@@ -6,11 +6,13 @@ package svm.view.forms;
 
 import com.toedter.calendar.JDateChooser;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import svm.domain.abstraction.exception.DomainAttributeException;
+import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
@@ -825,8 +827,36 @@ public class PanelMembers extends javax.swing.JPanel {
         try {
             this.memberController.setFirstName(this.getTfFirstName().getText());
             this.memberController.setLastName(this.getTfLastName().getText());
+            
+            this.memberController.setBirthDate(new Date());
+            this.memberController.setEntryDate(new Date());
+            this.memberController.setGender("M");
+            this.memberController.setSocialNumber("   ");
+            this.memberController.setTitle(" ");
+            this.memberController.setEmail1(" ");
+            this.memberController.setEmail2(" ");
+            this.memberController.setPhone1(" ");
+            this.memberController.setPhone2(" ");
+            this.memberController.setFax(" ");
+            this.memberController.setLat("47");
+            this.memberController.setLong("9");
+            this.memberController.setStreet(" ");
+            this.memberController.setStreetNumber("1");
+            this.memberController.setUserName("1234");
+                    
+            
             this.memberController.commit();
-        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
+        } catch (DomainParameterCheckException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainAttributeException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExistingTransactionException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnMemberSaveActionPerformed

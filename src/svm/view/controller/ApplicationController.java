@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Properties;
 import javax.swing.UIManager;
+import svm.rmi.abstraction.controller.IRMISearchController;
+import svm.rmi.implementation.rmiControllerFactory.RMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
 import svm.view.forms.PanelContests;
@@ -78,8 +80,6 @@ public class ApplicationController {
             
             // Start the application
             startSVM();
-            
-   
             
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);

@@ -1115,7 +1115,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="libstboxContestTeams">
+                        <Component class="javax.swing.JList" name="listboxContestTeams">
                           <Properties>
                             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                               <StringArray count="3">
@@ -1129,7 +1129,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="libstboxContestTeamsValueChanged"/>
+                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listboxContestTeamsValueChanged"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -1180,7 +1180,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="libstboxAllTeamsInSport">
+                        <Component class="javax.swing.JList" name="listboxAllTeamsInSport">
                           <Properties>
                             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                               <StringArray count="5">
@@ -1196,7 +1196,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="libstboxAllTeamsInSportValueChanged"/>
+                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listboxAllTeamsInSportValueChanged"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -1434,7 +1434,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="libstboxContestTeamMembers">
+                        <Component class="javax.swing.JList" name="listboxContestTeamMembers">
                           <Properties>
                             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                               <StringArray count="3">
@@ -1448,7 +1448,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="libstboxContestTeamMembersValueChanged"/>
+                            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listboxContestTeamMembersValueChanged"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -1760,6 +1760,9 @@
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {null, null, null, null, null},&#xa;        {null, null, null, null, null},&#xa;        {null, null, null, null, null},&#xa;        {null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Date&quot;, &quot;Team A&quot;, &quot;Team B&quot;, &quot;Score A&quot;, &quot;Score B&quot;&#xa;    }&#xa;)" type="code"/>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="0"/>
                             </Property>
                             <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="66" green="99" red="0" type="rgb"/>

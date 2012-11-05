@@ -65,7 +65,7 @@
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[640, 500]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value=""/>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
@@ -146,7 +146,7 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="alignmentY" type="float" value="0.0"/>
-            <Property name="name" type="java.lang.String" value="panelLogin"/>
+            <Property name="name" type="java.lang.String" value="panelLogin" noResource="true"/>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="panelLogin"/>
@@ -200,7 +200,7 @@
                     <EmptyBorder bottom="1" left="20" right="1" top="1"/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value=""/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
@@ -219,7 +219,7 @@
                     <EmptyBorder bottom="1" left="20" right="1" top="1"/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value=""/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>

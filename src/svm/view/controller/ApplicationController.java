@@ -11,13 +11,9 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
-import svm.logic.abstraction.exception.IllegalGetInstanceException;
-import svm.logic.abstraction.transferobjects.ITransferMember;
-import svm.persistence.abstraction.exceptions.ExistingTransactionException;
-import svm.persistence.abstraction.exceptions.NoSessionFoundException;
-import svm.persistence.abstraction.exceptions.NoTransactionException;
-import svm.rmi.abstraction.controller.IRMISearchController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
@@ -30,6 +26,9 @@ import svm.view.forms.PanelMembers;
  */
 public class ApplicationController {
 
+    /* Factory */
+    public static IRMIControllerFactory factory;
+    
     /**
      * The two main forms
      * login and main applicationwindow
@@ -56,8 +55,8 @@ public class ApplicationController {
     private ViewSubTeamController viewSubTeamCtrl;
 
     public ApplicationController() {
-        this.panelContests = new PanelContests();
-        this.panelMembers = new PanelMembers();
+        this.panelContests = new PanelContests(factory);
+        this.panelMembers = new PanelMembers(factory);
         this.viewContestCtrl = new ViewContestController();
         this.viewMemberCtrl = new ViewMemberController();
         this.viewSearchCtrl = new ViewSearchController();
@@ -72,21 +71,19 @@ public class ApplicationController {
             //Hole Argument (IP)
             // String ip = args[0];
             String ip = "127.0.0.1";
-            //  ip="172.16.63.174";
-            //Lookup Objekt    Holle ATM Fabrik
-            IRMIControllerFactory factory = (IRMIControllerFactory) Naming.lookup("rmi://" + ip + ":1099/RMI");
+            try {
+                //  ip="172.16.63.174";
+                //Lookup Objekt    Holle ATM Fabrik
+                factory = (IRMIControllerFactory) Naming.lookup("rmi://" + ip + ":1099/RMI");
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             //Starte die Testmethoden
             System.out.println("Path: rmi://" + ip + ":1099/RMI");
             System.out.println("Client runs");
             //IRMIContestController contestController = factory.getRMIContestController();
-            IRMISearchController searchController = factory.getRMISearchController();
-
-            searchController.start();
-            for (ITransferMember obj : searchController.getMembers("Georgi", "")) {
-                System.out.println(obj.getFirstName() + " " + obj.getLastName());
-            }
-            searchController.commit();
+         
      
 
         
@@ -123,32 +120,13 @@ public class ApplicationController {
          {
                 e.printStackTrace();
          }
-         catch(NoSessionFoundException e)
-         {
-                e.printStackTrace();
-         }
-          catch(IllegalGetInstanceException e)
-         {
-                e.printStackTrace();
-         }
-           catch(MalformedURLException e)
-         {
-                e.printStackTrace();
-         }
-           catch(ExistingTransactionException e)
-         {
-                e.printStackTrace();
-         }
-           catch(NoTransactionException e)
-         {
-                e.printStackTrace();
-         }
+
 
     }
 
     private static void startSVM() {                
             
-            loginForm = new LoginForm();
+            loginForm = new LoginForm(factory);
             loginForm.pack();
             loginForm.setSize(640, 550);
             loginForm.setLocationRelativeTo(null);
@@ -176,9 +154,9 @@ public class ApplicationController {
             
     }
     
-    public void login()
+    public void login(String username, String password)
     {            
-        startMainForm(loginForm.getTfUserName().getText());
+        startMainForm(username);
     }
     
     public void loadPrivileges(String privileges)

@@ -6,20 +6,21 @@ package svm.view.forms;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
+import svm.rmi.abstraction.factory.IRMIControllerFactory;
 
 /**
  *
  * @author Patrick
  */
 public class PanelContests extends javax.swing.JPanel {
-
+   private IRMIControllerFactory factory = null;
     /**
      * Creates new Form Panel for Contest UseCases
      */
-    public PanelContests() {
-        initComponents();
+    public PanelContests(IRMIControllerFactory factory) {       
+            initComponents();
+            this.factory=factory;     
     }
-
     
     /** Getters and Setters for Components on Panel Contest **/
     
@@ -1253,7 +1254,7 @@ public class PanelContests extends javax.swing.JPanel {
                         .addGap(14, 14, 14))
                     .addGroup(panelContestResultsLayout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelContestResultsLayout.setVerticalGroup(
             panelContestResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1284,7 +1285,7 @@ public class PanelContests extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelContestHead, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPanelContestDetails))
+                .addComponent(tabPanelContestDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         splitPanelContest.setRightComponent(splitPanelContestRight);

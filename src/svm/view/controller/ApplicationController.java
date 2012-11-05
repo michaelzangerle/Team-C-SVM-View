@@ -6,9 +6,7 @@ package svm.view.controller;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.util.Properties;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;

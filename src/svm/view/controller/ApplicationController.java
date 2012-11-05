@@ -6,7 +6,9 @@ package svm.view.controller;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
@@ -68,7 +70,7 @@ public class ApplicationController {
     }
     
     
-    public static void main(String args[]){
+    public static void main(String args[]) throws UnknownHostException{
         
          try {
 String policy = PolicyFileLocator.getLocationOfPolicyFile();
@@ -80,7 +82,7 @@ String policy = PolicyFileLocator.getLocationOfPolicyFile();
              
             //Hole Argument (IP)
             // String ip = args[0];
-            String ip = "172.16.60.17";
+            String ip = InetAddress.getLocalHost().getHostAddress();
             try {
                 //  ip="172.16.63.174";
                 //Lookup Objekt    Holle ATM Fabrik

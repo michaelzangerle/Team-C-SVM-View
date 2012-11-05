@@ -842,7 +842,7 @@ public class PanelMembers extends javax.swing.JPanel {
             this.memberController.setLong("9");
             this.memberController.setStreet(" ");
             this.memberController.setStreetNumber("1");
-            this.memberController.setUserName("1234");
+            this.memberController.setUsername("1234");
                     
             
             this.memberController.commit();

@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -70,10 +71,16 @@ public class ApplicationController {
     public static void main(String args[]){
         
          try {
+String policy = PolicyFileLocator.getLocationOfPolicyFile();
+            System.setProperty("java.security.policy", policy);
+            System.out.println("Policy: " + policy);
 
+            System.setSecurityManager(new RMISecurityManager());
+             
+             
             //Hole Argument (IP)
             // String ip = args[0];
-            String ip = "127.0.0.1";
+            String ip = "172.16.60.17";
             try {
                 //  ip="172.16.63.174";
                 //Lookup Objekt    Holle ATM Fabrik

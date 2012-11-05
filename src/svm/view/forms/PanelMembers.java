@@ -44,10 +44,6 @@ public class PanelMembers extends javax.swing.JPanel {
         return btnMemberNew;
     }
 
-    public JButton getBtnMemberReset() {
-        return btnMemberReset;
-    }
-
     public JButton getBtnMemberSave() {
         return btnMemberSave;
     }
@@ -108,10 +104,6 @@ public class PanelMembers extends javax.swing.JPanel {
         return listboxShowMembers;
     }
 
-    public JTextField getTfCountry() {
-        return tfCountry;
-    }
-
     public JTextField getTfFirstName() {
         return tfFirstName;
     }
@@ -128,9 +120,6 @@ public class PanelMembers extends javax.swing.JPanel {
         return tfMail2;
     }
 
-    public JTextField getTfMemberFee() {
-        return tfMemberFee;
-    }
 
     public JTextField getTfPhone1() {
         return tfPhone1;
@@ -140,13 +129,8 @@ public class PanelMembers extends javax.swing.JPanel {
         return tfPhone2;
     }
 
-    public JTextField getTfPlaceName() {
-        return tfPlaceName;
-    }
 
-    public JTextField getTfPostalCode() {
-        return tfPostalCode;
-    }
+
 
     public JTextField getTfSearchFirstName() {
         return tfSearchFirstName;

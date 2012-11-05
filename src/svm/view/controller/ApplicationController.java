@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
@@ -28,6 +29,8 @@ public class ApplicationController {
 
     /* Factory */
     public static IRMIControllerFactory factory;
+        public static ITransferMember user;
+
     
     /**
      * The two main forms

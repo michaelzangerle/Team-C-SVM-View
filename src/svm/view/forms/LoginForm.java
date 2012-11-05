@@ -29,8 +29,8 @@ public class LoginForm extends javax.swing.JFrame {
     
     // The one and only instance of the loginForm
     private static LoginForm loginForm = null;
-    private final IRMIControllerFactory factory;
-    private ITransferMember member;
+    private static IRMIControllerFactory factory;
+    
 
    
 
@@ -74,7 +74,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         panelLoginFrame.setBackground(new java.awt.Color(255, 255, 255));
         panelLoginFrame.setMinimumSize(new java.awt.Dimension(640, 500));
-        panelLoginFrame.setName("");
+        panelLoginFrame.setName(""); // NOI18N
 
         lblLogo.setBackground(new java.awt.Color(255, 255, 255));
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/svm/view/resources/svm_lg_640.png"))); // NOI18N
@@ -92,20 +92,20 @@ public class LoginForm extends javax.swing.JFrame {
         panelLogin.setForeground(new java.awt.Color(204, 204, 204));
         panelLogin.setToolTipText("");
         panelLogin.setAlignmentY(0.0F);
-        panelLogin.setName("panelLogin");
+        panelLogin.setName("panelLogin"); // NOI18N
 
         tfUserName.setBackground(new java.awt.Color(229, 229, 229));
         tfUserName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        tfUserName.setText("Barack Hussein Obama II");
+        tfUserName.setText("mary.sluis");
         tfUserName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
-        tfUserName.setName("");
+        tfUserName.setName(""); // NOI18N
 
         tfPassword.setBackground(new java.awt.Color(229, 229, 229));
         tfPassword.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         tfPassword.setText("admin");
         tfPassword.setToolTipText("");
         tfPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
-        tfPassword.setName("");
+        tfPassword.setName(""); // NOI18N
 
         btnLogin.setText("Login");
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -197,8 +197,8 @@ public class LoginForm extends javax.swing.JFrame {
             IRMILoginController loginController=factory.getRMILoginController();
             loginController.start();
             if(loginController.login(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
-            { this.member=loginController.getMember();
-              appController.login(member.getFirstName()+ " " +member.getLastName(),"no pass");
+            { ApplicationController.user=loginController.getMember();
+              appController.login(ApplicationController.user.getFirstName()+ " " +ApplicationController.user.getLastName(),"no pass");
             }  
             try {
                 loginController.commit();
@@ -222,7 +222,7 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
     
      public ITransferMember getMember() {
-        return member;
+        return ApplicationController.user;
     }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables

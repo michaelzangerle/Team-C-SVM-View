@@ -10,10 +10,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.transferobjects.ITransferMember;
+import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
+import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.rmi.abstraction.controller.IRMIMemberController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
+import svm.view.controller.ApplicationController;
 
 /**
  *
@@ -21,6 +26,7 @@ import svm.rmi.abstraction.factory.IRMIControllerFactory;
  */
 public class PanelMembers extends javax.swing.JPanel {
     private IRMIControllerFactory factory = null;
+    private IRMIMemberController memberController;
   
 
     /**
@@ -75,7 +81,7 @@ public class PanelMembers extends javax.swing.JPanel {
     }
 
     public JComboBox getCmbMemberSports() {
-        return cmbMemberSports;
+        return cmbMemberTeams;
     }
 
     public JComboBox getCmbSearchDepartment() {
@@ -207,7 +213,6 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersMenu = new javax.swing.JPanel();
         btnMemberSave = new javax.swing.JButton();
         btnMemberNew = new javax.swing.JButton();
-        btnMemberReset = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tfLastName = new javax.swing.JTextField();
@@ -229,9 +234,6 @@ public class PanelMembers extends javax.swing.JPanel {
         tfStreet = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tfMemberFee = new javax.swing.JTextField();
-        tfPostalCode = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         cmbGender = new javax.swing.JComboBox();
@@ -239,15 +241,10 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         dcBirthDate = new com.toedter.calendar.JDateChooser();
         dcEntryDate = new com.toedter.calendar.JDateChooser();
-        jLabel20 = new javax.swing.JLabel();
-        tfPlaceName = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        tfCountry = new javax.swing.JTextField();
         cmbContactDetails = new javax.swing.JComboBox();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        cmbMemberSports = new javax.swing.JComboBox();
+        cmbMemberTeams = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane2 = new javax.swing.JScrollPane();
         libstboxMemberSports = new javax.swing.JList();
@@ -430,14 +427,6 @@ public class PanelMembers extends javax.swing.JPanel {
             }
         });
 
-        btnMemberReset.setText("Reset");
-        btnMemberReset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMemberReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMemberResetActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelMembersMenuLayout = new javax.swing.GroupLayout(panelMembersMenu);
         panelMembersMenu.setLayout(panelMembersMenuLayout);
         panelMembersMenuLayout.setHorizontalGroup(
@@ -447,9 +436,7 @@ public class PanelMembers extends javax.swing.JPanel {
                 .addComponent(btnMemberSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMemberNew, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMemberReset, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(341, Short.MAX_VALUE))
         );
         panelMembersMenuLayout.setVerticalGroup(
             panelMembersMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,7 +444,6 @@ public class PanelMembers extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelMembersMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnMemberSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(btnMemberReset, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMemberNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -491,7 +477,7 @@ public class PanelMembers extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("Primäre Adresse und Kontaktdetails");
+        jLabel11.setText("Adresse und Kontaktdetails");
 
         tfPhone2.setText("3210 555");
 
@@ -529,14 +515,6 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(51, 51, 51));
         jLabel17.setText("Nr.");
 
-        tfMemberFee.setText("1000000");
-
-        tfPostalCode.setText("4711");
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel18.setText("Postleitzahl");
-
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(51, 51, 51));
         jLabel19.setText("Mitgliedsbeitrag");
@@ -572,18 +550,6 @@ public class PanelMembers extends javax.swing.JPanel {
             }
         });
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel20.setText("Ort");
-
-        tfPlaceName.setText("Dornbirn");
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel22.setText("Land");
-
-        tfCountry.setText("Österreich");
-
         cmbContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Adresse 2", "Adresse 3" }));
         cmbContactDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbContactDetails.setFocusCycleRoot(true);
@@ -595,19 +561,15 @@ public class PanelMembers extends javax.swing.JPanel {
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel23.setText("Adressen");
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel24.setText("€");
+        jLabel23.setText("Ort");
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel25.setText("Sportarten und Abteilungen");
+        jLabel25.setText("Teams und Abteilungen");
 
-        cmbMemberSports.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sportart 1", "Sportart 2" }));
-        cmbMemberSports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbMemberSports.setFocusCycleRoot(true);
+        cmbMemberTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team 1", "Team 2" }));
+        cmbMemberTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbMemberTeams.setFocusCycleRoot(true);
 
         libstboxMemberSports.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -707,32 +669,19 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addComponent(tfMail1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfMail2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfPlaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfCountry, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(cmbContactDetails, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(tfStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbContactDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,7 +690,7 @@ public class PanelMembers extends javax.swing.JPanel {
                                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnToggleSports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbMemberSports, javax.swing.GroupLayout.Alignment.LEADING, 0, 123, Short.MAX_VALUE))
+                                    .addComponent(cmbMemberTeams, javax.swing.GroupLayout.Alignment.LEADING, 0, 123, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
@@ -756,14 +705,8 @@ public class PanelMembers extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dcEntryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(tfUserName, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, splitPanelMembersRightLayout.createSequentialGroup()
-                                    .addComponent(tfMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(7, 7, 7)
-                                    .addComponent(jLabel24)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(checkMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                            .addComponent(tfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(checkMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         splitPanelMembersRightLayout.setVerticalGroup(
             splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -788,9 +731,7 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addComponent(tfUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(tfMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel19)
-                                .addComponent(jLabel24)
                                 .addComponent(checkMemberFee))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -837,19 +778,7 @@ public class PanelMembers extends javax.swing.JPanel {
                                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(tfStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel17))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel18))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfPlaceName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel20))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel22))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cmbContactDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel23)))
@@ -861,7 +790,7 @@ public class PanelMembers extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                                .addComponent(cmbMemberSports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbMemberTeams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnToggleSports)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -883,7 +812,7 @@ public class PanelMembers extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPanelMembers)
+                .addComponent(splitPanelMembers, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -909,15 +838,28 @@ public class PanelMembers extends javax.swing.JPanel {
 
     private void btnMemberSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSaveActionPerformed
         // TODO add your handling code here:
+        try {
+            this.memberController.setFirstName(this.getTfFirstName().getText());
+            this.memberController.setLastName(this.getTfLastName().getText());
+            this.memberController.commit();
+        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMemberSaveActionPerformed
 
     private void btnMemberNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberNewActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            this.memberController = this.factory.getRMIMemberController(ApplicationController.user);
+            this.memberController.start();
+            ITransferMember tmp=this.memberController.getMember();
+            this.getTfFirstName().setText(tmp.getFirstName());
+            this.getTfLastName().setText(tmp.getLastName());
+        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnMemberNewActionPerformed
-
-    private void btnMemberResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberResetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMemberResetActionPerformed
 
     private void dcBirthDatePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcBirthDatePropertyChange
         // TODO add your handling code here:
@@ -953,7 +895,6 @@ public class PanelMembers extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMemberNew;
-    private javax.swing.JButton btnMemberReset;
     private javax.swing.JButton btnMemberSave;
     private javax.swing.JButton btnMemberSearch;
     private javax.swing.JButton btnToggleDepartment;
@@ -963,7 +904,7 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JComboBox cmbContactDetails;
     private javax.swing.JComboBox cmbGender;
     private javax.swing.JComboBox cmbMemberDepartment;
-    private javax.swing.JComboBox cmbMemberSports;
+    private javax.swing.JComboBox cmbMemberTeams;
     private javax.swing.JComboBox cmbSearchDepartment;
     private com.toedter.calendar.JDateChooser dcBirthDate;
     private com.toedter.calendar.JDateChooser dcEntryDate;
@@ -976,14 +917,10 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1005,16 +942,12 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JSplitPane splitPanelMembers;
     private javax.swing.JSplitPane splitPanelMembersLeft;
     private javax.swing.JPanel splitPanelMembersRight;
-    private javax.swing.JTextField tfCountry;
     private javax.swing.JTextField tfFirstName;
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfMail1;
     private javax.swing.JTextField tfMail2;
-    private javax.swing.JTextField tfMemberFee;
     private javax.swing.JTextField tfPhone1;
     private javax.swing.JTextField tfPhone2;
-    private javax.swing.JTextField tfPlaceName;
-    private javax.swing.JTextField tfPostalCode;
     private javax.swing.JTextField tfSearchFirstName;
     private javax.swing.JTextField tfSearchLastName;
     private javax.swing.JTextField tfSocialNumber;

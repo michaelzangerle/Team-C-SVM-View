@@ -6,10 +6,19 @@ package svm.view.controller;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Properties;
 import javax.swing.UIManager;
+import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.transferobjects.ITransferMember;
+import svm.persistence.abstraction.exceptions.ExistingTransactionException;
+import svm.persistence.abstraction.exceptions.NoSessionFoundException;
+import svm.persistence.abstraction.exceptions.NoTransactionException;
 import svm.rmi.abstraction.controller.IRMISearchController;
-import svm.rmi.implementation.rmiControllerFactory.RMIControllerFactory;
+import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
 import svm.view.forms.PanelContests;
@@ -56,9 +65,31 @@ public class ApplicationController {
     }
     
     
-    public static void main(String args[]) {
+    public static void main(String args[]){
+        
+         try {
 
-        try {
+            //Hole Argument (IP)
+            // String ip = args[0];
+            String ip = "127.0.0.1";
+            //  ip="172.16.63.174";
+            //Lookup Objekt    Holle ATM Fabrik
+            IRMIControllerFactory factory = (IRMIControllerFactory) Naming.lookup("rmi://" + ip + ":1099/RMI");
+
+            //Starte die Testmethoden
+            System.out.println("Path: rmi://" + ip + ":1099/RMI");
+            System.out.println("Client runs");
+            //IRMIContestController contestController = factory.getRMIContestController();
+            IRMISearchController searchController = factory.getRMISearchController();
+
+            searchController.start();
+            for (ITransferMember obj : searchController.getMembers("Georgi", "")) {
+                System.out.println(obj.getFirstName() + " " + obj.getLastName());
+            }
+            searchController.commit();
+     
+
+        
             // Setup the look and feel properties
             Properties props = new Properties();
 
@@ -84,6 +115,34 @@ public class ApplicationController {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+         catch(RemoteException e)
+         {
+             e.printStackTrace();
+         }
+         catch(NotBoundException e)
+         {
+                e.printStackTrace();
+         }
+         catch(NoSessionFoundException e)
+         {
+                e.printStackTrace();
+         }
+          catch(IllegalGetInstanceException e)
+         {
+                e.printStackTrace();
+         }
+           catch(MalformedURLException e)
+         {
+                e.printStackTrace();
+         }
+           catch(ExistingTransactionException e)
+         {
+                e.printStackTrace();
+         }
+           catch(NoTransactionException e)
+         {
+                e.printStackTrace();
+         }
 
     }
 

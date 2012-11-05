@@ -108,11 +108,11 @@ public class PanelContests extends javax.swing.JPanel {
     }
 
     public JList getLibstboxAllContestTeams() {
-        return libstboxAllContestTeams;
+        return listboxAllContestTeams;
     }
 
     public JList getLibstboxAllTeamMembers() {
-        return libstboxAllTeamMembers;
+        return listboxAllTeamMembers;
     }
 
     public JList getLibstboxAllTeamsInSport() {
@@ -277,7 +277,7 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel26 = new javax.swing.JLabel();
         cmbContestTeams = new javax.swing.JComboBox();
         jScrollPane5 = new javax.swing.JScrollPane();
-        libstboxAllTeamMembers = new javax.swing.JList();
+        listboxAllTeamMembers = new javax.swing.JList();
         jLabel35 = new javax.swing.JLabel();
         btnRemoveFromSubTeam = new javax.swing.JButton();
         btnAddToSubTeam = new javax.swing.JButton();
@@ -288,7 +288,7 @@ public class PanelContests extends javax.swing.JPanel {
         panelContestTeamsAlternate = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        libstboxAllContestTeams = new javax.swing.JList();
+        listboxAllContestTeams = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         listboxTeamA = new javax.swing.JList();
         jLabel33 = new javax.swing.JLabel();
@@ -972,18 +972,18 @@ public class PanelContests extends javax.swing.JPanel {
             }
         });
 
-        libstboxAllTeamMembers.setModel(new javax.swing.AbstractListModel() {
+        listboxAllTeamMembers.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        libstboxAllTeamMembers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        libstboxAllTeamMembers.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        listboxAllTeamMembers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listboxAllTeamMembers.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                libstboxAllTeamMembersValueChanged(evt);
+                listboxAllTeamMembersValueChanged(evt);
             }
         });
-        jScrollPane5.setViewportView(libstboxAllTeamMembers);
+        jScrollPane5.setViewportView(listboxAllTeamMembers);
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(102, 102, 102));
@@ -1095,18 +1095,18 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel31.setForeground(new java.awt.Color(102, 102, 102));
         jLabel31.setText("Wettkampf-Matches einteilen");
 
-        libstboxAllContestTeams.setModel(new javax.swing.AbstractListModel() {
+        listboxAllContestTeams.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        libstboxAllContestTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        libstboxAllContestTeams.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        listboxAllContestTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listboxAllContestTeams.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                libstboxAllContestTeamsValueChanged(evt);
+                listboxAllContestTeamsValueChanged(evt);
             }
         });
-        jScrollPane6.setViewportView(libstboxAllContestTeams);
+        jScrollPane6.setViewportView(listboxAllContestTeams);
 
         listboxTeamA.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -1225,13 +1225,13 @@ public class PanelContests extends javax.swing.JPanel {
 
         tableMatchesOverview.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Team A", "Team B", "Score A", "Score B"
+                "Date", "Team A", "Team B", "Score A", "Score B"
             }
         ));
         tableMatchesOverview.setSelectionBackground(new java.awt.Color(0, 153, 102));
@@ -1387,9 +1387,9 @@ public class PanelContests extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void libstboxAllContestTeamsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxAllContestTeamsValueChanged
+    private void listboxAllContestTeamsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxAllContestTeamsValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_libstboxAllContestTeamsValueChanged
+    }//GEN-LAST:event_listboxAllContestTeamsValueChanged
 
     private void listboxTeamAValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxTeamAValueChanged
         // TODO add your handling code here:
@@ -1399,9 +1399,9 @@ public class PanelContests extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_listboxTeamBValueChanged
 
-    private void libstboxAllTeamMembersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxAllTeamMembersValueChanged
+    private void listboxAllTeamMembersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxAllTeamMembersValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_libstboxAllTeamMembersValueChanged
+    }//GEN-LAST:event_listboxAllTeamMembersValueChanged
 
     private void libstboxContestTeamMembersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxContestTeamMembersValueChanged
         // TODO add your handling code here:
@@ -1487,11 +1487,11 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JList libstboxAllContestTeams;
-    private javax.swing.JList libstboxAllTeamMembers;
     private javax.swing.JList libstboxAllTeamsInSport;
     private javax.swing.JList libstboxContestTeamMembers;
     private javax.swing.JList libstboxContestTeams;
+    private javax.swing.JList listboxAllContestTeams;
+    private javax.swing.JList listboxAllTeamMembers;
     private javax.swing.JList listboxShowContests;
     private javax.swing.JList listboxTeamA;
     private javax.swing.JList listboxTeamB;

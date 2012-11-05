@@ -19,6 +19,7 @@ import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
 import svm.rmi.abstraction.controller.IRMIMemberController;
+import svm.rmi.abstraction.controller.IRMISearchController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.controller.ApplicationController;
 
@@ -29,6 +30,7 @@ import svm.view.controller.ApplicationController;
 public class PanelMembers extends javax.swing.JPanel {
     private IRMIControllerFactory factory = null;
     private IRMIMemberController memberController;
+    private IRMISearchController searchController;
   
 
     /**
@@ -815,11 +817,47 @@ public class PanelMembers extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxSearchFeeStateChanged
 
     private void btnMemberSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSearchActionPerformed
-        // TODO add your handling code here:
+               
+        try {
+            // TODO add your handling code here:
+            this.searchController = factory.getRMISearchController(ApplicationController.user);
+            this.searchController.start();
+            List<ITransferMember> members = this.searchController.getMembers(getTfSearchFirstName().getText(), getTfSearchLastName().getText());
+            DefaultListModel<ITransferMember> model= new DefaultListModel<>();
+            for(ITransferMember m : members)model.addElement(m);
+            getListboxShowMembers().setModel(model);
+            this.searchController.commit();
+            
+        } catch (ExistingTransactionException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMemberSearchActionPerformed
 
     private void listboxShowMembersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxShowMembersValueChanged
-        // TODO add your handling code here:
+        try {
+           if(this.memberController != null) this.memberController.abort();
+        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | RemoteException ex) {
+                    }
+                try {
+            ITransferMember member = (ITransferMember) getListboxShowMembers().getSelectedValue();
+            
+            this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
+            this.memberController.start();
+            ITransferMember tmp=this.memberController.getMember();
+            this.getTfFirstName().setText(tmp.getFirstName());
+            this.getTfLastName().setText(tmp.getLastName());
+        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_listboxShowMembersValueChanged
 
     private void btnMemberSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSaveActionPerformed
@@ -862,6 +900,11 @@ public class PanelMembers extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMemberSaveActionPerformed
 
     private void btnMemberNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberNewActionPerformed
+                try {
+           if(this.memberController != null) this.memberController.abort();
+        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | RemoteException ex) {
+                    }
+        
         try {
             // TODO add your handling code here:
             this.memberController = this.factory.getRMIMemberController(ApplicationController.user);

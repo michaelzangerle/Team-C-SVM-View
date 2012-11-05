@@ -3,10 +3,20 @@
  * and open the template in the editor.
  */
 package svm.view.forms;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.transferobjects.ITransferMember;
+import svm.persistence.abstraction.exceptions.ExistingTransactionException;
+import svm.persistence.abstraction.exceptions.NoSessionFoundException;
+import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.rmi.abstraction.controller.IRMILoginController;
+import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.controller.ApplicationController;
 
 /**
@@ -19,14 +29,19 @@ public class LoginForm extends javax.swing.JFrame {
     
     // The one and only instance of the loginForm
     private static LoginForm loginForm = null;
+    private final IRMIControllerFactory factory;
+    private ITransferMember member;
+
+   
 
     /**
      * Creates new form LoginForm
      */
-    public LoginForm() {
+    public LoginForm(IRMIControllerFactory factory) {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
         this.appController = new ApplicationController();
+        this.factory=factory;
     }
 
     /**
@@ -178,8 +193,27 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-               
-        appController.login();
+        try {
+            IRMILoginController loginController=factory.getRMILoginController();
+            loginController.start();
+            if(loginController.login(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
+            { this.member=loginController.getMember();
+              appController.login(member.getFirstName()+ " " +member.getLastName(),"no pass");
+            }  
+            try {
+                loginController.commit();
+            } catch (ExistingTransactionException ex) {
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoTransactionException ex) {
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IllegalGetInstanceException | NoSessionFoundException ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+   
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -187,6 +221,9 @@ public class LoginForm extends javax.swing.JFrame {
         // appController.cancel();
     }//GEN-LAST:event_btnCancelActionPerformed
     
+     public ITransferMember getMember() {
+        return member;
+    }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton btnCancel;

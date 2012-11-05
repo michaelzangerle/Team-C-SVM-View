@@ -5,19 +5,31 @@
 package svm.view.forms;
 
 import com.toedter.calendar.JDateChooser;
+import java.rmi.RemoteException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.transferobjects.ITransferMember;
+import svm.persistence.abstraction.exceptions.NoSessionFoundException;
+import svm.rmi.abstraction.factory.IRMIControllerFactory;
 
 /**
  *
  * @author Patrick
  */
 public class PanelMembers extends javax.swing.JPanel {
+    private IRMIControllerFactory factory = null;
+  
 
     /**
      * Creates new Form Panel for Member UseCases
-     */    
-    public PanelMembers() {
-        initComponents();
+     */  
+    
+    public PanelMembers(IRMIControllerFactory factory) {       
+            initComponents();
+            this.factory=factory;      
     }
     
     /* Getters and Setters for Panel Components */
@@ -158,6 +170,14 @@ public class PanelMembers extends javax.swing.JPanel {
         return checkMemberFee;
     }
     
+    /*
+     *   List<ITransferMember> l=factory.getRMISearchController().getMembers("Georgie", "");
+           // l.get(0).get
+        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     * 
+     */
     
    
     /**

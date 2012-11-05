@@ -1,4 +1,15 @@
-out/
-.idea/ant.xml
-.idea/workspace.xml
-.idea/misc.xml
+# NetBeans specific #
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Class Files #
+*.class
+
+# Package Files #
+*.war
+*.ear

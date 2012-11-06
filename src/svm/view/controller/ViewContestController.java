@@ -40,10 +40,16 @@ public class ViewContestController {
     private IRMIContestController contestController;
     private IRMISearchController searchController;
     private PanelContests panelContests;
+    
     private DefaultListModel<ITransferTeam> participatingTeams = new DefaultListModel<>();
     private DefaultListModel<ITransferContest> model = new DefaultListModel<>();
+    
     private DefaultListModel<ITransferMember> completeTeam = new DefaultListModel<>();
     private DefaultListModel<ITransferMember> subTeam = new DefaultListModel<>();
+    
+    private DefaultListModel<ITransferTeam> allContestTeams = new DefaultListModel<>();
+    private DefaultListModel<ITransferTeam> contestTeamA = new DefaultListModel<>();
+    private DefaultListModel<ITransferTeam> contestTeamB = new DefaultListModel<>();
 
     public ViewContestController(PanelContests panelContest) {
         try {
@@ -313,5 +319,41 @@ public class ViewContestController {
         } else{
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
         }
+    }
+    
+    public void manageContestTeams() {
+        try {
+            this.panelContests.getListboxAllContestTeams().setModel(allContestTeams);
+            this.panelContests.getListboxTeamA().setModel(contestTeamA);
+            this.panelContests.getListboxTeamB().setModel(contestTeamB);
+            
+            this.contestController = factory.getRMIContestController((ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.contestController.start();
+            ITransferContest selectedContest = (ITransferContest) this.panelContests.getListboxContestTeams().getSelectedValue();
+            
+            for (ITransferTeam t : contestController.getTeams()){
+                this.allContestTeams.addElement(t);
+            }
+        } catch (NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public void removeFromTeam() {
+        if (this.panelContests.getListboxTeamA().getSelectedValue() != null){
+            contestTeamA.removeElement(this.panelContests.getListboxTeamA().getSelectedValue());
+        }
+        if (this.panelContests.getListboxTeamB().getSelectedValue() != null){
+            contestTeamA.removeElement(this.panelContests.getListboxTeamB().getSelectedValue());
+        }
+    }
+
+    public void addToTeamB() {
+        contestTeamB.addElement((ITransferTeam)this.panelContests.getListboxAllContestTeams().getSelectedValue());
+    }
+
+    public void addToTeamA() {
+        contestTeamA.addElement((ITransferTeam)this.panelContests.getListboxAllContestTeams().getSelectedValue());
     }
 }

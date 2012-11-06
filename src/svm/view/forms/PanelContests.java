@@ -1135,7 +1135,7 @@ public class PanelContests extends javax.swing.JPanel {
        }else if(tabPanelContestDetails.getSelectedIndex() == 2){
            viewContestController.manageSubteams();
        }else if(tabPanelContestDetails.getSelectedIndex() == 3){
-           //TODO
+           viewContestController.manageContestTeams();
        }else if(tabPanelContestDetails.getSelectedIndex() == 4){
            viewContestController.showMatchOverview();
        }
@@ -1174,15 +1174,15 @@ public class PanelContests extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRemoveFromSubTeamActionPerformed
 
     private void btnToAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToAActionPerformed
-        // TODO add your handling code here:
+        viewContestController.addToTeamA();
     }//GEN-LAST:event_btnToAActionPerformed
 
     private void btnToBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToBActionPerformed
-        // TODO add your handling code here:
+        viewContestController.addToTeamB();
     }//GEN-LAST:event_btnToBActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        viewContestController.removeFromTeam();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void listboxAllContestTeamsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxAllContestTeamsValueChanged

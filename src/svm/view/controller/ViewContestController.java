@@ -177,6 +177,7 @@ public class ViewContestController {
     }
 
     public void showAllLocations() {
+       /*
         try {
             ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
             this.panelContests.getTfContestPhone1().setText(selectedContest.getContactDetails().getPhone1());
@@ -203,6 +204,7 @@ public class ViewContestController {
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }
     
     public void saveMatchOverview(){

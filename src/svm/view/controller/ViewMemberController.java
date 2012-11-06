@@ -51,10 +51,11 @@ public class ViewMemberController {
             
             ITransferDepartment chosenDepartment = (ITransferDepartment) panelMembers.getCmbSearchDepartment().getSelectedItem();
             this.searchController.start();
+            
+            //TODO nix geht SUCHE mit alle Parameter //
             List<ITransferMember> members = this.searchController.getMembers(
                     panelMembers.getTfSearchFirstName().getText(),
-                    panelMembers.getTfSearchLastName().getText(),
-                    chosenDepartment, panelMembers.getCbxSearchFee().isSelected());
+                    panelMembers.getTfSearchLastName().getText());//,chosenDepartment,panelMembers.getCbxSearchFee().isSelected());
             DefaultListModel<ITransferMember> model = new DefaultListModel<>();
             for (ITransferMember m : members) {
                 model.addElement(m);
@@ -71,8 +72,6 @@ public class ViewMemberController {
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
@@ -92,8 +91,11 @@ public class ViewMemberController {
             this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();
-            panelMembers.getTfFirstName().setText(tmp.getFirstName());
-            panelMembers.getTfLastName().setText(tmp.getLastName());
+           // panelMembers.getTfFirstName().setText(tmp.getFirstName());
+           // panelMembers.getTfLastName().setText(tmp.getLastName());
+              showMemberDetails(tmp);        
+            
+            
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -142,7 +144,7 @@ public class ViewMemberController {
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();
             
-            showMemberDetails(tmp);         
+          
             
             
         } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
@@ -167,9 +169,20 @@ public class ViewMemberController {
     }
 
     private void showMemberDetails(ITransferMember tmp) {
-        
-         panelMembers.getTfFirstName().setText(tmp.getFirstName());
-         panelMembers.getTfLastName().setText(tmp.getLastName());
+        try {
+            panelMembers.getTfFirstName().setText(tmp.getFirstName());
+            panelMembers.getTfLastName().setText(tmp.getLastName());
+            panelMembers.getTfMail1().setText(tmp.getEmail1());
+            panelMembers.getTfMail2().setText(tmp.getEmail2());
+            panelMembers.getTfPhone1().setText(tmp.getPhone1());
+            panelMembers.getTfSocialNumber().setText(tmp.getSocialNumber());
+            panelMembers.getTfStreet().setText(tmp.getStreet());
+            panelMembers.getDcBirthDate().setDate(tmp.getBirthDate());
+            panelMembers.getDcEntryDate().setDate(tmp.getEntryDate());
+            panelMembers.getCheckMemberFee().setSelected(tmp.getPaid());
+        } catch (DomainParameterCheckException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

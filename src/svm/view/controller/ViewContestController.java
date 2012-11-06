@@ -109,6 +109,7 @@ public class ViewContestController {
     public void saveContest() {
         try {
 
+            this.contestController.start();
             this.contestController.setContestName(panelContests.getTfContestName().getText());
             this.contestController.setContestStartDate(panelContests.getDcContestStartDate().getDate());
             this.contestController.setContestEndDate(panelContests.getDcContestEndDate().getDate());
@@ -120,10 +121,9 @@ public class ViewContestController {
             this.contestController.setStreet(panelContests.getTfContestStreet().getText());
             this.contestController.setStreetNumber(panelContests.getTfContestStreetNumber().getText());
             this.contestController.commit();
-        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainParameterCheckException | DomainAttributeException | RemoteException ex) {
+        } catch (DomainParameterCheckException | ExistingTransactionException | NoTransactionException | DomainAttributeException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        } 
     }
 
     public void createNewContest() {

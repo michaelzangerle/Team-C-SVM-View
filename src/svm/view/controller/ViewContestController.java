@@ -40,6 +40,10 @@ public class ViewContestController {
     private IRMIContestController contestController;
     private IRMISearchController searchController;
     private PanelContests panelContests;
+    private DefaultListModel<ITransferTeam> participatingTeams = new DefaultListModel<>();
+    private DefaultListModel<ITransferContest> model = new DefaultListModel<>();
+    private DefaultListModel<ITransferMember> completeTeam = new DefaultListModel<>();
+    private DefaultListModel<ITransferMember> subTeam = new DefaultListModel<>();
 
     public ViewContestController(PanelContests panelContest) {
         try {
@@ -55,20 +59,19 @@ public class ViewContestController {
         try {
 
             this.searchController.start();
-            DefaultListModel<ITransferContest> model = new DefaultListModel<>();
             for (ITransferContest c : searchController.getContests()) {
                 model.addElement(c);
             }
             this.panelContests.getListboxShowContests().setModel(model);
             this.panelContests.getListboxShowContests().setSelectedIndex(0);
-            ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
-            
+            ITransferContest selectedContest = (ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue();
+
             this.panelContests.getTfContestName().setText(selectedContest.getName());
             this.panelContests.getDcContestStartDate().setDate(selectedContest.getStart());
             this.panelContests.getDcContestEndDate().setDate(selectedContest.getEnd());
             this.panelContests.getTfContestFee().setText(Float.toString(selectedContest.getFee()));
-            
-            
+
+
             this.searchController.commit();
 
 
@@ -77,20 +80,19 @@ public class ViewContestController {
         }
 
     }
-    
-    public void showMatchOverview(){
-        
+
+    public void showMatchOverview() {
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - hh.mm");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -100);
         sdf.set2DigitYearStart(cal.getTime());
-        
+
         try {
-            ITransferContest salkdjf = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
-            this.contestController = factory.getRMIContestController((ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.contestController = factory.getRMIContestController((ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
             this.contestController.start();
             int i = 0;
-            for(ITransferMatch m : contestController.getMatches()){
+            for (ITransferMatch m : contestController.getMatches()) {
                 this.panelContests.getTableMatchesOverview().setValueAt(sdf.format(m.getStart()), i, 0);
                 this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(0), i, 1);
                 this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(1), i, 2);
@@ -123,7 +125,7 @@ public class ViewContestController {
             this.contestController.commit();
         } catch (DomainParameterCheckException | ExistingTransactionException | NoTransactionException | DomainAttributeException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     public void createNewContest() {
@@ -149,9 +151,24 @@ public class ViewContestController {
     }
 
     public void addTeamToContest() {
+        try {
+            ITransferTeam team = (ITransferTeam) this.panelContests.getListboxAllContestTeams().getSelectedValue();
+            if (!this.participatingTeams.contains(team)) {
+                this.participatingTeams.addElement(team);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Team ist bereits in Auswahl vorhanden");
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
+        }
     }
 
     public void removeTeamFromContest() {
+        try {
+            this.participatingTeams.removeElement((ITransferTeam) this.panelContests.getListboxContestTeams().getSelectedValue());
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
+        }
     }
 
     public void showAllTeams() {
@@ -177,37 +194,38 @@ public class ViewContestController {
     }
 
     public void showAllLocations() {
-       /*
-        try {
-            ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
-            this.panelContests.getTfContestPhone1().setText(selectedContest.getContactDetails().getPhone1());
-            this.panelContests.getTfContestPhone2().setText(selectedContest.getContactDetails().getPhone2());
-            this.panelContests.getTfContestMail1().setText(selectedContest.getContactDetails().getEmail1());
-            this.panelContests.getTfContestStreet().setText(selectedContest.getContactDetails().getStreet());
-            this.panelContests.getTfContestStreetNumber().setText(selectedContest.getContactDetails().getStreetNumber());
-            
-            DefaultComboBoxModel<ITransferLocation> model = new DefaultComboBoxModel<>();
-            this.searchController.start();
-            for (ITransferLocation team : searchController.getLocations()) {
-                model.addElement(team);
+
+        if (this.panelContests.getListboxShowContests().getSelectedValue() != null) {
+            try {
+                ITransferContest selectedContest = (ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue();
+                this.panelContests.getTfContestPhone1().setText(selectedContest.getContactDetails().getPhone1());
+                this.panelContests.getTfContestPhone2().setText(selectedContest.getContactDetails().getPhone2());
+                this.panelContests.getTfContestMail1().setText(selectedContest.getContactDetails().getEmail1());
+                this.panelContests.getTfContestStreet().setText(selectedContest.getContactDetails().getStreet());
+                this.panelContests.getTfContestStreetNumber().setText(selectedContest.getContactDetails().getStreetNumber());
+
+                DefaultComboBoxModel<ITransferLocation> model = new DefaultComboBoxModel<>();
+                this.searchController.start();
+                for (ITransferLocation team : searchController.getLocations()) {
+                    model.addElement(team);
+                }
+                panelContests.getCmbContestContactDetails().setModel(model);
+                this.searchController.commit();
+            } catch (ExistingTransactionException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSessionFoundException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoTransactionException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalGetInstanceException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            panelContests.getCmbContestContactDetails().setModel(model);
-            this.searchController.commit();
-        } catch (ExistingTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalGetInstanceException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
     }
-    
-    public void saveMatchOverview(){
+
+    public void saveMatchOverview() {
         try {
             int i = 0;
             LinkedList dates = new LinkedList();
@@ -215,12 +233,12 @@ public class ViewContestController {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, -100);
             sdf.set2DigitYearStart(cal.getTime());
-            
-            this.contestController = factory.getRMIContestController((ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
-            
+
+            this.contestController = factory.getRMIContestController((ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+
             int entriesIterator = 0;
-            
-            for (ITransferMatch t : this.contestController.getMatches()){
+
+            for (ITransferMatch t : this.contestController.getMatches()) {
                 String dateString;
                 try {
                     dateString = (String) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 0);
@@ -231,11 +249,11 @@ public class ViewContestController {
                     dates.clear();
                     break;
                 }
-                
-                try{
-                this.contestController.setResult(t, 
-                        (Float)this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3), 
-                        (Float)this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4));
+
+                try {
+                    this.contestController.setResult(t,
+                            (Float) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3),
+                            (Float) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4));
                 } catch (ClassCastException ex) {
                     Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
                     javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing result, corrupted resultrow: " + entriesIterator);
@@ -256,6 +274,44 @@ public class ViewContestController {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void assignContestTeamModel() {
+        this.panelContests.getListboxContestTeams().setModel(participatingTeams);
+    }
+
+    public void manageSubteams() {
+        try {
+            this.contestController = factory.getRMIContestController((ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.contestController.start();
+
+            this.panelContests.getListboxAllTeamMembers().setModel(completeTeam);
+            this.panelContests.getListboxContestTeamMembers().setModel(subTeam);
+
+            for (ITransferTeam c : contestController.getTeams()) {
+                this.panelContests.getCmbContestTeams().addItem(c);
+            }
+        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addToSubTeam() {
+        if (this.panelContests.getListboxAllTeamMembers().getSelectedValue() != null) {
+            this.subTeam.addElement((ITransferMember) this.panelContests.getListboxAllTeamMembers().getSelectedValue());
+            this.completeTeam.removeElement(this.panelContests.getListboxAllTeamMembers().getSelectedValue());
+        } else{
+            javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
+        }
+    }
+
+    public void removeFromSubTeam() {
+        if (this.panelContests.getListboxContestTeamMembers().getSelectedValue() != null) {
+            this.completeTeam.addElement((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+            this.subTeam.removeElement(this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+        } else{
+            javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
         }
     }
 }

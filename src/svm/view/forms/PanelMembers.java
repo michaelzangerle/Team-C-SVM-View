@@ -487,7 +487,7 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel21.setForeground(new java.awt.Color(51, 51, 51));
         jLabel21.setText("Eintrittsdatum");
 
-        cmbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "männlich", "weiblich" }));
+        cmbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "m", "f" }));
         cmbGender.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbGender.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

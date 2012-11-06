@@ -109,21 +109,29 @@ public class ViewMemberController {
         try {
             this.memberController.setFirstName(panelMembers.getTfFirstName().getText());
             this.memberController.setLastName(panelMembers.getTfLastName().getText());
-            this.memberController.setBirthDate(new Date());
-            this.memberController.setEntryDate(new Date());
-            this.memberController.setGender("M");
-            this.memberController.setSocialNumber("   ");
-            this.memberController.setTitle(" ");
-            this.memberController.setEmail1(" ");
-            this.memberController.setEmail2(" ");
-            this.memberController.setPhone1(" ");
-            this.memberController.setPhone2(" ");
-            this.memberController.setFax(" ");
-            this.memberController.setLat("47");
-            this.memberController.setLong("9");
-            this.memberController.setStreet(" ");
-            this.memberController.setStreetNumber("1");
-            this.memberController.setUsername("1234");
+            this.memberController.setBirthDate(panelMembers.getDcBirthDate().getDate());
+            this.memberController.setEntryDate(panelMembers.getDcEntryDate().getDate());
+            this.memberController.setGender(panelMembers.getCmbGender().getSelectedItem().toString());
+            this.memberController.setSocialNumber(panelMembers.getTfSocialNumber().getText());
+            //this.memberController.setTitle(" ");
+            this.memberController.setEmail1(panelMembers.getTfMail1().getText());
+            this.memberController.setEmail2(panelMembers.getTfMail2().getText());
+            this.memberController.setPhone1(panelMembers.getTfPhone1().getText());
+            this.memberController.setPhone2(panelMembers.getTfPhone2().getText());
+            //this.memberController.setFax(" ");
+            //this.memberController.setLat("47");
+            //this.memberController.setLong("9");
+            if(panelMembers.getCheckMemberFee().isEnabled() && panelMembers.getCheckMemberFee().isSelected()){
+                try {
+                    this.memberController.setPaidCurrentYear();
+                } catch (        RemoteException | DomainAttributeException | NoSessionFoundException | IllegalAccessException | InstantiationException ex) {
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            this.memberController.setStreet(panelMembers.getTfStreet().getText());
+            this.memberController.setStreetNumber(panelMembers.getTfStreetNumber().getText());
+            this.memberController.setUsername(panelMembers.getTfUserName().getText());
+            //this.memberController.setUsername("1234");
 
             this.memberController.commit();
         } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainParameterCheckException | DomainAttributeException | RemoteException ex) {
@@ -144,7 +152,7 @@ public class ViewMemberController {
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();
             
-          
+            
             
             
         } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
@@ -172,6 +180,12 @@ public class ViewMemberController {
         try {
             panelMembers.getTfFirstName().setText(tmp.getFirstName());
             panelMembers.getTfLastName().setText(tmp.getLastName());
+            if (tmp.getGender().equalsIgnoreCase("m")) {
+                 panelMembers.getCmbGender().setSelectedIndex(0);
+            }else{
+                panelMembers.getCmbGender().setSelectedIndex(1);
+            }
+            panelMembers.getTfUserName().setText(tmp.getUsername());
             panelMembers.getTfMail1().setText(tmp.getEmail1());
             panelMembers.getTfMail2().setText(tmp.getEmail2());
             panelMembers.getTfPhone1().setText(tmp.getPhone1());
@@ -180,6 +194,9 @@ public class ViewMemberController {
             panelMembers.getDcBirthDate().setDate(tmp.getBirthDate());
             panelMembers.getDcEntryDate().setDate(tmp.getEntryDate());
             panelMembers.getCheckMemberFee().setSelected(tmp.getPaid());
+            if(tmp.getPaid()){
+                panelMembers.getCheckMemberFee().setEnabled(false);
+            }
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }

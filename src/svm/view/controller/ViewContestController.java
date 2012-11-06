@@ -14,10 +14,7 @@ import javax.swing.DefaultListModel;
 import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
-import svm.logic.abstraction.transferobjects.ITransferContest;
-import svm.logic.abstraction.transferobjects.ITransferLocation;
-import svm.logic.abstraction.transferobjects.ITransferMember;
-import svm.logic.abstraction.transferobjects.ITransferTeam;
+import svm.logic.abstraction.transferobjects.*;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
@@ -58,6 +55,7 @@ public class ViewContestController {
                 model.addElement(c);
             }
             this.panelContests.getListboxShowContests().setModel(model);
+            this.panelContests.getListboxShowContests().setSelectedIndex(0);
             this.searchController.commit();
 
 
@@ -65,6 +63,26 @@ public class ViewContestController {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void showMatchOverview(){
+        try {
+            this.contestController = factory.getRMIContestController((ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.contestController.start();
+            int i = 0;
+            for(ITransferMatch m : contestController.getMatches()){
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 0);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 1);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 2);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 3);
+            }
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void saveContest() {

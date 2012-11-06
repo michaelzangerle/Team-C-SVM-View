@@ -1140,7 +1140,13 @@ public class PanelContests extends javax.swing.JPanel {
            viewContestController.showAllLocations();
        }else if(tabPanelContestDetails.getSelectedIndex() == 1){
            viewContestController.showAllTeams();
-       }   
+       }else if(tabPanelContestDetails.getSelectedIndex() == 2){
+           //TODO
+       }else if(tabPanelContestDetails.getSelectedIndex() == 3){
+           //TODO
+       }else if(tabPanelContestDetails.getSelectedIndex() == 4){
+           viewContestController.showMatchOverview();
+       }
     }//GEN-LAST:event_tabPanelContestDetailsStateChanged
 
     private void cmbContestContactDetailsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbContestContactDetailsItemStateChanged

@@ -1123,7 +1123,7 @@ public class PanelContests extends javax.swing.JPanel {
     }//GEN-LAST:event_btnContestNewActionPerformed
 
     private void listboxShowContestsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxShowContestsValueChanged
-        // TODO add your handling code here:
+        viewContestController.contestChange();
     }//GEN-LAST:event_listboxShowContestsValueChanged
 
     private void tabPanelContestDetailsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanelContestDetailsStateChanged

@@ -65,11 +65,10 @@ public class ViewContestController {
 
         try {
 
-            this.searchController.start();
-            if (showContests.isEmpty()) {
+            this.searchController.start();           
+                showContests.clear();
                 for (ITransferContest c : searchController.getContests()) {
                     showContests.addElement(c);
-                }
             }
             this.panelContests.getListboxShowContests().setModel(showContests);
             //this.panelContests.getListboxShowContests().setSelectedIndex(0);
@@ -394,6 +393,7 @@ public class ViewContestController {
 
     public void updateContests() {
         try {
+            if(this.panelContests.getListboxShowContests().getSelectedIndex() == -1 )return;
             ITransferContest selectedContest = (ITransferContest) this.showContests.get(this.panelContests.getListboxShowContests().getSelectedIndex());
             this.contestController = factory.getRMIContestController(selectedContest, ApplicationController.user);
             this.contestController.start();

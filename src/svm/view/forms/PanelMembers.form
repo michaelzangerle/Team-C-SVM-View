@@ -176,19 +176,10 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfSearchLastName">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Muster"/>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="null"/>
-                        </Property>
-                      </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfSearchFirstName">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Max"/>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="null"/>
-                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -298,21 +289,14 @@
                               </Border>
                             </Property>
                             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                              <StringArray count="5">
-                                <StringItem index="0" value="Item 1"/>
-                                <StringItem index="1" value="Item 2"/>
-                                <StringItem index="2" value="Item 3"/>
-                                <StringItem index="3" value="Item 4"/>
-                                <StringItem index="4" value="Item 5"/>
+                              <StringArray count="1">
+                                <StringItem index="0" value="-"/>
                               </StringArray>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                               <Color id="Handcursor"/>
                             </Property>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="null"/>
-                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listboxShowMembersValueChanged"/>
@@ -664,18 +648,12 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tfLastName">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Muster"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfFirstName">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Max"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfSocialNumber">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="0815 1234"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -723,14 +701,8 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfPhone2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="3210 555"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfPhone1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="555 3210"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
@@ -755,14 +727,8 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfMail2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="com@com.com"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfMail1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="at@at.at"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
@@ -787,14 +753,11 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfStreetNumber">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfStreet">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Spinnergasse"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfStreetActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
@@ -859,7 +822,6 @@
             <Component class="javax.swing.JTextField" name="tfUserName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="MegaMax"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
@@ -886,9 +848,8 @@
             <Component class="javax.swing.JComboBox" name="cmbContactDetails">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Adresse 2"/>
-                    <StringItem index="1" value="Adresse 3"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="-"/>
                   </StringArray>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -925,14 +886,14 @@
             <Component class="javax.swing.JComboBox" name="cmbMemberTeams">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Team 1"/>
-                    <StringItem index="1" value="Team 2"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="Bayern M&#xfc;nchen"/>
                   </StringArray>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Handcursor"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusCycleRoot" type="boolean" value="true"/>
               </Properties>
             </Component>
@@ -955,18 +916,18 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="libstboxMemberSports">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="f2" green="f2" red="f2" type="rgb"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                        <StringItem index="4" value="Item 5"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="-"/>
                       </StringArray>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Handcursor"/>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="libstboxMemberSportsValueChanged"/>
@@ -980,6 +941,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Handcursor"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnToggleSportsActionPerformed"/>
@@ -1002,14 +964,14 @@
             <Component class="javax.swing.JComboBox" name="cmbMemberDepartment">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Abteilung 1"/>
-                    <StringItem index="1" value="Abteilung 2"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="Rechnungswesen"/>
                   </StringArray>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Handcursor"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusCycleRoot" type="boolean" value="true"/>
               </Properties>
             </Component>
@@ -1019,6 +981,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Handcursor"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnToggleDepartmentActionPerformed"/>
@@ -1033,18 +996,18 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="libstboxMemberDepartment">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="f2" green="f2" red="f2" type="rgb"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                        <StringItem index="4" value="Item 5"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="-"/>
                       </StringArray>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Handcursor"/>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="libstboxMemberDepartmentValueChanged"/>

@@ -5,42 +5,25 @@
 package svm.view.forms;
 
 import com.toedter.calendar.JDateChooser;
-import java.rmi.RemoteException;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import svm.domain.abstraction.exception.DomainAttributeException;
-import svm.domain.abstraction.exception.DomainParameterCheckException;
-import svm.logic.abstraction.exception.IllegalGetInstanceException;
-import svm.logic.abstraction.transferobjects.ITransferMember;
-import svm.persistence.abstraction.exceptions.ExistingTransactionException;
-import svm.persistence.abstraction.exceptions.NoSessionFoundException;
-import svm.persistence.abstraction.exceptions.NoTransactionException;
-import svm.rmi.abstraction.controller.IRMIMemberController;
-import svm.rmi.abstraction.controller.IRMISearchController;
-import svm.rmi.abstraction.factory.IRMIControllerFactory;
-import svm.view.controller.ApplicationController;
+import svm.view.controller.ViewMemberController;
 
 /**
  *
  * @author Patrick
  */
 public class PanelMembers extends javax.swing.JPanel {
-    private IRMIControllerFactory factory = null;
-    private IRMIMemberController memberController;
-    private IRMISearchController searchController;
-  
+     
+    private ViewMemberController viewMemberController;
 
     /**
      * Creates new Form Panel for Member UseCases
      */  
     
-    public PanelMembers(IRMIControllerFactory factory) {       
+    public PanelMembers() {       
             initComponents();
-            this.factory=factory;      
-    }
+            this.viewMemberController = new ViewMemberController(this);
+             }
     
     /* Getters and Setters for Panel Components */
 
@@ -132,9 +115,6 @@ public class PanelMembers extends javax.swing.JPanel {
     public JTextField getTfPhone2() {
         return tfPhone2;
     }
-
-
-
 
     public JTextField getTfSearchFirstName() {
         return tfSearchFirstName;
@@ -259,11 +239,7 @@ public class PanelMembers extends javax.swing.JPanel {
         cmbSearchDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abteilung wählen", "Item 2", "Item 3", "Item 4" }));
         cmbSearchDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        tfSearchLastName.setText("Muster");
-        tfSearchLastName.setPreferredSize(null);
-
-        tfSearchFirstName.setText("Max");
-        tfSearchFirstName.setPreferredSize(null);
+        tfSearchFirstName.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
@@ -352,13 +328,12 @@ public class PanelMembers extends javax.swing.JPanel {
         listboxShowMembers.setBackground(new java.awt.Color(252, 252, 252));
         listboxShowMembers.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
         listboxShowMembers.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listboxShowMembers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listboxShowMembers.setDoubleBuffered(true);
-        listboxShowMembers.setPreferredSize(null);
         listboxShowMembers.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listboxShowMembersValueChanged(evt);
@@ -444,11 +419,7 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Nachname");
 
-        tfLastName.setText("Muster");
-
-        tfFirstName.setText("Max");
-
-        tfSocialNumber.setText("0815 1234");
+        tfLastName.setToolTipText("");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
@@ -467,10 +438,6 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
         jLabel11.setText("Adresse und Kontaktdetails");
 
-        tfPhone2.setText("3210 555");
-
-        tfPhone1.setText("555 3210");
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(51, 51, 51));
         jLabel12.setText("Telefon 1");
@@ -478,10 +445,6 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
         jLabel13.setText("Telefon 2");
-
-        tfMail2.setText("com@com.com");
-
-        tfMail1.setText("at@at.at");
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(51, 51, 51));
@@ -491,9 +454,11 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel15.setForeground(new java.awt.Color(51, 51, 51));
         jLabel15.setText("Email 2");
 
-        tfStreetNumber.setText("1");
-
-        tfStreet.setText("Spinnergasse");
+        tfStreet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfStreetActionPerformed(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
@@ -520,7 +485,6 @@ public class PanelMembers extends javax.swing.JPanel {
         });
 
         tfUserName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        tfUserName.setText("MegaMax");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
@@ -538,7 +502,7 @@ public class PanelMembers extends javax.swing.JPanel {
             }
         });
 
-        cmbContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Adresse 2", "Adresse 3" }));
+        cmbContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         cmbContactDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbContactDetails.setFocusCycleRoot(true);
         cmbContactDetails.addItemListener(new java.awt.event.ItemListener() {
@@ -555,16 +519,19 @@ public class PanelMembers extends javax.swing.JPanel {
         jLabel25.setForeground(new java.awt.Color(102, 102, 102));
         jLabel25.setText("Teams und Abteilungen");
 
-        cmbMemberTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team 1", "Team 2" }));
+        cmbMemberTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bayern München" }));
         cmbMemberTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbMemberTeams.setEnabled(false);
         cmbMemberTeams.setFocusCycleRoot(true);
 
+        libstboxMemberSports.setBackground(new java.awt.Color(242, 242, 242));
         libstboxMemberSports.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         libstboxMemberSports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        libstboxMemberSports.setEnabled(false);
         libstboxMemberSports.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 libstboxMemberSportsValueChanged(evt);
@@ -574,6 +541,7 @@ public class PanelMembers extends javax.swing.JPanel {
 
         btnToggleSports.setText("+ | -");
         btnToggleSports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnToggleSports.setEnabled(false);
         btnToggleSports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnToggleSportsActionPerformed(evt);
@@ -585,24 +553,28 @@ public class PanelMembers extends javax.swing.JPanel {
         checkMemberFee.setText("bezahlt");
         checkMemberFee.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cmbMemberDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abteilung 1", "Abteilung 2" }));
+        cmbMemberDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rechnungswesen" }));
         cmbMemberDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbMemberDepartment.setEnabled(false);
         cmbMemberDepartment.setFocusCycleRoot(true);
 
         btnToggleDepartment.setText("+ | -");
         btnToggleDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnToggleDepartment.setEnabled(false);
         btnToggleDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnToggleDepartmentActionPerformed(evt);
             }
         });
 
+        libstboxMemberDepartment.setBackground(new java.awt.Color(242, 242, 242));
         libstboxMemberDepartment.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         libstboxMemberDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        libstboxMemberDepartment.setEnabled(false);
         libstboxMemberDepartment.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 libstboxMemberDepartmentValueChanged(evt);
@@ -818,103 +790,21 @@ public class PanelMembers extends javax.swing.JPanel {
 
     private void btnMemberSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSearchActionPerformed
                
-        try {
-            // TODO add your handling code here:
-            this.searchController = factory.getRMISearchController(ApplicationController.user);
-            this.searchController.start();
-            List<ITransferMember> members = this.searchController.getMembers(getTfSearchFirstName().getText(), getTfSearchLastName().getText());
-            DefaultListModel<ITransferMember> model= new DefaultListModel<>();
-            for(ITransferMember m : members)model.addElement(m);
-            getListboxShowMembers().setModel(model);
-            this.searchController.commit();
-            
-        } catch (ExistingTransactionException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalGetInstanceException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        viewMemberController.searchMembers();
     }//GEN-LAST:event_btnMemberSearchActionPerformed
 
     private void listboxShowMembersValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxShowMembersValueChanged
-        try {
-           if(this.memberController != null) this.memberController.abort();
-        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | RemoteException ex) {
-                    }
-                try {
-            ITransferMember member = (ITransferMember) getListboxShowMembers().getSelectedValue();
-            
-            this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
-            this.memberController.start();
-            ITransferMember tmp=this.memberController.getMember();
-            this.getTfFirstName().setText(tmp.getFirstName());
-            this.getTfLastName().setText(tmp.getLastName());
-        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       viewMemberController.showMembers();
         
     }//GEN-LAST:event_listboxShowMembersValueChanged
 
     private void btnMemberSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSaveActionPerformed
-        // TODO add your handling code here:
-        try {
-            this.memberController.setFirstName(this.getTfFirstName().getText());
-            this.memberController.setLastName(this.getTfLastName().getText());
-            
-            this.memberController.setBirthDate(new Date());
-            this.memberController.setEntryDate(new Date());
-            this.memberController.setGender("M");
-            this.memberController.setSocialNumber("   ");
-            this.memberController.setTitle(" ");
-            this.memberController.setEmail1(" ");
-            this.memberController.setEmail2(" ");
-            this.memberController.setPhone1(" ");
-            this.memberController.setPhone2(" ");
-            this.memberController.setFax(" ");
-            this.memberController.setLat("47");
-            this.memberController.setLong("9");
-            this.memberController.setStreet(" ");
-            this.memberController.setStreetNumber("1");
-            this.memberController.setUsername("1234");
-                    
-            
-            this.memberController.commit();
-        } catch (DomainParameterCheckException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainAttributeException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExistingTransactionException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       viewMemberController.saveMember();
+        
     }//GEN-LAST:event_btnMemberSaveActionPerformed
 
     private void btnMemberNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberNewActionPerformed
-                try {
-           if(this.memberController != null) this.memberController.abort();
-        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | RemoteException ex) {
-                    }
-        
-        try {
-            // TODO add your handling code here:
-            this.memberController = this.factory.getRMIMemberController(ApplicationController.user);
-            this.memberController.start();
-            ITransferMember tmp=this.memberController.getMember();
-            this.getTfFirstName().setText(tmp.getFirstName());
-            this.getTfLastName().setText(tmp.getLastName());
-        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        viewMemberController.createNewMember();       
         
     }//GEN-LAST:event_btnMemberNewActionPerformed
 
@@ -949,6 +839,10 @@ public class PanelMembers extends javax.swing.JPanel {
     private void libstboxMemberDepartmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxMemberDepartmentValueChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_libstboxMemberDepartmentValueChanged
+
+    private void tfStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStreetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStreetActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMemberNew;

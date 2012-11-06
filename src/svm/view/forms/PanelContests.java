@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
+import svm.view.controller.ViewContestController;
+import svm.view.controller.ViewMemberController;
 
 /**
  *
@@ -21,14 +23,16 @@ import svm.rmi.abstraction.factory.IRMIControllerFactory;
  */
 public class PanelContests extends javax.swing.JPanel {
 
-    private IRMIControllerFactory factory = null;
-
+      private ViewContestController viewContestController;
+    
+    
     /**
      * Creates new Form Panel for Contest UseCases
      */
-    public PanelContests(IRMIControllerFactory factory) {
+    public PanelContests() {
+         this.viewContestController = new ViewContestController(this);
         initComponents();
-        this.factory = factory;
+
     }
 
     /**
@@ -58,16 +62,9 @@ public class PanelContests extends javax.swing.JPanel {
         return btnContestNew;
     }
 
-    public JButton getBtnContestReset() {
-        return btnContestReset;
-    }
 
     public JButton getBtnContestSave() {
         return btnContestSave;
-    }
-
-    public JButton getBtnContestSearch() {
-        return btnContestSearch;
     }
 
     public JButton getBtnRemoveFromContest() {
@@ -90,29 +87,17 @@ public class PanelContests extends javax.swing.JPanel {
         return cmbContestContactDetails;
     }
 
-    public JComboBox getCmbContestSport() {
-        return cmbContestSport;
-    }
 
     public JComboBox getCmbContestTeams() {
         return cmbContestTeams;
     }
 
-    public JComboBox getCmbSearchDepartment() {
-        return cmbSearchDepartment;
-    }
-
+   
     public JDateChooser getDcContestEndDate() {
         return dcContestEndDate;
     }
 
-    public JDateChooser getDcContestSearchFrom() {
-        return dcContestSearchFrom;
-    }
-
-    public JDateChooser getDcContestSearchTo() {
-        return dcContestSearchTo;
-    }
+   
 
     public JDateChooser getDcContestStartDate() {
         return dcContestStartDate;
@@ -154,10 +139,6 @@ public class PanelContests extends javax.swing.JPanel {
         return tableMatchesOverview;
     }
 
-    public JTextField getTfContestCountry() {
-        return tfContestCountry;
-    }
-
     public JTextField getTfContestFee() {
         return tfContestFee;
     }
@@ -186,24 +167,12 @@ public class PanelContests extends javax.swing.JPanel {
         return tfContestPhone2;
     }
 
-    public JTextField getTfContestPlaceName() {
-        return tfContestPlaceName;
-    }
-
-    public JTextField getTfContestPostalCode() {
-        return tfContestPostalCode;
-    }
-
     public JTextField getTfContestStreet() {
         return tfContestStreet;
     }
 
     public JTextField getTfContestStreetNumber() {
         return tfContestStreetNumber;
-    }
-
-    public JTextField getTfSearchContestName() {
-        return tfSearchContestName;
     }
 
     /**
@@ -219,22 +188,14 @@ public class PanelContests extends javax.swing.JPanel {
         panelContestLeft = new javax.swing.JPanel();
         splitPanelMembersLeft = new javax.swing.JSplitPane();
         panelMembersSearch = new javax.swing.JPanel();
-        cmbSearchDepartment = new javax.swing.JComboBox();
-        tfSearchContestName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        btnContestSearch = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        dcContestSearchFrom = new com.toedter.calendar.JDateChooser();
-        jLabel27 = new javax.swing.JLabel();
-        dcContestSearchTo = new com.toedter.calendar.JDateChooser();
+        btShowAllContests = new javax.swing.JButton();
         panelMembersList = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listboxShowContests = new javax.swing.JList();
         splitPanelContestRight = new javax.swing.JPanel();
         panelContestMenu = new javax.swing.JPanel();
         btnContestNew = new javax.swing.JButton();
-        btnContestReset = new javax.swing.JButton();
         btnContestSave = new javax.swing.JButton();
         panelContestHead = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -247,8 +208,6 @@ public class PanelContests extends javax.swing.JPanel {
         dcContestStartDate = new com.toedter.calendar.JDateChooser();
         dcContestEndDate = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        cmbContestSport = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         tabPanelContestDetails = new javax.swing.JTabbedPane();
         panelContestLocation = new javax.swing.JPanel();
@@ -265,14 +224,8 @@ public class PanelContests extends javax.swing.JPanel {
         tfContestStreet = new javax.swing.JTextField();
         tfContestStreetNumber = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        tfContestPostalCode = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        tfContestCountry = new javax.swing.JTextField();
-        tfContestPlaceName = new javax.swing.JTextField();
         cmbContestContactDetails = new javax.swing.JComboBox();
         jLabel23 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         panelContestTeams = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         listboxContestTeams = new javax.swing.JList();
@@ -325,56 +278,23 @@ public class PanelContests extends javax.swing.JPanel {
         panelContestLeft.setBackground(new java.awt.Color(252, 252, 252));
         panelContestLeft.setPreferredSize(new java.awt.Dimension(352, 500));
 
-        splitPanelMembersLeft.setDividerLocation(170);
+        splitPanelMembersLeft.setDividerLocation(60);
         splitPanelMembersLeft.setDividerSize(4);
         splitPanelMembersLeft.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         splitPanelMembersLeft.setDoubleBuffered(true);
         splitPanelMembersLeft.setPreferredSize(new java.awt.Dimension(352, 500));
 
-        cmbSearchDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abteilung wählen", "Item 2", "Item 3", "Item 4" }));
-        cmbSearchDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbSearchDepartment.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbSearchDepartmentItemStateChanged(evt);
-            }
-        });
-
-        tfSearchContestName.setText("Liga der außergewöhnlichen Fußballer");
+        panelMembersSearch.setPreferredSize(new java.awt.Dimension(350, 80));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Wettbewerb suchen");
+        jLabel1.setText("Aktuelle Wetbewerbe");
         jLabel1.setToolTipText("");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Bezeichnung");
-
-        btnContestSearch.setText("Suche");
-        btnContestSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnContestSearch.addActionListener(new java.awt.event.ActionListener() {
+        btShowAllContests.setText("Alle Wettbewerbe anzeigen");
+        btShowAllContests.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContestSearchActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Datum von");
-
-        dcContestSearchFrom.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dcContestSearchFromPropertyChange(evt);
-            }
-        });
-
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel27.setText("bis");
-
-        dcContestSearchTo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dcContestSearchToPropertyChange(evt);
+                btShowAllContestsActionPerformed(evt);
             }
         });
 
@@ -384,58 +304,17 @@ public class PanelContests extends javax.swing.JPanel {
             panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbSearchDepartment, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelMembersSearchLayout.createSequentialGroup()
-                        .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelMembersSearchLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersSearchLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersSearchLayout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersSearchLayout.createSequentialGroup()
-                                        .addComponent(jLabel27)
-                                        .addGap(20, 20, 20)))))
-                        .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelMembersSearchLayout.createSequentialGroup()
-                                .addComponent(tfSearchContestName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersSearchLayout.createSequentialGroup()
-                                .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dcContestSearchFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                    .addComponent(dcContestSearchTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(26, 26, 26)
-                                .addComponent(btnContestSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap())
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addGap(128, 128, 128))
+            .addComponent(btShowAllContests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelMembersSearchLayout.setVerticalGroup(
             panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbSearchDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfSearchContestName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelMembersSearchLayout.createSequentialGroup()
-                        .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(dcContestSearchFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dcContestSearchTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel27)))
-                    .addComponent(btnContestSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(btShowAllContests))
         );
 
         splitPanelMembersLeft.setTopComponent(panelMembersSearch);
@@ -448,13 +327,12 @@ public class PanelContests extends javax.swing.JPanel {
         listboxShowContests.setBackground(new java.awt.Color(252, 252, 252));
         listboxShowContests.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
         listboxShowContests.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listboxShowContests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listboxShowContests.setDoubleBuffered(true);
-        listboxShowContests.setPreferredSize(null);
         listboxShowContests.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listboxShowContestsValueChanged(evt);
@@ -470,8 +348,9 @@ public class PanelContests extends javax.swing.JPanel {
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMembersListLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersListLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -486,7 +365,7 @@ public class PanelContests extends javax.swing.JPanel {
         panelContestLeftLayout.setVerticalGroup(
             panelContestLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContestLeftLayout.createSequentialGroup()
-                .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -503,14 +382,6 @@ public class PanelContests extends javax.swing.JPanel {
         btnContestNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnContestNewActionPerformed(evt);
-            }
-        });
-
-        btnContestReset.setText("Reset");
-        btnContestReset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnContestReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContestResetActionPerformed(evt);
             }
         });
 
@@ -531,20 +402,16 @@ public class PanelContests extends javax.swing.JPanel {
                 .addComponent(btnContestSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnContestNew, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
-                .addComponent(btnContestReset, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelContestMenuLayout.setVerticalGroup(
             panelContestMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContestMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelContestMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnContestReset, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelContestMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnContestNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnContestSave, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(panelContestMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnContestNew, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnContestSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         panelContestHead.setBackground(new java.awt.Color(252, 252, 252));
@@ -553,8 +420,6 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Ende");
-
-        tfContestFee.setText("1000000");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(51, 51, 51));
@@ -571,8 +436,6 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel24.setForeground(new java.awt.Color(51, 51, 51));
         jLabel24.setText("€");
 
-        tfContestName.setText("Champions League 2055");
-
         dcContestStartDate.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dcContestStartDatePropertyChange(evt);
@@ -588,14 +451,6 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Beginn");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel8.setText("Sportart");
-        jLabel8.setToolTipText("");
-
-        cmbContestSport.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sportart 1", "Sportart 2" }));
-        cmbContestSport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -620,24 +475,19 @@ public class PanelContests extends javax.swing.JPanel {
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(28, Short.MAX_VALUE))
                     .addGroup(panelContestHeadLayout.createSequentialGroup()
-                        .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(panelContestHeadLayout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(dcContestEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(tfContestID, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(panelContestHeadLayout.createSequentialGroup()
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfContestName)))
+                        .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelContestHeadLayout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbContestSport, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(dcContestEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfContestID, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelContestHeadLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfContestName)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelContestHeadLayout.setVerticalGroup(
@@ -657,17 +507,12 @@ public class PanelContests extends javax.swing.JPanel {
                     .addComponent(dcContestStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContestHeadLayout.createSequentialGroup()
-                        .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfContestID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbContestSport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
+                    .addGroup(panelContestHeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfContestID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7))
                     .addComponent(dcContestEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         tabPanelContestDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -684,8 +529,6 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
         jLabel11.setText("Primäre Adresse und Kontaktdetails");
 
-        tfContestPhone1.setText("555 3210");
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(51, 51, 51));
         jLabel12.setText("Telefon 1");
@@ -694,15 +537,9 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel13.setForeground(new java.awt.Color(51, 51, 51));
         jLabel13.setText("Telefon 2");
 
-        tfContestPhone2.setText("3210 555");
-
-        tfContestMail1.setText("at@at.at");
-
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(51, 51, 51));
         jLabel14.setText("Email 1");
-
-        tfContestMail2.setText("com@com.com");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 51, 51));
@@ -712,29 +549,11 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
         jLabel16.setText("Straße");
 
-        tfContestStreet.setText("Spinnergasse");
-
-        tfContestStreetNumber.setText("1");
-
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(51, 51, 51));
         jLabel17.setText("Nr.");
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel18.setText("Postleitzahl");
-
-        tfContestPostalCode.setText("4711");
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel20.setText("Ort");
-
-        tfContestCountry.setText("Österreich");
-
-        tfContestPlaceName.setText("Dornbirn");
-
-        cmbContestContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Adresse 2", "Adresse 3" }));
+        cmbContestContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         cmbContestContactDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbContestContactDetails.setFocusCycleRoot(true);
         cmbContestContactDetails.addItemListener(new java.awt.event.ItemListener() {
@@ -747,59 +566,42 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel23.setForeground(new java.awt.Color(51, 51, 51));
         jLabel23.setText("Adressen");
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel22.setText("Land");
-
         javax.swing.GroupLayout panelContestLocationLayout = new javax.swing.GroupLayout(panelContestLocation);
         panelContestLocation.setLayout(panelContestLocationLayout);
         panelContestLocationLayout.setHorizontalGroup(
             panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContestLocationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfContestPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfContestPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfContestMail1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfContestMail2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfContestStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfContestStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfContestPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfContestPlaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelContestLocationLayout.createSequentialGroup()
-                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbContestContactDetails, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelContestLocationLayout.createSequentialGroup()
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfContestCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfContestPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfContestPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelContestLocationLayout.createSequentialGroup()
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfContestMail1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfContestMail2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelContestLocationLayout.createSequentialGroup()
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfContestStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfContestStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelContestLocationLayout.createSequentialGroup()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbContestContactDetails, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(333, Short.MAX_VALUE))
         );
         panelContestLocationLayout.setVerticalGroup(
@@ -831,23 +633,11 @@ public class PanelContests extends javax.swing.JPanel {
                 .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfContestStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfContestPostalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfContestPlaceName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(tfContestCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbContestContactDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         tabPanelContestDetails.addTab("Location", panelContestLocation);
@@ -855,7 +645,7 @@ public class PanelContests extends javax.swing.JPanel {
         panelContestTeams.setBackground(new java.awt.Color(252, 252, 252));
 
         listboxContestTeams.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -894,7 +684,7 @@ public class PanelContests extends javax.swing.JPanel {
         });
 
         listboxAllTeamsInSport.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -912,7 +702,7 @@ public class PanelContests extends javax.swing.JPanel {
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel37.setText("Alle Teams der Sportart");
+        jLabel37.setText("Alle Teams");
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(102, 102, 102));
@@ -976,7 +766,7 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel26.setForeground(new java.awt.Color(102, 102, 102));
         jLabel26.setText("Team für den Wettkampf zusammenstellen");
 
-        cmbContestTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team 1", "Team 2" }));
+        cmbContestTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         cmbContestTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbContestTeams.setFocusCycleRoot(true);
         cmbContestTeams.addItemListener(new java.awt.event.ItemListener() {
@@ -986,7 +776,7 @@ public class PanelContests extends javax.swing.JPanel {
         });
 
         listboxAllTeamMembers.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -1025,7 +815,7 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel36.setText("Wettkampfteam");
 
         listboxContestTeamMembers.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -1109,7 +899,7 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel31.setText("Wettkampf-Matches einteilen");
 
         listboxAllContestTeams.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -1122,7 +912,7 @@ public class PanelContests extends javax.swing.JPanel {
         jScrollPane6.setViewportView(listboxAllContestTeams);
 
         listboxTeamA.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -1166,7 +956,7 @@ public class PanelContests extends javax.swing.JPanel {
         });
 
         listboxTeamB.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -1254,7 +1044,7 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel30.setForeground(new java.awt.Color(102, 102, 102));
         jLabel30.setText("Matchübersicht und Resultate");
 
-        btnMatchOverviewSave.setText("Save");
+        btnMatchOverviewSave.setText("Matchübersicht speichern");
         btnMatchOverviewSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMatchOverviewSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1272,7 +1062,7 @@ public class PanelContests extends javax.swing.JPanel {
                     .addGroup(panelContestResultsLayout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnMatchOverviewSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnMatchOverviewSave))
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
@@ -1328,44 +1118,29 @@ public class PanelContests extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPanelContest, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                .addComponent(splitPanelContest, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContestSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContestSaveActionPerformed
+             viewContestController.saveContest();
     }//GEN-LAST:event_btnContestSaveActionPerformed
 
     private void btnContestNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContestNewActionPerformed
-        // TODO add your handling code here:
+            viewContestController.createNewContest();
     }//GEN-LAST:event_btnContestNewActionPerformed
-
-    private void btnContestResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContestResetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnContestResetActionPerformed
-
-    private void btnContestSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContestSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnContestSearchActionPerformed
-
-    private void cmbSearchDepartmentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSearchDepartmentItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSearchDepartmentItemStateChanged
 
     private void listboxShowContestsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxShowContestsValueChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_listboxShowContestsValueChanged
 
-    private void dcContestSearchFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcContestSearchFromPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dcContestSearchFromPropertyChange
-
-    private void dcContestSearchToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcContestSearchToPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dcContestSearchToPropertyChange
-
     private void tabPanelContestDetailsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanelContestDetailsStateChanged
-        // TODO add your handling code here:
+       if(tabPanelContestDetails.getSelectedIndex() == 0){
+           viewContestController.showAllLocations();
+       }else if(tabPanelContestDetails.getSelectedIndex() == 1){
+           viewContestController.showAllTeams();
+       }   
     }//GEN-LAST:event_tabPanelContestDetailsStateChanged
 
     private void cmbContestContactDetailsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbContestContactDetailsItemStateChanged
@@ -1373,11 +1148,11 @@ public class PanelContests extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbContestContactDetailsItemStateChanged
 
     private void btnAddToContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToContestActionPerformed
-        // TODO add your handling code here:
+        viewContestController.addTeamToContest();
     }//GEN-LAST:event_btnAddToContestActionPerformed
 
     private void btnRemoveFromContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFromContestActionPerformed
-        // TODO add your handling code here:
+        viewContestController.removeTeamFromContest();
     }//GEN-LAST:event_btnRemoveFromContestActionPerformed
 
     private void btnConfirmContestTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmContestTeamsActionPerformed
@@ -1492,28 +1267,27 @@ public class PanelContests extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnMatchOverviewSaveActionPerformed
 
+    private void btShowAllContestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btShowAllContestsActionPerformed
+        viewContestController.showContests();
+    }//GEN-LAST:event_btShowAllContestsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btShowAllContests;
     private javax.swing.JButton btnAddToContest;
     private javax.swing.JButton btnAddToSubTeam;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnConfirmContestTeams;
     private javax.swing.JButton btnConfirmSubTeam;
     private javax.swing.JButton btnContestNew;
-    private javax.swing.JButton btnContestReset;
     private javax.swing.JButton btnContestSave;
-    private javax.swing.JButton btnContestSearch;
     private javax.swing.JButton btnMatchOverviewSave;
     private javax.swing.JButton btnRemoveFromContest;
     private javax.swing.JButton btnRemoveFromSubTeam;
     private javax.swing.JButton btnToA;
     private javax.swing.JButton btnToB;
     private javax.swing.JComboBox cmbContestContactDetails;
-    private javax.swing.JComboBox cmbContestSport;
     private javax.swing.JComboBox cmbContestTeams;
-    private javax.swing.JComboBox cmbSearchDepartment;
     private com.toedter.calendar.JDateChooser dcContestEndDate;
-    private com.toedter.calendar.JDateChooser dcContestSearchFrom;
-    private com.toedter.calendar.JDateChooser dcContestSearchTo;
     private com.toedter.calendar.JDateChooser dcContestStartDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -1523,17 +1297,11 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel33;
@@ -1547,7 +1315,6 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -1580,7 +1347,6 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JSplitPane splitPanelMembersLeft;
     private javax.swing.JTabbedPane tabPanelContestDetails;
     private javax.swing.JTable tableMatchesOverview;
-    private javax.swing.JTextField tfContestCountry;
     private javax.swing.JTextField tfContestFee;
     private javax.swing.JTextField tfContestID;
     private javax.swing.JTextField tfContestMail1;
@@ -1588,10 +1354,9 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JTextField tfContestName;
     private javax.swing.JTextField tfContestPhone1;
     private javax.swing.JTextField tfContestPhone2;
-    private javax.swing.JTextField tfContestPlaceName;
-    private javax.swing.JTextField tfContestPostalCode;
     private javax.swing.JTextField tfContestStreet;
     private javax.swing.JTextField tfContestStreetNumber;
-    private javax.swing.JTextField tfSearchContestName;
     // End of variables declaration//GEN-END:variables
+
+  
 }

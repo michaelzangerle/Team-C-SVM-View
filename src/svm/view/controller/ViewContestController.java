@@ -5,13 +5,18 @@
 package svm.view.controller;
 
 import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import svm.domain.abstraction.exception.DomainAttributeException;
+import svm.domain.abstraction.exception.DomainException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.transferobjects.*;
@@ -56,6 +61,14 @@ public class ViewContestController {
             }
             this.panelContests.getListboxShowContests().setModel(model);
             this.panelContests.getListboxShowContests().setSelectedIndex(0);
+            ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
+            
+            this.panelContests.getTfContestName().setText(selectedContest.getName());
+            this.panelContests.getDcContestStartDate().setDate(selectedContest.getStart());
+            this.panelContests.getDcContestEndDate().setDate(selectedContest.getEnd());
+            this.panelContests.getTfContestFee().setText(Float.toString(selectedContest.getFee()));
+            
+            
             this.searchController.commit();
 
 
@@ -66,15 +79,23 @@ public class ViewContestController {
     }
     
     public void showMatchOverview(){
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - hh.mm");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -100);
+        sdf.set2DigitYearStart(cal.getTime());
+        
         try {
+            ITransferContest salkdjf = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
             this.contestController = factory.getRMIContestController((ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
             this.contestController.start();
             int i = 0;
             for(ITransferMatch m : contestController.getMatches()){
-                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 0);
-                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 1);
-                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 2);
-                this.panelContests.getTableMatchesOverview().setValueAt(m.getStart(), i, 3);
+                this.panelContests.getTableMatchesOverview().setValueAt(sdf.format(m.getStart()), i, 0);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(0), i, 1);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(1), i, 2);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(0).getResult(), i, 3);
+                this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(1).getResult(), i, 4);
             }
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,7 +155,7 @@ public class ViewContestController {
     }
 
     public void showAllTeams() {
-        /*try {
+        try {
             this.searchController.start();
             DefaultListModel<ITransferTeam> model = new DefaultListModel<>();
             for (ITransferTeam team : searchController.getTeams()) {
@@ -152,11 +173,18 @@ public class ViewContestController {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
     public void showAllLocations() {
         try {
+            ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue();
+            this.panelContests.getTfContestPhone1().setText(selectedContest.getContactDetails().getPhone1());
+            this.panelContests.getTfContestPhone2().setText(selectedContest.getContactDetails().getPhone2());
+            this.panelContests.getTfContestMail1().setText(selectedContest.getContactDetails().getEmail1());
+            this.panelContests.getTfContestStreet().setText(selectedContest.getContactDetails().getStreet());
+            this.panelContests.getTfContestStreetNumber().setText(selectedContest.getContactDetails().getStreetNumber());
+            
             DefaultComboBoxModel<ITransferLocation> model = new DefaultComboBoxModel<>();
             this.searchController.start();
             for (ITransferLocation team : searchController.getLocations()) {
@@ -169,6 +197,58 @@ public class ViewContestController {
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void saveMatchOverview(){
+        try {
+            int i = 0;
+            LinkedList dates = new LinkedList();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - hh.mm");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.YEAR, -100);
+            sdf.set2DigitYearStart(cal.getTime());
+            
+            this.contestController = factory.getRMIContestController((ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            
+            int entriesIterator = 0;
+            
+            for (ITransferMatch t : this.contestController.getMatches()){
+                String dateString;
+                try {
+                    dateString = (String) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 0);
+                    this.contestController.setDateForMatch(t, sdf.parse(dateString));
+                } catch (ParseException ex) {
+                    Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
+                    javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing Date, corrupted cell: " + entriesIterator + ",0\nCorrect Format is dd.MM.yyyy - hh.mm");
+                    dates.clear();
+                    break;
+                }
+                
+                try{
+                this.contestController.setResult(t, 
+                        (Float)this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3), 
+                        (Float)this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4));
+                } catch (ClassCastException ex) {
+                    Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
+                    javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing result, corrupted resultrow: " + entriesIterator);
+                    dates.clear();
+                    break;
+                }
+                entriesIterator++;
+            }
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);

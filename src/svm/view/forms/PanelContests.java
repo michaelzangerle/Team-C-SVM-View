@@ -287,7 +287,7 @@ public class PanelContests extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Aktuelle Wetbewerbe");
+        jLabel1.setText("Aktuelle Wettbewerbe");
         jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout panelMembersSearchLayout = new javax.swing.GroupLayout(panelMembersSearch);
@@ -546,6 +546,7 @@ public class PanelContests extends javax.swing.JPanel {
 
         cmbContestContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         cmbContestContactDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbContestContactDetails.setEnabled(false);
         cmbContestContactDetails.setFocusCycleRoot(true);
         cmbContestContactDetails.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

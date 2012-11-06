@@ -248,6 +248,8 @@ public class PanelMembers extends javax.swing.JPanel {
             }
         });
 
+        tfSearchLastName.setText("x");
+
         tfSearchFirstName.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -513,7 +515,7 @@ public class PanelMembers extends javax.swing.JPanel {
             }
         });
 
-        cmbContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        cmbContactDetails.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "6845 Hohenems" }));
         cmbContactDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbContactDetails.setFocusCycleRoot(true);
         cmbContactDetails.addItemListener(new java.awt.event.ItemListener() {

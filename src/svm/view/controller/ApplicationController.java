@@ -153,6 +153,14 @@ public class ApplicationController {
         mainForm.toFront();
         loginForm.setVisible(false);
         mainForm.setAutoRequestFocus(true);
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {             
+                mainForm.toFront();
+                mainForm.repaint();
+            }
+        });
 
 
     }
@@ -173,19 +181,17 @@ public class ApplicationController {
         if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 0) {
 
             panelMembers.getViewMemberController().showDepartments();
-          
+
 
         } else if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 1) {
 
-          panelContests.getViewContestController().showContests();
+            panelContests.getViewContestController().showContests();
         }
     }
-    
-      private void initTabPanel01() {
-       
+
+    private void initTabPanel01() {
     }
 
-      private void initTabPanel00() {
-        
+    private void initTabPanel00() {
     }
 }

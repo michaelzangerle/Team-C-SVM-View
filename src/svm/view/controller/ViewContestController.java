@@ -7,14 +7,12 @@ package svm.view.controller;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.domain.abstraction.exception.DomainException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
@@ -51,6 +49,7 @@ public class ViewContestController {
     private DefaultComboBoxModel<ITransferLocation> showAllLocations = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<ITransferTeam> comboContestTeams = new DefaultComboBoxModel<>();
     private DefaultListModel<ITransferTeam> allTeamsInSport = new DefaultListModel<>();
+    private DefaultTableModel tableMatchOverview = new DefaultTableModel();
 
     public ViewContestController(PanelContests panelContest) {
         try {
@@ -98,21 +97,29 @@ public class ViewContestController {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -100);
         sdf.set2DigitYearStart(cal.getTime());
+        this.panelContests.getTableMatchesOverview().setModel(tableMatchOverview);
+
+        if (tableMatchOverview.getColumnCount() == 0) {
+            this.tableMatchOverview.addColumn("Date");
+            this.tableMatchOverview.addColumn("TeamA");
+            this.tableMatchOverview.addColumn("TeamB");
+            this.tableMatchOverview.addColumn("ScoreA");
+            this.tableMatchOverview.addColumn("ScoreB");
+        }
+
+        Vector vector = new Vector();
 
         try {
-            int i = 0;
-            if (this.panelContests.getTableMatchesOverview().getModel().getRowCount() == 0) {
-                for (ITransferMatch m : contestController.getMatches()) {
-                    this.panelContests.getTableMatchesOverview().setValueAt(sdf.format(m.getStart()), i, 0);
-                    this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(0), i, 1);
-                    this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(1), i, 2);
-                    this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(0).getResult(), i, 3);
-                    this.panelContests.getTableMatchesOverview().setValueAt(m.getContestants().get(1).getResult(), i, 4);
-                }
+            for (ITransferMatch m : contestController.getMatches()) {
+                vector = new Vector();
+                vector.add(sdf.format(m.getStart()));
+                vector.add(m.getContestants().get(0));
+                vector.add(m.getContestants().get(1));
+                vector.add(m.getContestants().get(0).getResult());
+                vector.add(m.getContestants().get(1).getResult());
+                this.tableMatchOverview.addRow(vector);
             }
-        } catch (IllegalGetInstanceException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+        } catch (IllegalGetInstanceException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

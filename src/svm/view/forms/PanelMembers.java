@@ -16,6 +16,10 @@ public class PanelMembers extends javax.swing.JPanel {
      
     private ViewMemberController viewMemberController;
 
+    public ViewMemberController getViewMemberController() {
+        return viewMemberController;
+    }
+
     /**
      * Creates new Form Panel for Member UseCases
      */  
@@ -238,6 +242,11 @@ public class PanelMembers extends javax.swing.JPanel {
 
         cmbSearchDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abteilung wählen", "Item 2", "Item 3", "Item 4" }));
         cmbSearchDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbSearchDepartment.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbSearchDepartmentItemStateChanged(evt);
+            }
+        });
 
         tfSearchFirstName.setToolTipText("");
 
@@ -345,7 +354,9 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersList.setLayout(panelMembersListLayout);
         panelMembersListLayout.setHorizontalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addGroup(panelMembersListLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -843,6 +854,10 @@ public class PanelMembers extends javax.swing.JPanel {
     private void tfStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStreetActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfStreetActionPerformed
+
+    private void cmbSearchDepartmentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSearchDepartmentItemStateChanged
+        
+    }//GEN-LAST:event_cmbSearchDepartmentItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMemberNew;

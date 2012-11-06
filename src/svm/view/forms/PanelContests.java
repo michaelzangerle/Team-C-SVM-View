@@ -189,7 +189,6 @@ public class PanelContests extends javax.swing.JPanel {
         splitPanelMembersLeft = new javax.swing.JSplitPane();
         panelMembersSearch = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btShowAllContests = new javax.swing.JButton();
         panelMembersList = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listboxShowContests = new javax.swing.JList();
@@ -291,13 +290,6 @@ public class PanelContests extends javax.swing.JPanel {
         jLabel1.setText("Aktuelle Wetbewerbe");
         jLabel1.setToolTipText("");
 
-        btShowAllContests.setText("Alle Wettbewerbe anzeigen");
-        btShowAllContests.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btShowAllContestsActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelMembersSearchLayout = new javax.swing.GroupLayout(panelMembersSearch);
         panelMembersSearch.setLayout(panelMembersSearchLayout);
         panelMembersSearchLayout.setHorizontalGroup(
@@ -306,15 +298,13 @@ public class PanelContests extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                 .addGap(128, 128, 128))
-            .addComponent(btShowAllContests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelMembersSearchLayout.setVerticalGroup(
             panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(btShowAllContests))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         splitPanelMembersLeft.setTopComponent(panelMembersSearch);
@@ -344,14 +334,15 @@ public class PanelContests extends javax.swing.JPanel {
         panelMembersList.setLayout(panelMembersListLayout);
         panelMembersListLayout.setHorizontalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addGroup(panelMembersListLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMembersListLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelMembersListLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 33, Short.MAX_VALUE))
         );
 
         splitPanelMembersLeft.setRightComponent(panelMembersList);
@@ -1273,12 +1264,11 @@ public class PanelContests extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnMatchOverviewSaveActionPerformed
 
-    private void btShowAllContestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btShowAllContestsActionPerformed
-        viewContestController.showContests();
-    }//GEN-LAST:event_btShowAllContestsActionPerformed
+    public ViewContestController getViewContestController() {
+        return viewContestController;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btShowAllContests;
     private javax.swing.JButton btnAddToContest;
     private javax.swing.JButton btnAddToSubTeam;
     private javax.swing.JButton btnBack;

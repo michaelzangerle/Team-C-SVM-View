@@ -56,14 +56,15 @@ public class ApplicationController {
 
     public ApplicationController() {
     }
-    
-    public void init(){
+
+    public void init() {
         this.panelContests = new PanelContests();
         this.panelMembers = new PanelMembers();
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
         this.viewSearchCtrl = new ViewSearchController();
-        this.viewSubTeamCtrl = new ViewSubTeamController();}
+        this.viewSubTeamCtrl = new ViewSubTeamController();
+    }
 
     public static void main(String args[]) throws UnknownHostException {
 
@@ -137,8 +138,8 @@ public class ApplicationController {
     }
 
     private void startMainForm(String username) {
-init();
-        mainForm = new MainForm();
+        init();
+        mainForm = new MainForm(this);
         mainForm.setLblUser(username);
         mainForm.setLblPrivileges("[Präsident] - Stufe");
 
@@ -165,5 +166,26 @@ init();
         panelContests.setName("Wettbewerbe");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
+    }
+
+    public void switchMainTab() {
+
+        if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 0) {
+
+            panelMembers.getViewMemberController().showDepartments();
+          
+
+        } else if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 1) {
+
+          panelContests.getViewContestController().showContests();
+        }
+    }
+    
+      private void initTabPanel01() {
+       
+    }
+
+      private void initTabPanel00() {
+        
     }
 }

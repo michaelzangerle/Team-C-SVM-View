@@ -7,16 +7,19 @@ package svm.view.forms;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import svm.view.controller.ApplicationController;
 
 /**
  *
  * @author Patrick
  */
 public class MainForm extends javax.swing.JFrame {
-
+     
+    private ApplicationController appController;
+    
     // The one and only instance of the sample application    
     private static MainForm mainForm = null;
-
+   
     /**
      * Creates new form LoginForm
      */
@@ -24,6 +27,12 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();       
         this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
         
+    }
+
+    public MainForm(ApplicationController appController) {
+         initComponents();
+        this.appController = appController;
+        this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
     }
 
     /**
@@ -198,7 +207,7 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabPanelMainCenterStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanelMainCenterStateChanged
-        // TODO add your handling code here:
+        appController.switchMainTab();
     }//GEN-LAST:event_tabPanelMainCenterStateChanged
 
 
@@ -239,6 +248,5 @@ public class MainForm extends javax.swing.JFrame {
 
     public void setTabPanelMainCenter(JTabbedPane tabPanelMainCenter) {
         this.tabPanelMainCenter = tabPanelMainCenter;
-    }
-
+    }    
 }

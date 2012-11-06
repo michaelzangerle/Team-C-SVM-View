@@ -9,11 +9,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.transferobjects.ITransferDepartment;
+import svm.logic.abstraction.transferobjects.ITransferLocation;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
@@ -35,16 +38,23 @@ public class ViewMemberController {
     private PanelMembers panelMembers;
 
     public ViewMemberController(PanelMembers panelMembers) {
-     
-        this.panelMembers = panelMembers;
+        try {
+            this.panelMembers = panelMembers;
+            this.searchController = factory.getRMISearchController(ApplicationController.user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void searchMembers() {
         try {
-
-            this.searchController = factory.getRMISearchController(ApplicationController.user);
+            
+            ITransferDepartment chosenDepartment = (ITransferDepartment) panelMembers.getCmbSearchDepartment().getSelectedItem();
             this.searchController.start();
-            List<ITransferMember> members = this.searchController.getMembers(panelMembers.getTfSearchFirstName().getText(), panelMembers.getTfSearchLastName().getText());
+            List<ITransferMember> members = this.searchController.getMembers(
+                    panelMembers.getTfSearchFirstName().getText(),
+                    panelMembers.getTfSearchLastName().getText(),
+                    chosenDepartment, panelMembers.getCbxSearchFee().isSelected());
             DefaultListModel<ITransferMember> model = new DefaultListModel<>();
             for (ITransferMember m : members) {
                 model.addElement(m);
@@ -52,9 +62,19 @@ public class ViewMemberController {
             panelMembers.getListboxShowMembers().setModel(model);
             this.searchController.commit();
 
-        } catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (ExistingTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainParameterCheckException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     public void showMembers() {
@@ -118,14 +138,39 @@ public class ViewMemberController {
         }
 
         try {
-            // TODO add your handling code here:
             this.memberController = this.factory.getRMIMemberController(ApplicationController.user);
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();
-            panelMembers.getTfFirstName().setText(tmp.getFirstName());
-            panelMembers.getTfLastName().setText(tmp.getLastName());
+            
+            showMemberDetails(tmp);         
+            
+            
         } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void showDepartments() {
+        try {
+           
+            DefaultComboBoxModel<ITransferDepartment> model = new DefaultComboBoxModel<>();
+            this.searchController.start();
+            for (ITransferDepartment department : searchController.getDepartments()) {
+                model.addElement(department);
+            }
+            panelMembers.getCmbSearchDepartment().setModel(model);
+            this.searchController.commit();
+        } catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showMemberDetails(ITransferMember tmp) {
+        
+         panelMembers.getTfFirstName().setText(tmp.getFirstName());
+         panelMembers.getTfLastName().setText(tmp.getLastName());
+    }
+    
+    
 }

@@ -194,7 +194,7 @@
                   <Color blue="e5" green="e5" red="e5" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="mary.sluis"/>
+                <Property name="text" type="java.lang.String" value="tfe1234"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="1" left="20" right="1" top="1"/>

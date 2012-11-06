@@ -179,6 +179,9 @@
                       </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfSearchLastName">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="x"/>
+                      </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfSearchFirstName">
                       <Properties>
@@ -855,7 +858,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
-                    <StringItem index="0" value="-"/>
+                    <StringItem index="0" value="6845 Hohenems"/>
                   </StringArray>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">

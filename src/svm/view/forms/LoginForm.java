@@ -96,7 +96,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         tfUserName.setBackground(new java.awt.Color(229, 229, 229));
         tfUserName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        tfUserName.setText("mary.sluis");
+        tfUserName.setText("tfe1234");
         tfUserName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         tfUserName.setName(""); // NOI18N
 

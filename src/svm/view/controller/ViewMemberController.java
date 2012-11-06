@@ -51,8 +51,7 @@ public class ViewMemberController {
             
             ITransferDepartment chosenDepartment = (ITransferDepartment) panelMembers.getCmbSearchDepartment().getSelectedItem();
             this.searchController.start();
-            
-            //TODO nix geht SUCHE mit alle Parameter //
+           
             List<ITransferMember> members = this.searchController.getMembers(
                     panelMembers.getTfSearchFirstName().getText(),
                     panelMembers.getTfSearchLastName().getText());//,chosenDepartment,panelMembers.getCbxSearchFee().isSelected());
@@ -62,6 +61,7 @@ public class ViewMemberController {
             }
             panelMembers.getListboxShowMembers().setModel(model);
             this.searchController.commit();
+
 
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,7 +95,6 @@ public class ViewMemberController {
            // panelMembers.getTfLastName().setText(tmp.getLastName());
               showMemberDetails(tmp);        
             
-            
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -106,14 +105,17 @@ public class ViewMemberController {
     }
 
     public void saveMember() {
+
         try {
+          //  ITransferMember member = (ITransferMember) panelMembers.getListboxShowMembers().getSelectedValue();
+         //   this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
             this.memberController.setFirstName(panelMembers.getTfFirstName().getText());
             this.memberController.setLastName(panelMembers.getTfLastName().getText());
             this.memberController.setBirthDate(panelMembers.getDcBirthDate().getDate());
             this.memberController.setEntryDate(panelMembers.getDcEntryDate().getDate());
             this.memberController.setGender(panelMembers.getCmbGender().getSelectedItem().toString());
             this.memberController.setSocialNumber(panelMembers.getTfSocialNumber().getText());
-            //this.memberController.setTitle(" ");
+            this.memberController.setTitle(" ");
             this.memberController.setEmail1(panelMembers.getTfMail1().getText());
             this.memberController.setEmail2(panelMembers.getTfMail2().getText());
             this.memberController.setPhone1(panelMembers.getTfPhone1().getText());
@@ -125,7 +127,7 @@ public class ViewMemberController {
                 try {
                     this.memberController.setPaidCurrentYear();
                 } catch (        RemoteException | DomainAttributeException | NoSessionFoundException | IllegalAccessException | InstantiationException ex) {
-                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);  
                 }
             }
             this.memberController.setStreet(panelMembers.getTfStreet().getText());
@@ -133,14 +135,29 @@ public class ViewMemberController {
             this.memberController.setUsername(panelMembers.getTfUserName().getText());
             //this.memberController.setUsername("1234");
 
-            this.memberController.commit();
-        } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainParameterCheckException | DomainAttributeException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+           this.memberController.commit();
+          // this.memberController.start();
+
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainParameterCheckException ex) {            
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainAttributeException ex) {
+            javax.swing.JOptionPane.showMessageDialog(panelMembers, "Bitte alle Felder ausfüllen!");
+        } catch (ExistingTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }    
 
     public void createNewMember() {
         try {
+            
+            clearMemberFields();
+            
             if (this.memberController != null) {
                 this.memberController.abort();
             }
@@ -150,11 +167,7 @@ public class ViewMemberController {
         try {
             this.memberController = this.factory.getRMIMemberController(ApplicationController.user);
             this.memberController.start();
-            ITransferMember tmp = this.memberController.getMember();
-            
-            
-            
-            
+            ITransferMember tmp = this.memberController.getMember();            
         } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -191,6 +204,7 @@ public class ViewMemberController {
             panelMembers.getTfPhone1().setText(tmp.getPhone1());
             panelMembers.getTfSocialNumber().setText(tmp.getSocialNumber());
             panelMembers.getTfStreet().setText(tmp.getStreet());
+            panelMembers.getTfStreetNumber().setText(tmp.getStreetNumber());
             panelMembers.getDcBirthDate().setDate(tmp.getBirthDate());
             panelMembers.getDcEntryDate().setDate(tmp.getEntryDate());
             panelMembers.getCheckMemberFee().setSelected(tmp.getPaid());
@@ -200,6 +214,22 @@ public class ViewMemberController {
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void clearMemberFields() {
+        
+            panelMembers.getTfFirstName().setText("");
+            panelMembers.getTfLastName().setText("");
+            panelMembers.getTfUserName().setText("");
+            panelMembers.getTfMail1().setText("");
+            panelMembers.getTfMail2().setText("");
+            panelMembers.getTfPhone1().setText("");
+            panelMembers.getTfSocialNumber().setText("");
+            panelMembers.getTfStreet().setText("");
+            panelMembers.getTfStreetNumber().setText("");
+            panelMembers.getDcBirthDate().setDate(new Date());
+            panelMembers.getDcEntryDate().setDate(new Date());
+            panelMembers.getCheckMemberFee().setSelected(false);       
     }
     
     

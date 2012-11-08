@@ -211,7 +211,7 @@ public class LoginForm extends javax.swing.JFrame {
         try {
             IRMILoginController loginController=factory.getRMILoginController();
             loginController.start();
-            if(loginController.login(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
+            if(loginController.login(this.tfUserName.getText(), String.valueOf(this.tfPassword.getPassword())))
             { ApplicationController.user=loginController.getMember();
               appController.login(ApplicationController.user.getFirstName()+ " " +ApplicationController.user.getLastName(),"no pass");
             }  else{

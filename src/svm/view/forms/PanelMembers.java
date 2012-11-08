@@ -43,12 +43,24 @@ public class PanelMembers extends javax.swing.JPanel {
         return btnMemberSearch;
     }
 
-    public JButton getBtnToggleDepartment() {
-        return btnToggleDepartment;
+    public JButton getBtnAddRole() {
+        return btnAddRole;
+    }
+
+    public JButton getBtnRemoveRole() {
+        return btnRemoveRole;
+    }
+
+    public JList getLibstboxActiveRoles() {
+        return libstboxActiveRoles;
+    }
+
+    public JList getLibstboxAllRoles() {
+        return libstboxAllRoles;
     }
 
     public JButton getBtnToggleSports() {
-        return btnToggleSports;
+        return btnAddRole;
     }
 
     public JCheckBox getCbxSearchFee() {
@@ -61,14 +73,6 @@ public class PanelMembers extends javax.swing.JPanel {
 
     public JComboBox getCmbGender() {
         return cmbGender;
-    }
-
-    public JComboBox getCmbMemberDepartment() {
-        return cmbMemberDepartment;
-    }
-
-    public JComboBox getCmbMemberSports() {
-        return cmbMemberTeams;
     }
 
     public JComboBox getCmbSearchDepartment() {
@@ -84,11 +88,11 @@ public class PanelMembers extends javax.swing.JPanel {
     }
 
     public JList getLibstboxMemberDepartment() {
-        return libstboxMemberDepartment;
+        return libstboxActiveRoles;
     }
 
     public JList getLibstboxMemberSports() {
-        return libstboxMemberSports;
+        return libstboxAllRoles;
     }
 
     public JList getListboxShowMembers() {
@@ -216,16 +220,16 @@ public class PanelMembers extends javax.swing.JPanel {
         cmbContactDetails = new javax.swing.JComboBox();
         jLabel23 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        cmbMemberTeams = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane2 = new javax.swing.JScrollPane();
-        libstboxMemberSports = new javax.swing.JList();
-        btnToggleSports = new javax.swing.JButton();
+        libstboxAllRoles = new javax.swing.JList();
+        btnAddRole = new javax.swing.JButton();
         checkMemberFee = new javax.swing.JCheckBox();
-        cmbMemberDepartment = new javax.swing.JComboBox();
-        btnToggleDepartment = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        libstboxMemberDepartment = new javax.swing.JList();
+        libstboxActiveRoles = new javax.swing.JList();
+        jLabel26 = new javax.swing.JLabel();
+        btnRemoveRole = new javax.swing.JButton();
+        jLabel27 = new javax.swing.JLabel();
 
         splitPanelMembers.setBackground(new java.awt.Color(252, 252, 252));
         splitPanelMembers.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -362,7 +366,7 @@ public class PanelMembers extends javax.swing.JPanel {
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
         );
 
         splitPanelMembersLeft.setRightComponent(panelMembersList);
@@ -530,34 +534,29 @@ public class PanelMembers extends javax.swing.JPanel {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel25.setText("Teams und Abteilungen");
+        jLabel25.setText("Mitglied Rechteverwaltung");
 
-        cmbMemberTeams.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bayern München" }));
-        cmbMemberTeams.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbMemberTeams.setEnabled(false);
-        cmbMemberTeams.setFocusCycleRoot(true);
-
-        libstboxMemberSports.setBackground(new java.awt.Color(242, 242, 242));
-        libstboxMemberSports.setModel(new javax.swing.AbstractListModel() {
+        libstboxAllRoles.setBackground(new java.awt.Color(242, 242, 242));
+        libstboxAllRoles.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        libstboxMemberSports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        libstboxMemberSports.setEnabled(false);
-        libstboxMemberSports.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        libstboxAllRoles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        libstboxAllRoles.setEnabled(false);
+        libstboxAllRoles.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                libstboxMemberSportsValueChanged(evt);
+                libstboxAllRolesValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(libstboxMemberSports);
+        jScrollPane2.setViewportView(libstboxAllRoles);
 
-        btnToggleSports.setText("+ | -");
-        btnToggleSports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnToggleSports.setEnabled(false);
-        btnToggleSports.addActionListener(new java.awt.event.ActionListener() {
+        btnAddRole.setText(">>");
+        btnAddRole.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAddRole.setEnabled(false);
+        btnAddRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnToggleSportsActionPerformed(evt);
+                btnAddRoleActionPerformed(evt);
             }
         });
 
@@ -566,34 +565,37 @@ public class PanelMembers extends javax.swing.JPanel {
         checkMemberFee.setText("bezahlt");
         checkMemberFee.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cmbMemberDepartment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Rechnungswesen" }));
-        cmbMemberDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbMemberDepartment.setEnabled(false);
-        cmbMemberDepartment.setFocusCycleRoot(true);
-
-        btnToggleDepartment.setText("+ | -");
-        btnToggleDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnToggleDepartment.setEnabled(false);
-        btnToggleDepartment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnToggleDepartmentActionPerformed(evt);
-            }
-        });
-
-        libstboxMemberDepartment.setBackground(new java.awt.Color(242, 242, 242));
-        libstboxMemberDepartment.setModel(new javax.swing.AbstractListModel() {
+        libstboxActiveRoles.setBackground(new java.awt.Color(242, 242, 242));
+        libstboxActiveRoles.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        libstboxMemberDepartment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        libstboxMemberDepartment.setEnabled(false);
-        libstboxMemberDepartment.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        libstboxActiveRoles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        libstboxActiveRoles.setEnabled(false);
+        libstboxActiveRoles.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                libstboxMemberDepartmentValueChanged(evt);
+                libstboxActiveRolesValueChanged(evt);
             }
         });
-        jScrollPane3.setViewportView(libstboxMemberDepartment);
+        jScrollPane3.setViewportView(libstboxActiveRoles);
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel26.setText("Alle verfügbaren Rollen");
+
+        btnRemoveRole.setText("<<");
+        btnRemoveRole.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRemoveRole.setEnabled(false);
+        btnRemoveRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveRoleActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel27.setText("Aktive Rollen");
 
         javax.swing.GroupLayout splitPanelMembersRightLayout = new javax.swing.GroupLayout(splitPanelMembersRight);
         splitPanelMembersRight.setLayout(splitPanelMembersRightLayout);
@@ -658,17 +660,19 @@ public class PanelMembers extends javax.swing.JPanel {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26)
                             .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnToggleSports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbMemberTeams, javax.swing.GroupLayout.Alignment.LEADING, 0, 123, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnToggleDepartment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbMemberDepartment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAddRole)
+                                    .addComponent(btnRemoveRole))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 151, Short.MAX_VALUE))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -731,50 +735,48 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addComponent(jLabel12))
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfMail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfMail2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel16))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel17))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cmbContactDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel23)))
-                            .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfPhone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel13))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfMail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel14))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfMail2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel15))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel16))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfStreetNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel17))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(cmbContactDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel23)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addGap(18, 18, 18)
-                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                                .addComponent(cmbMemberTeams, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnToggleSports)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                                .addComponent(cmbMemberDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnToggleDepartment)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(48, 48, 48))
+                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel27))
+                        .addGap(23, 23, 23)
+                        .addComponent(btnAddRole)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRemoveRole)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         splitPanelMembers.setRightComponent(splitPanelMembersRight);
@@ -785,7 +787,7 @@ public class PanelMembers extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPanelMembers, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
+                .addComponent(splitPanelMembers)
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -837,21 +839,17 @@ public class PanelMembers extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbContactDetailsItemStateChanged
 
-    private void btnToggleSportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleSportsActionPerformed
+    private void btnAddRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnToggleSportsActionPerformed
+    }//GEN-LAST:event_btnAddRoleActionPerformed
 
-    private void btnToggleDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleDepartmentActionPerformed
+    private void libstboxAllRolesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxAllRolesValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnToggleDepartmentActionPerformed
+    }//GEN-LAST:event_libstboxAllRolesValueChanged
 
-    private void libstboxMemberSportsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxMemberSportsValueChanged
+    private void libstboxActiveRolesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxActiveRolesValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_libstboxMemberSportsValueChanged
-
-    private void libstboxMemberDepartmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_libstboxMemberDepartmentValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_libstboxMemberDepartmentValueChanged
+    }//GEN-LAST:event_libstboxActiveRolesValueChanged
 
     private void tfStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStreetActionPerformed
         // TODO add your handling code here:
@@ -861,18 +859,20 @@ public class PanelMembers extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cmbSearchDepartmentItemStateChanged
 
+    private void btnRemoveRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveRoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveRoleActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddRole;
     private javax.swing.JButton btnMemberNew;
     private javax.swing.JButton btnMemberSave;
     private javax.swing.JButton btnMemberSearch;
-    private javax.swing.JButton btnToggleDepartment;
-    private javax.swing.JButton btnToggleSports;
+    private javax.swing.JButton btnRemoveRole;
     private javax.swing.JCheckBox cbxSearchFee;
     private javax.swing.JCheckBox checkMemberFee;
     private javax.swing.JComboBox cmbContactDetails;
     private javax.swing.JComboBox cmbGender;
-    private javax.swing.JComboBox cmbMemberDepartment;
-    private javax.swing.JComboBox cmbMemberTeams;
     private javax.swing.JComboBox cmbSearchDepartment;
     private com.toedter.calendar.JDateChooser dcBirthDate;
     private com.toedter.calendar.JDateChooser dcEntryDate;
@@ -890,6 +890,8 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -900,8 +902,8 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList libstboxMemberDepartment;
-    private javax.swing.JList libstboxMemberSports;
+    private javax.swing.JList libstboxActiveRoles;
+    private javax.swing.JList libstboxAllRoles;
     private javax.swing.JList listboxShowMembers;
     private javax.swing.JPanel panelMembersLeft;
     private javax.swing.JPanel panelMembersList;

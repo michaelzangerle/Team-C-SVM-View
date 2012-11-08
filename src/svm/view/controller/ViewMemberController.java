@@ -15,12 +15,14 @@ import javax.swing.JPanel;
 import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.exception.NotAllowException;
 import svm.logic.abstraction.transferobjects.ITransferDepartment;
 import svm.logic.abstraction.transferobjects.ITransferLocation;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.persistence.abstraction.exceptions.NotSupportedException;
 import svm.rmi.abstraction.controller.IRMIMemberController;
 import svm.rmi.abstraction.controller.IRMISearchController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
@@ -63,6 +65,14 @@ public class ViewMemberController {
             this.searchController.commit();
 
 
+        } catch (NotAllowException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {
@@ -88,14 +98,14 @@ public class ViewMemberController {
         } catch (ExistingTransactionException | NoSessionFoundException | NoTransactionException | RemoteException ex) {
         }
         try {
-            this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
+            this.memberController = this.factory.getRMIMemberController(member, ApplicationController.user);
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();
            // panelMembers.getTfFirstName().setText(tmp.getFirstName());
            // panelMembers.getTfLastName().setText(tmp.getLastName());
               showMemberDetails(tmp);        
             
-        } catch (NoSessionFoundException ex) {
+        } catch (InstantiationException | IllegalAccessException | NotSupportedException | NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,11 +114,8 @@ public class ViewMemberController {
         }
     }
 
-    public void saveMember() {
-
-        try {
-          //  ITransferMember member = (ITransferMember) panelMembers.getListboxShowMembers().getSelectedValue();
-         //   this.memberController = this.factory.getRMIMemberController(ApplicationController.user, member);
+    public void saveMember() {     
+        try {    
             this.memberController.setFirstName(panelMembers.getTfFirstName().getText());
             this.memberController.setLastName(panelMembers.getTfLastName().getText());
             this.memberController.setBirthDate(panelMembers.getDcBirthDate().getDate());
@@ -126,31 +133,36 @@ public class ViewMemberController {
             if(panelMembers.getCheckMemberFee().isEnabled() && panelMembers.getCheckMemberFee().isSelected()){
                 try {
                     this.memberController.setPaidCurrentYear();
-                } catch (        RemoteException | DomainAttributeException | NoSessionFoundException | IllegalAccessException | InstantiationException ex) {
-                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);  
-                }
+                } catch (NoSessionFoundException ex) {
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotSupportedException ex) {
+                    Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                } 
             }
             this.memberController.setStreet(panelMembers.getTfStreet().getText());
             this.memberController.setStreetNumber(panelMembers.getTfStreetNumber().getText());
             this.memberController.setUsername(panelMembers.getTfUserName().getText());
             //this.memberController.setUsername("1234");
-
-           this.memberController.commit();
-          // this.memberController.start();
-
-        } catch (RemoteException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainParameterCheckException ex) {            
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainAttributeException ex) {
-            javax.swing.JOptionPane.showMessageDialog(panelMembers, "Bitte alle Felder ausfüllen!");
+            this.memberController.commit();
         } catch (ExistingTransactionException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainParameterCheckException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DomainAttributeException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotAllowException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     public void createNewMember() {
@@ -168,9 +180,19 @@ public class ViewMemberController {
             this.memberController = this.factory.getRMIMemberController(ApplicationController.user);
             this.memberController.start();
             ITransferMember tmp = this.memberController.getMember();            
-        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     public void showDepartments() {
@@ -183,7 +205,21 @@ public class ViewMemberController {
             }
             panelMembers.getCmbSearchDepartment().setModel(model);
             this.searchController.commit();
-        } catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+        } catch (NotAllowException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
 
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }

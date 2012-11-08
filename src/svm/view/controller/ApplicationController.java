@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import svm.logic.abstraction.transferobjects.ITransferAuth;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
@@ -32,7 +33,7 @@ public class ApplicationController {
 
     /* Factory */
     public static IRMIControllerFactory factory;
-    public static ITransferMember user;
+    public static ITransferAuth user;
     /**
      * The two main forms login and main applicationwindow
      *
@@ -91,9 +92,6 @@ public class ApplicationController {
             System.out.println("Path: rmi://" + ip + ":1099/RMI");
             System.out.println("Client runs");
             //IRMIContestController contestController = factory.getRMIContestController();
-
-
-
 
             // Setup the look and feel properties
             Properties props = new Properties();

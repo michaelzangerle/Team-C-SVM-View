@@ -4,6 +4,7 @@
  */
 package svm.view.controller;
 
+import java.awt.HeadlessException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,10 +19,12 @@ import svm.domain.abstraction.exception.DomainException;
 import svm.domain.abstraction.exception.DomainParameterCheckException;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.exception.LogicException;
+import svm.logic.abstraction.exception.NotAllowException;
 import svm.logic.abstraction.transferobjects.*;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.persistence.abstraction.exceptions.NotSupportedException;
 import svm.rmi.abstraction.controller.IRMIContestController;
 import svm.rmi.abstraction.controller.IRMIMemberController;
 import svm.rmi.abstraction.controller.IRMISearchController;
@@ -85,7 +88,21 @@ public class ViewContestController {
             this.searchController.commit();
 
 
-        } catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
+        } catch (NotAllowException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -113,10 +130,13 @@ public class ViewContestController {
             for (ITransferMatch m : contestController.getMatches()) {
                 vector = new Vector();
                 vector.add(sdf.format(m.getStart()));
+                // TODO Überarbeiten
+                /*
                 vector.add(m.getContestants().get(0));
                 vector.add(m.getContestants().get(1));
                 vector.add(m.getContestants().get(0).getResult());
                 vector.add(m.getContestants().get(1).getResult());
+                */
                 this.tableMatchOverview.addRow(vector);
             }
         } catch (IllegalGetInstanceException | RemoteException ex) {
@@ -137,17 +157,7 @@ public class ViewContestController {
             this.contestController.setStreet(panelContests.getTfContestStreet().getText());
             this.contestController.setStreetNumber(panelContests.getTfContestStreetNumber().getText());
             this.contestController.commit();
-        } catch (DomainParameterCheckException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExistingTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainAttributeException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+        } catch (NotAllowException | DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -169,10 +179,9 @@ public class ViewContestController {
             ITransferContest tmp = this.contestController.getTransferContest();
             panelContests.getTfContestName().setText(tmp.getName());
 
-        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSessionFoundException | IllegalGetInstanceException | RemoteException | InstantiationException | IllegalAccessException | NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void addTeamToContest() {
@@ -186,7 +195,7 @@ public class ViewContestController {
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Team ist bereits in Auswahl vorhanden");
             }
-        } catch (Exception e) {
+        } catch (RemoteException | NoSessionFoundException | DomainException | InstantiationException | IllegalAccessException | NotAllowException | HeadlessException e) {
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
         }
     }
@@ -221,15 +230,7 @@ public class ViewContestController {
                     contestTeams.addElement(team);
                 }
             }
-        } catch (ExistingTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoTransactionException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalGetInstanceException ex) {
+        } catch (InstantiationException | IllegalAccessException | NotSupportedException | NotAllowException | ExistingTransactionException | NoTransactionException | NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -277,6 +278,8 @@ public class ViewContestController {
                 try {
                     dateString = (String) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 0);
                     this.contestController.setDateForMatch(t, sdf.parse(dateString));
+                } catch (NotAllowException ex) {
+                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
                     Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
                     javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing Date, corrupted cell: " + entriesIterator + ",0\nCorrect Format is dd.MM.yyyy - hh.mm");
@@ -285,9 +288,21 @@ public class ViewContestController {
                 }
 
                 try {
-                    this.contestController.setResult(t,
-                            (Float) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3),
-                            (Float) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4));
+                    try {
+                        this.contestController.setResult(t,
+                                (Integer) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3),
+                                (Integer) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4));
+                    } catch (NoSessionFoundException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (DomainException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NotAllowException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } catch (ClassCastException ex) {
                     Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
                     javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing result, corrupted resultrow: " + entriesIterator);
@@ -296,20 +311,12 @@ public class ViewContestController {
                 }
                 entriesIterator++;
             }
-        } catch (NoSessionFoundException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DomainException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalGetInstanceException ex) {
+        } catch (IllegalGetInstanceException ex) { 
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+        catch (RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        }    }
 
     public void assignContestTeamModel() {
         this.panelContests.getListboxContestTeams().setModel(contestTeams);
@@ -409,6 +416,12 @@ public class ViewContestController {
             this.panelContests.getDcContestStartDate().setDate(selectedContest.getStart());
             this.panelContests.getDcContestEndDate().setDate(selectedContest.getEnd());
             this.panelContests.getTfContestFee().setText(Float.toString(selectedContest.getFee()));
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -429,6 +442,12 @@ public class ViewContestController {
         try {
             this.contestController.commit();
             this.contestController.start();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {
@@ -447,7 +466,13 @@ public class ViewContestController {
             int entryIterator = 0;
             while (entryIterator < teamB.capacity()) {
                 try {
-                    this.contestController.addMatch(teamA.get(entryIterator), teamB.get(entryIterator), new Date(), new Date());
+                    try {
+                        this.contestController.addMatch(teamA.get(entryIterator), teamB.get(entryIterator), new Date(), new Date());
+                    } catch (NotSupportedException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NotAllowException ex) {
+                        Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } catch (LogicException ex) {
                     Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DomainException ex) {
@@ -460,6 +485,12 @@ public class ViewContestController {
             }
             this.contestController.commit();
             this.contestController.start();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {

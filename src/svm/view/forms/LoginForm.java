@@ -11,10 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.transferobjects.ITransferAuth;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.persistence.abstraction.exceptions.NotSupportedException;
 import svm.rmi.abstraction.controller.IRMILoginController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.controller.ApplicationController;
@@ -57,8 +59,9 @@ public class LoginForm extends javax.swing.JFrame {
         panelLogin = new javax.swing.JPanel();
         tfUserName = new javax.swing.JTextField();
         tfPassword = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
+        btnLDAPLogin = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SVM Login");
@@ -107,11 +110,11 @@ public class LoginForm extends javax.swing.JFrame {
         tfPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         tfPassword.setName(""); // NOI18N
 
-        btnLogin.setText("Login");
-        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnLDAPLogin.setText("LDAP-Login");
+        btnLDAPLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLDAPLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnLDAPLoginActionPerformed(evt);
             }
         });
 
@@ -123,6 +126,14 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
+        btnLogin.setText("Login");
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout panelLoginLayout = new org.jdesktop.layout.GroupLayout(panelLogin);
         panelLogin.setLayout(panelLoginLayout);
         panelLoginLayout.setHorizontalGroup(
@@ -130,10 +141,13 @@ public class LoginForm extends javax.swing.JFrame {
             .add(panelLoginLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(panelLoginLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, panelLoginLayout.createSequentialGroup()
+                    .add(panelLoginLayout.createSequentialGroup()
                         .add(btnCancel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 85, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 291, Short.MAX_VALUE)
-                        .add(btnLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 174, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(249, 249, 249)
+                        .add(btnLDAPLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(btnLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))
                     .add(tfUserName)
                     .add(tfPassword))
                 .addContainerGap())
@@ -145,10 +159,11 @@ public class LoginForm extends javax.swing.JFrame {
                 .add(tfUserName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(32, 32, 32)
                 .add(tfPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 29, Short.MAX_VALUE)
                 .add(panelLoginLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(btnLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(btnCancel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(btnCancel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btnLDAPLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btnLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -168,7 +183,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .add(lblLogo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 240, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
                 .add(panelLogin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 14, Short.MAX_VALUE))
+                .add(0, 11, Short.MAX_VALUE))
         );
 
         lblLogo.getAccessibleContext().setAccessibleParent(this);
@@ -192,41 +207,57 @@ public class LoginForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLDAPLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLDAPLoginActionPerformed
         try {
             IRMILoginController loginController=factory.getRMILoginController();
             loginController.start();
             if(loginController.login(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
             { ApplicationController.user=loginController.getMember();
               appController.login(ApplicationController.user.getFirstName()+ " " +ApplicationController.user.getLastName(),"no pass");
-            }  
+            }  else{
+                System.out.println("Falsches Passwort oder Benutzer");
+            }
+            
             try {
                 loginController.commit();
-            } catch (ExistingTransactionException ex) {
-                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoTransactionException ex) {
+            } catch (    ExistingTransactionException | NoTransactionException ex) {
                 Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IllegalGetInstanceException | NoSessionFoundException ex) {
+        } catch (NoSessionFoundException | IllegalGetInstanceException | InstantiationException | IllegalAccessException | NotSupportedException | RemoteException ex) {
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
         }
    
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_btnLDAPLoginActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         // appController.cancel();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try {
+            IRMILoginController loginController=factory.getRMILoginController();
+            loginController.start();
+          
+            if(loginController.loginWithoutLdap(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
+            { ApplicationController.user=loginController.getMember();
+              appController.login(ApplicationController.user.getFirstName()+ " " +ApplicationController.user.getLastName(),"no pass");
+            }  
+      
+            loginController.commit();
+       
+    }   catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | NotSupportedException | InstantiationException | IllegalAccessException | RemoteException ex) {    
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }//GEN-LAST:event_btnLoginActionPerformed
     
-     public ITransferMember getMember() {
+     public ITransferAuth getMember() {
         return ApplicationController.user;
     }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton btnCancel;
+    protected javax.swing.JButton btnLDAPLogin;
     protected javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JPanel panelLogin;
@@ -266,12 +297,8 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     public JButton getBtnLogin() {
-        return btnLogin;
+        return btnLDAPLogin;
     }
 
-    public void setBtnLogin(JButton btnLogin) {
-        this.btnLogin = btnLogin;
-    }
-    
-
+   
 }

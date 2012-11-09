@@ -394,7 +394,7 @@ public class PanelContests extends javax.swing.JPanel {
                 .addComponent(btnContestSave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnContestNew, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
         panelContestMenuLayout.setVerticalGroup(
             panelContestMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,7 +595,7 @@ public class PanelContests extends javax.swing.JPanel {
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbContestContactDetails, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         panelContestLocationLayout.setVerticalGroup(
             panelContestLocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -725,7 +725,7 @@ public class PanelContests extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnConfirmContestTeams))
                             .addComponent(jLabel38))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         panelContestTeamsLayout.setVerticalGroup(
             panelContestTeamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -765,6 +765,11 @@ public class PanelContests extends javax.swing.JPanel {
         cmbContestTeams.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbContestTeamsItemStateChanged(evt);
+            }
+        });
+        cmbContestTeams.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbContestTeamsActionPerformed(evt);
             }
         });
 
@@ -854,7 +859,7 @@ public class PanelContests extends javax.swing.JPanel {
                         .addGroup(panelContestSubTeamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel36)
                             .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         panelContestSubTeamsLayout.setVerticalGroup(
             panelContestSubTeamsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1071,7 +1076,7 @@ public class PanelContests extends javax.swing.JPanel {
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnMatchOverviewSave))
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
         panelContestResultsLayout.setVerticalGroup(
@@ -1178,7 +1183,7 @@ public class PanelContests extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbContestTeamsItemStateChanged
 
     private void btnConfirmSubTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmSubTeamActionPerformed
-        // TODO add your handling code here:
+        viewContestController.saveSubteam();
     }//GEN-LAST:event_btnConfirmSubTeamActionPerformed
 
     private void btnAddToSubTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToSubTeamActionPerformed
@@ -1244,6 +1249,10 @@ public class PanelContests extends javax.swing.JPanel {
     private void btnMatchCompositionSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchCompositionSaveActionPerformed
         viewContestController.saveTeamComposition();
     }//GEN-LAST:event_btnMatchCompositionSaveActionPerformed
+
+    private void cmbContestTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbContestTeamsActionPerformed
+        viewContestController.changeContestTeamSelection();
+    }//GEN-LAST:event_cmbContestTeamsActionPerformed
 
     public ViewContestController getViewContestController() {
         return viewContestController;

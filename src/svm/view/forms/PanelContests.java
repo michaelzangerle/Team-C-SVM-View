@@ -1000,7 +1000,7 @@ public class PanelContests extends javax.swing.JPanel {
                         .addGap(548, 548, 548))
                     .addGroup(panelContestTeamsAlternateLayout.createSequentialGroup()
                         .addComponent(btnMatchCompositionSave)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(panelContestTeamsAlternateLayout.createSequentialGroup()
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -1241,47 +1241,7 @@ public class PanelContests extends javax.swing.JPanel {
     }//GEN-LAST:event_dcContestEndDatePropertyChange
 
     private void btnMatchOverviewSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchOverviewSaveActionPerformed
-        int i = 0;
-        LinkedList dates = new LinkedList();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - hh.mm");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -100);
-        sdf.set2DigitYearStart(cal.getTime());
-
-        while (i < tableMatchesOverview.getModel().getRowCount()) {
-            String dateString = (String) tableMatchesOverview.getValueAt(i, 0);
-
-            try {
-                Date date = sdf.parse(dateString);
-                dates.add(date);
-            } catch (ParseException ex) {
-                Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
-                javax.swing.JOptionPane.showMessageDialog(this, "Error while parsing Date, corrupted cell: " + i + ",0\nCorrect Format is dd.MM.yyyy - hh.mm");
-                dates.clear();
-                break;
-            }
-            i++;
-            System.out.println("Success");
-        }
-        i = 0;
-        LinkedList TeamA = new LinkedList();
-        while (i < tableMatchesOverview.getModel().getRowCount()) {
-            if (tableMatchesOverview.getValueAt(i, 1) != null) {
-                TeamA.add((String) (tableMatchesOverview.getValueAt(i, 1)));
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error while parsing TeamA, corrupted cell: " + i + ",1");
-            }
-
-        }
-        i = 0;
-        LinkedList TeamB = new LinkedList();
-        while (i < tableMatchesOverview.getModel().getRowCount()) {
-            if (tableMatchesOverview.getValueAt(i, 2) != null) {
-                TeamB.add((String) (tableMatchesOverview.getValueAt(i, 2)));
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error while parsing TeamA, corrupted cell: " + i + ",2");
-            }
-        }
+        viewContestController.saveMatchOverview();
     }//GEN-LAST:event_btnMatchOverviewSaveActionPerformed
 
     private void btnMatchCompositionSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchCompositionSaveActionPerformed

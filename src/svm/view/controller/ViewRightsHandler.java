@@ -34,4 +34,10 @@ public class ViewRightsHandler {
         
       
     }
+    
+    public void setContestManager()
+    {
+    
+    }
+  
 }

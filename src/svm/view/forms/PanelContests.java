@@ -1026,7 +1026,7 @@ public class PanelContests extends javax.swing.JPanel {
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
-        tabPanelContestDetails.addTab("Matcheinteilung", panelContestTeamsAlternate);
+        tabPanelContestDetails.addTab("Neue Matches anlegen", panelContestTeamsAlternate);
 
         panelContestResults.setBackground(new java.awt.Color(252, 252, 252));
 

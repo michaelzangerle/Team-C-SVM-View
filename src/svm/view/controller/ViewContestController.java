@@ -345,7 +345,8 @@ public class ViewContestController {
 
         if (this.panelContests.getCmbContestTeams().getModel().getSize() == 0) {
             try {
-                for (ITransferTeam c : contestController.getTeams()) {
+                List<ITransferTeam> teams = contestController.getTeams();
+                for (ITransferTeam c : teams) {
                     this.comboContestTeams.addElement(c);
                 }
             } catch (RemoteException ex) {
@@ -531,7 +532,7 @@ public class ViewContestController {
         ITransferTeam selectedTeam = (ITransferTeam)this.panelContests.getCmbContestTeams().getSelectedItem();
         
         try {
-            this.subTeamController = factory.getRMISubTeamController(selectedTeam, (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.subTeamController = factory.getRMISubTeamController(selectedTeam, contestController.getTransferContest(), ApplicationController.user);
             this.subTeamController.start();
         for (ITransferMember member:subTeamController.getMemberOfTeam()){
             this.allTeamMembers.addElement(member);

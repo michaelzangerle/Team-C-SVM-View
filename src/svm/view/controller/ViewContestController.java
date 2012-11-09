@@ -63,7 +63,7 @@ public class ViewContestController {
         } catch (RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         this.panelContests = panelContest;
     }
 
@@ -345,7 +345,8 @@ public class ViewContestController {
 
         if (this.panelContests.getCmbContestTeams().getModel().getSize() == 0) {
             try {
-                for (ITransferTeam c : contestController.getTeams()) {
+                List<ITransferTeam> teams = contestController.getTeams();
+                for (ITransferTeam c : teams) {
                     this.comboContestTeams.addElement(c);
                 }
             } catch (RemoteException ex) {
@@ -367,8 +368,13 @@ public class ViewContestController {
 
     public void removeFromSubTeam() {
         if (this.panelContests.getListboxContestTeamMembers().getSelectedValue() != null) {
-            this.allTeamMembers.addElement((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
-            this.contestTeamMembers.removeElement(this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+            try {
+                this.subTeamController.removeMember((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+                this.allTeamMembers.addElement((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+                this.contestTeamMembers.removeElement(this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+            } catch (RemoteException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
         }
@@ -525,21 +531,29 @@ public class ViewContestController {
     }
 
     public void changeContestTeamSelection() {
-        
+
         this.allTeamMembers.clear();
         this.contestTeamMembers.clear();
-        ITransferTeam selectedTeam = (ITransferTeam)this.panelContests.getCmbContestTeams().getSelectedItem();
-        
+        ITransferTeam selectedTeam = (ITransferTeam) this.panelContests.getCmbContestTeams().getSelectedItem();
+
         try {
-            this.subTeamController = factory.getRMISubTeamController(selectedTeam, (ITransferContest)this.panelContests.getListboxShowContests().getSelectedValue(), ApplicationController.user);
+            this.subTeamController = factory.getRMISubTeamController(selectedTeam, contestController.getTransferContest(), ApplicationController.user);
             this.subTeamController.start();
-        for (ITransferMember member:subTeamController.getMemberOfTeam()){
-            this.allTeamMembers.addElement(member);
-        }
-        for (ITransferMember member:subTeamController.getMembersOfSubTeam()){
-            this.contestTeamMembers.addElement(member);
-        }
-        this.panelContests.getListboxAllTeamMembers();
+
+            for (ITransferMember member : subTeamController.getMembersOfSubTeam()) {
+                this.contestTeamMembers.addElement(member);
+            }
+
+            for (ITransferMember member : subTeamController.getMemberOfTeam()) {
+                if (!contestTeamMembers.contains(member)) {
+                    this.allTeamMembers.addElement(member);
+                }
+            }
+
+            this.panelContests.getListboxAllTeamMembers().setModel(allTeamMembers);
+
+
+            this.panelContests.getListboxContestTeamMembers().setModel(contestTeamMembers);
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -557,28 +571,6 @@ public class ViewContestController {
 
     public void saveSubteam() {
         try {
-            int i = 0;
-            
-            while (i < this.panelContests.getListboxContestTeamMembers().getMaxSelectionIndex()){
-                try {
-                    this.subTeamController.addMember(this.contestTeamMembers.get(i));
-                    i++;
-                } catch (LogicException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSessionFoundException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DomainException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NotSupportedException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
             this.subTeamController.commit();
             this.subTeamController.start();
         } catch (IllegalGetInstanceException ex) {

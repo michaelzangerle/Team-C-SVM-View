@@ -764,7 +764,6 @@ public class PanelMembers extends javax.swing.JPanel {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addComponent(jLabel25)
-                        .addGap(18, 18, 18)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                                 .addGap(35, 35, 35)

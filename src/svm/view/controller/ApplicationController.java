@@ -52,8 +52,7 @@ public class ApplicationController {
      */
     private ViewContestController viewContestCtrl;
     private ViewMemberController viewMemberCtrl;
-    private ViewSearchController viewSearchCtrl;
-    private ViewSubTeamController viewSubTeamCtrl;
+    private ViewRightsHandler viewRightsHandler;
 
     public ApplicationController() {
     }
@@ -63,8 +62,8 @@ public class ApplicationController {
         this.panelMembers = new PanelMembers();
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
-        this.viewSearchCtrl = new ViewSearchController();
-        this.viewSubTeamCtrl = new ViewSubTeamController();
+        this.viewRightsHandler = new ViewRightsHandler(this.user,this);
+       
     }
 
     public static void main(String args[]) throws UnknownHostException {
@@ -172,6 +171,7 @@ public class ApplicationController {
         panelContests.setName("Wettbewerbe");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
+        viewRightsHandler.setRights();
     }
 
     public void switchMainTab() {
@@ -187,9 +187,18 @@ public class ApplicationController {
         }
     }
 
-    private void initTabPanel01() {
+    public MainForm getMainForm() {
+        return mainForm;
     }
 
-    private void initTabPanel00() {
+    public PanelContests getPanelContests() {
+        return panelContests;
     }
+
+    public PanelMembers getPanelMembers() {
+        return panelMembers;
+    }
+
+    
+    
 }

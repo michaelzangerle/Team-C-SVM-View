@@ -274,7 +274,7 @@
                           <Component id="btnContestSave" min="-2" pref="102" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnContestNew" min="-2" pref="102" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="377" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -563,7 +563,7 @@
                                       <Component id="cmbContestContactDetails" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="312" max="32767" attributes="0"/>
+                              <EmptySpace pref="333" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -776,7 +776,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="26" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -981,7 +981,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="37" max="32767" attributes="0"/>
+                              <EmptySpace pref="58" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1430,7 +1430,7 @@
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="btnMatchOverviewSave" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane8" pref="551" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane8" pref="572" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>

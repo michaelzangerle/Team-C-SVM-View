@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import svm.domain.abstraction.exception.DomainAttributeException;
 import svm.domain.abstraction.exception.DomainException;
@@ -42,6 +43,7 @@ public class ViewContestController {
     private IRMIContestController contestController;
     private IRMISearchController searchController;
     private PanelContests panelContests;
+    
     private DefaultListModel<ITransferTeam> contestTeams = new DefaultListModel<>();
     private DefaultListModel<ITransferContest> showContests = new DefaultListModel<>();
     private DefaultListModel<ITransferMember> allTeamMembers = new DefaultListModel<>();
@@ -446,6 +448,7 @@ public class ViewContestController {
             while (i < this.panelContests.getListboxContestTeams().getModel().getSize()) {
                 try {
                     contestController.addTeam((ITransferTeam)this.panelContests.getListboxContestTeams().getSelectedValue());
+                    i++;
                 } catch (        DomainException | NotAllowException ex) {
                     Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -479,6 +482,8 @@ public class ViewContestController {
                     try {
                         this.contestController.addMatch(teamA.get(entryIterator), teamB.get(entryIterator), new Date(), new Date());
                         entryIterator++;
+                        contestController.commit();
+                        contestController.start();
                     } catch (NotSupportedException | NotAllowException ex) {
                         Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                     }

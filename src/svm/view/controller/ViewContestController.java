@@ -473,6 +473,7 @@ public class ViewContestController {
                     } catch (NotAllowException ex) {
                         Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    entryIterator+=1;
                 } catch (LogicException ex) {
                     Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DomainException ex) {

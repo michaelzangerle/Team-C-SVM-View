@@ -99,13 +99,13 @@ public class LoginForm extends javax.swing.JFrame {
 
         tfUserName.setBackground(new java.awt.Color(229, 229, 229));
         tfUserName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        tfUserName.setText("tfe1234");
+        tfUserName.setText("tf-test");
         tfUserName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         tfUserName.setName(""); // NOI18N
 
         tfPassword.setBackground(new java.awt.Color(229, 229, 229));
         tfPassword.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        tfPassword.setText("admin");
+        tfPassword.setText("1234");
         tfPassword.setToolTipText("");
         tfPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1));
         tfPassword.setName(""); // NOI18N
@@ -242,7 +242,15 @@ public class LoginForm extends javax.swing.JFrame {
             if(loginController.loginWithoutLdap(this.tfUserName.getText(), this.tfPassword.getPassword().toString()))
             { ApplicationController.user=loginController.getMember();
               appController.login(ApplicationController.user.getFirstName()+ " " +ApplicationController.user.getLastName(),"no pass");
-            }  
+            }
+            
+        System.out.println(ApplicationController.user.getFirstName()); 
+        System.out.println(ApplicationController.user.getLastName());
+        System.out.println(ApplicationController.user.getTitle());
+        System.out.println(ApplicationController.user.getUsername());
+        System.out.println(ApplicationController.user.isAllowedForContestAdding());
+        System.out.println(ApplicationController.user.isAllowedForContestChanging());
+        System.out.println(ApplicationController.user.isAllowedForContestDeleting());
       
             loginController.commit();
        
@@ -251,8 +259,9 @@ public class LoginForm extends javax.swing.JFrame {
         }    
     }//GEN-LAST:event_btnLoginActionPerformed
     
-     public ITransferAuth getMember() {
+     public ITransferAuth getMember() {        
         return ApplicationController.user;
+       
     }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables

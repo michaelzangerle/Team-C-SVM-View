@@ -5,17 +5,8 @@
 package svm.view.forms;
 
 import com.toedter.calendar.JDateChooser;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.controller.ViewContestController;
-import svm.view.controller.ViewMemberController;
 
 /**
  *

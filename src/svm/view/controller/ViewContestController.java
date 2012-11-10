@@ -545,7 +545,16 @@ public class ViewContestController {
             }
 
             for (ITransferMember member : subTeamController.getMemberOfTeam()) {
-                if (!contestTeamMembers.contains(member)) {
+                int i = 0;
+                boolean contains = false;
+                while ((i < contestTeamMembers.getSize()) && (contains == false)){
+                    if ((member.getFirstName().equalsIgnoreCase(contestTeamMembers.get(i).getFirstName())) &&
+                            member.getLastName().equalsIgnoreCase(contestTeamMembers.get(i).getLastName())){
+                        contains = true;
+                    }
+                    i++;
+                }
+                if (contains == false) {
                     this.allTeamMembers.addElement(member);
                 }
             }

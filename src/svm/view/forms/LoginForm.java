@@ -32,9 +32,6 @@ public class LoginForm extends javax.swing.JFrame {
     // The one and only instance of the loginForm
     private static LoginForm loginForm = null;
     private static IRMIControllerFactory factory;
-    
-
-   
 
     /**
      * Creates new form LoginForm

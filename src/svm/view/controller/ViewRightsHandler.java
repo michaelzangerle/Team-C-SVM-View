@@ -162,10 +162,16 @@ public class ViewRightsHandler {
                 panelMembers.getBtnMemberSave().setEnabled(user.isAllowedForMemberDeleting());
                 panelMembers.getBtnMemberSave().setEnabled(user.isAllowedForMemberChanging());
                 
-                panelMembers.getBtnAddRole().setVisible(user.isAllowedForMemberChanging());
+                panelMembers.getBtnAddRole().setVisible(user.isAllowedForMemberAddingPrivileges());
                 panelMembers.getBtnRemoveRole().setVisible(user.isAllowedForMemberAddingPrivileges());
-                panelMembers.getLibstboxActiveRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
-                panelMembers.getLibstboxAllRoles().setVisible(user.isAllowedForMemberAddingPrivileges()); 
+                //panelMembers.getListboxActiveRoles().setVisible(false);
+                //panelMembers.getListboxAllRoles().setVisible(false);
+                panelMembers.getListScrollActiveRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
+                panelMembers.getListScrollAllRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
+                panelMembers.getLblActiveRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
+                panelMembers.getLblAllRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
+                panelMembers.getLblMemberRoles().setVisible(user.isAllowedForMemberAddingPrivileges());
+               
     }
   
 }

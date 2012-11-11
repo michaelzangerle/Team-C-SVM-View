@@ -122,12 +122,11 @@ public class ViewMemberController {
             panelMembers.getListboxActiveRoles().setModel(listboxActiveRoles);
             panelMembers.getListboxAllRoles().setModel(listboxAllRoles);
 
-            //TODO Bestehende Userprivilegien
-            /*
-             * for (ITransferUserPrivilege privilege : memberController.getPrivileges()){
-             * listboxActiveRoles.addElement(privilege) }
-             */
-            
+            for (ITransferUserPrivilege privilege : memberController.getPrivileges()) {
+                listboxActiveRoles.addElement(privilege);
+            }
+
+
             for (ITransferUserPrivilege privilege : searchController.getUserPrivileges()) {
                 int i = 0;
                 boolean contains = false;
@@ -310,15 +309,15 @@ public class ViewMemberController {
 
     public void addPrivilege() {
         try {
-            ITransferUserPrivilege privilege = (ITransferUserPrivilege)this.panelMembers.getListboxAllRoles().getSelectedValue();
-            
+            ITransferUserPrivilege privilege = (ITransferUserPrivilege) this.panelMembers.getListboxAllRoles().getSelectedValue();
+
             memberController.addPrivilege(privilege);
             listboxActiveRoles.addElement(privilege);
-            
+
             int i = 0;
-            while (i < listboxAllRoles.getSize()){
-                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege)listboxAllRoles.getElementAt(i);
-                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())){
+            while (i < listboxAllRoles.getSize()) {
+                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxAllRoles.getElementAt(i);
+                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
                     listboxAllRoles.remove(i);
                 }
                 i++;
@@ -342,15 +341,15 @@ public class ViewMemberController {
 
     public void removePrivilege() {
         try {
-            ITransferUserPrivilege privilege = (ITransferUserPrivilege)this.panelMembers.getListboxActiveRoles().getSelectedValue();
-            
+            ITransferUserPrivilege privilege = (ITransferUserPrivilege) this.panelMembers.getListboxActiveRoles().getSelectedValue();
+
             this.listboxAllRoles.addElement(privilege);
             memberController.removePrivilege(privilege);
-            
+
             int i = 0;
-            while (i < listboxActiveRoles.getSize()){
-                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege)listboxActiveRoles.getElementAt(i);
-                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())){
+            while (i < listboxActiveRoles.getSize()) {
+                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxActiveRoles.getElementAt(i);
+                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
                     listboxActiveRoles.remove(i);
                 }
                 i++;

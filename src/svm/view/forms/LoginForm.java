@@ -250,7 +250,7 @@ public class LoginForm extends javax.swing.JFrame {
         System.out.println(ApplicationController.user.getUsername());
         System.out.println(ApplicationController.user.isAllowedForContestAdding());
         System.out.println(ApplicationController.user.isAllowedForContestDetailsChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestTeamChanging());
+        //System.out.println(ApplicationController.user.isAllowedForContestTeamChanging());
         System.out.println(ApplicationController.user.isAllowedForContestSubTeamChanging());
         System.out.println(ApplicationController.user.isAllowedForContestMatchChanging());
         System.out.println(ApplicationController.user.isAllowedForContestResultChanging());

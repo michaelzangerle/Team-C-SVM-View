@@ -16,6 +16,7 @@ import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import svm.logic.abstraction.transferobjects.ITransferAuth;
 import svm.logic.abstraction.transferobjects.ITransferMember;
@@ -46,6 +47,7 @@ public class ApplicationController {
      */
     private PanelContests panelContests;
     private PanelMembers panelMembers;
+
     /**
      * UseCase Controller
      *
@@ -62,8 +64,7 @@ public class ApplicationController {
         this.panelMembers = new PanelMembers();
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
-        this.viewRightsHandler = new ViewRightsHandler(this.user,this);
-       
+        this.viewRightsHandler = new ViewRightsHandler(this.user,this);       
     }
 
     public static void main(String args[]) throws UnknownHostException {
@@ -138,10 +139,9 @@ public class ApplicationController {
         init();
         mainForm = new MainForm(this);
         mainForm.setLblUser(username);
-        mainForm.setLblPrivileges("[Präsident] - Stufe");
-
-        loadPrivileges("all rights - (it's the president)");
-
+        mainForm.getLblPrivileges().setVisible(false);
+        loadPrivileges();
+        
         mainForm.pack();
         mainForm.setSize(995, 740);
         mainForm.setLocationRelativeTo(null);
@@ -150,12 +150,14 @@ public class ApplicationController {
         mainForm.toFront();
         loginForm.setVisible(false);
         mainForm.setAutoRequestFocus(true);
+
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {             
                 mainForm.toFront();
                 mainForm.repaint();
+
             }
         });
 
@@ -166,29 +168,31 @@ public class ApplicationController {
         startMainForm(username);
     }
 
-    public void loadPrivileges(String privileges) {
+    public void loadPrivileges() {
         panelMembers.setName("Mitglieder");
         panelContests.setName("Wettbewerbe");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
         viewRightsHandler.setRights();
     }
+    
+    
 
     public void switchMainTab() {
 
-        if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 0) {
+        if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Mitglieder")) {
 
             panelMembers.getViewMemberController().showDepartments();
 
 
-        } else if (mainForm.getTabPanelMainCenter().getSelectedIndex() == 1) {
+        } else if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Wettbewerbe")) {
 
             panelContests.getViewContestController().showContests();
         }
     }
 
     public MainForm getMainForm() {
-        return mainForm;
+        return this.mainForm;
     }
 
     public PanelContests getPanelContests() {

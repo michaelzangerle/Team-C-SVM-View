@@ -248,23 +248,23 @@ public class LoginForm extends javax.swing.JFrame {
         System.out.println(ApplicationController.user.getLastName());
         System.out.println(ApplicationController.user.getTitle());
         System.out.println(ApplicationController.user.getUsername());
-        System.out.println(ApplicationController.user.isAllowedForContestAdding());
-        System.out.println(ApplicationController.user.isAllowedForContestDetailsChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestTeamChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestSubTeamChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestMatchChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestResultChanging());
-        System.out.println(ApplicationController.user.isAllowedForContestDeleting());
-        System.out.println(ApplicationController.user.isAllowedForContestViewing());
-        System.out.println(ApplicationController.user.isAllowedForMemberAdding());
-        System.out.println(ApplicationController.user.isAllowedForMemberAddingPrivileges());
-        System.out.println(ApplicationController.user.isAllowedForMemberChanging());
-        System.out.println(ApplicationController.user.isAllowedForMemberDeleting());
-        System.out.println(ApplicationController.user.isAllowedForMemberViewing());
-        System.out.println(ApplicationController.user.isAllowedForSearching());
+        System.out.println("Contest adding : "+ ApplicationController.user.isAllowedForContestAdding());
+        System.out.println("Contest Details changing: " + ApplicationController.user.isAllowedForContestDetailsChanging());
+        System.out.println("Contest Teams changing: " + ApplicationController.user.isAllowedForContestTeamsChanging());
+        System.out.println("Contest SubTeam changing: " + ApplicationController.user.isAllowedForContestSubTeamChanging());
+        System.out.println("Contest Match changing: " + ApplicationController.user.isAllowedForContestMatchChanging());
+        System.out.println("Contest Result changing: " + ApplicationController.user.isAllowedForContestResultChanging());
+        System.out.println("Contest deleting: " + ApplicationController.user.isAllowedForContestDeleting());
+        System.out.println("Contest viewing: " + ApplicationController.user.isAllowedForContestViewing());
+        System.out.println("Member adding: " + ApplicationController.user.isAllowedForMemberAdding());
+        System.out.println("Member changing: " + ApplicationController.user.isAllowedForMemberChanging());   
+        System.out.println("Member deleting: " + ApplicationController.user.isAllowedForMemberDeleting());
+        System.out.println("Member viewing: " + ApplicationController.user.isAllowedForMemberViewing());
+        System.out.println("Searching: " + ApplicationController.user.isAllowedForSearching());
+        System.out.println("Privileges editing: " + ApplicationController.user.isAllowedForMemberAddingPrivileges());
 
       
-            loginController.commit();
+        loginController.commit();
        
     }   catch (ExistingTransactionException | NoTransactionException | NoSessionFoundException | IllegalGetInstanceException | NotSupportedException | InstantiationException | IllegalAccessException | RemoteException ex) {    
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);

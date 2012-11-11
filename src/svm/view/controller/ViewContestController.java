@@ -26,7 +26,6 @@ import svm.persistence.abstraction.exceptions.NoSessionFoundException;
 import svm.persistence.abstraction.exceptions.NoTransactionException;
 import svm.persistence.abstraction.exceptions.NotSupportedException;
 import svm.rmi.abstraction.controller.IRMIContestController;
-import svm.rmi.abstraction.controller.IRMIMemberController;
 import svm.rmi.abstraction.controller.IRMISearchController;
 import svm.rmi.abstraction.controller.IRMISubTeamController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
@@ -154,12 +153,6 @@ public class ViewContestController {
             this.contestController.setContestStartDate(panelContests.getDcContestStartDate().getDate());
             this.contestController.setContestEndDate(panelContests.getDcContestEndDate().getDate());
             this.contestController.setContestFee(Float.parseFloat(panelContests.getTfContestFee().getText()));
-            this.contestController.setEmail1(panelContests.getTfContestMail1().getText());
-            this.contestController.setEmail2(panelContests.getTfContestMail2().getText());
-            this.contestController.setPhone1(panelContests.getTfContestPhone1().getText());
-            this.contestController.setPhone2(panelContests.getTfContestPhone2().getText());
-            this.contestController.setStreet(panelContests.getTfContestStreet().getText());
-            this.contestController.setStreetNumber(panelContests.getTfContestStreetNumber().getText());
             this.contestController.commit();
         } catch (NotAllowException | DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,6 +222,7 @@ public class ViewContestController {
                 searchController.commit();
             }
             if (contestTeams.isEmpty()) {
+                
                 for (ITransferTeam team : contestController.getTeams()) {
                     System.out.println(team.getName());
                     contestTeams.addElement(team);
@@ -236,31 +230,6 @@ public class ViewContestController {
             }
         } catch (InstantiationException | IllegalAccessException | NotSupportedException | NotAllowException | ExistingTransactionException | NoTransactionException | NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void showAllLocations() {
-
-        if (this.panelContests.getListboxShowContests().getSelectedValue() != null) {
-            try {
-                ITransferContest selectedContest = (ITransferContest) this.panelContests.getListboxShowContests().getSelectedValue();
-                this.panelContests.getTfContestPhone1().setText(selectedContest.getContactDetails().getPhone1());
-                this.panelContests.getTfContestPhone2().setText(selectedContest.getContactDetails().getPhone2());
-                this.panelContests.getTfContestMail1().setText(selectedContest.getContactDetails().getEmail1());
-                this.panelContests.getTfContestStreet().setText(selectedContest.getContactDetails().getStreet());
-                this.panelContests.getTfContestStreetNumber().setText(selectedContest.getContactDetails().getStreetNumber());
-
-                /*
-                 * this.searchController.start(); for (ITransferLocation team :
-                 * searchController.getLocations()) {
-                 * showAllLocations.addElement(team); }
-                 * panelContests.getCmbContestContactDetails().setModel(showAllLocations);
-                 * this.searchController.commit();
-                 *
-                 */
-            } catch (IllegalGetInstanceException ex) {
-                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -590,5 +559,22 @@ public class ViewContestController {
         } catch (RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void contestDetailsTabChanged() {
+       
+         if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Teams")){
+             showContests();
+             showAllTeams();
+            assignContestTeamModel();
+        }else if( panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Wettkampfteilnehmer")){
+            manageSubteams();
+        }else if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase( "Neue Matches anlegen")){
+            manageContestTeams();
+        }else if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Matchübersicht")){
+            showMatchOverview();
+        }
+        
+        
     }
 }

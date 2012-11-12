@@ -50,7 +50,7 @@ public class ViewRightsHandler {
         }else{               
                 mainForm.getTabPanelMainCenter().remove(panelMembers);
                 
-                setMatchDetailsControls(user.isAllowedForContestMatchChanging());
+                setMatchDetailsControls(user.isAllowedForContestResultChanging());
                 setContestDetailsControls(user.isAllowedForContestDetailsChanging());
            }
         
@@ -67,11 +67,10 @@ public class ViewRightsHandler {
 
        }
        
-        /** Contest_Match_Manager **/
-       if(user.isAllowedForContestMatchChanging()) {
+       if(user.isAllowedForContestMatchAdding()) {
                
                 tabPanelContestDetails.add( this.contestSubPanelsByName.get("Neue Matches anlegen"));
-                setMatchDetailsControls(user.isAllowedForContestMatchChanging()); 
+                setMatchDetailsControls(user.isAllowedForContestMatchAdding()); 
        }
        
               
@@ -79,7 +78,6 @@ public class ViewRightsHandler {
        if(user.isAllowedForContestDetailsChanging()) {               
                 
                 setContestDetailsControls(user.isAllowedForContestDetailsChanging());
-                setMatchDetailsControls(user.isAllowedForContestMatchChanging());
        }
        
        /** Member_Manager **/
@@ -87,7 +85,7 @@ public class ViewRightsHandler {
             
               mainForm.getTabPanelMainCenter().add( this.mainPanelsByName.get("Mitglieder"));
               setContestDetailsControls(user.isAllowedForContestDetailsChanging());
-              setMatchDetailsControls(user.isAllowedForContestMatchChanging());
+              setMatchDetailsControls(user.isAllowedForContestResultChanging());
               setMemberControls();            
         }        
     }

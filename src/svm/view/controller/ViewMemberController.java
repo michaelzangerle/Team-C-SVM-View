@@ -126,7 +126,7 @@ public class ViewMemberController {
                 listboxActiveRoles.addElement(privilege);
             }
 
-
+            searchController.start();
             for (ITransferUserPrivilege privilege : searchController.getUserPrivileges()) {
                 int i = 0;
                 boolean contains = false;
@@ -141,6 +141,17 @@ public class ViewMemberController {
                     listboxAllRoles.addElement(privilege);
                 }
             }
+            searchController.commit();
+        } catch (ExistingTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoTransactionException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {

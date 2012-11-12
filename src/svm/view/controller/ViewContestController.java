@@ -55,6 +55,7 @@ public class ViewContestController {
     private DefaultTableModel tableMatchOverview = new DefaultTableModel();
     private HashMap<ITransferTeam, LinkedList<ITransferMember>> participatingMembers;
     private IRMISubTeamController subTeamController;
+    private List<ITransferMatch> overviewMatches;
 
     public ViewContestController(PanelContests panelContest) {
         try {
@@ -132,7 +133,8 @@ public class ViewContestController {
             Vector vector;
 
             try {
-                for (ITransferMatch m : contestController.getMatches()) {
+                this.overviewMatches = contestController.getMatches();
+                for (ITransferMatch m : this.overviewMatches) {
                     vector = new Vector();
                     vector.add(sdf.format(m.getStart()));
                     vector.add(m.getHomeTeam());
@@ -246,7 +248,7 @@ public class ViewContestController {
 
             int entriesIterator = 0;
 
-            for (ITransferMatch t : this.contestController.getMatches()) {
+            for (ITransferMatch t : this.overviewMatches) {
                 String dateString;
                 try {
                     dateString = (String) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 0);
@@ -276,9 +278,7 @@ public class ViewContestController {
                 }
                 entriesIterator++;
             }
-        } catch (IllegalGetInstanceException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+        }catch (RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {

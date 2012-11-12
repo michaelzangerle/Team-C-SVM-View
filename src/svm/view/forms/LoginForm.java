@@ -249,7 +249,7 @@ public class LoginForm extends javax.swing.JFrame {
         System.out.println("Contest Details changing: " + ApplicationController.user.isAllowedForContestDetailsChanging());
         System.out.println("Contest Teams changing: " + ApplicationController.user.isAllowedForContestTeamsChanging());
         System.out.println("Contest SubTeam changing: " + ApplicationController.user.isAllowedForContestSubTeamChanging());
-        System.out.println("Contest Match changing: " + ApplicationController.user.isAllowedForContestMatchChanging());
+        System.out.println("Contest Match changing: " + ApplicationController.user.isAllowedForContestMatchAdding());
         System.out.println("Contest Result changing: " + ApplicationController.user.isAllowedForContestResultChanging());
         System.out.println("Contest deleting: " + ApplicationController.user.isAllowedForContestDeleting());
         System.out.println("Contest viewing: " + ApplicationController.user.isAllowedForContestViewing());

@@ -322,16 +322,19 @@ public class ViewMemberController {
         try {
             ITransferUserPrivilege privilege = (ITransferUserPrivilege) this.panelMembers.getListboxAllRoles().getSelectedValue();
 
-            memberController.addPrivilege(privilege);
-            listboxActiveRoles.addElement(privilege);
+            if (privilege != null) {
 
-            int i = 0;
-            while (i < listboxAllRoles.getSize()) {
-                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxAllRoles.getElementAt(i);
-                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
-                    listboxAllRoles.remove(i);
+                memberController.addPrivilege(privilege);
+                listboxActiveRoles.addElement(privilege);
+
+                int i = 0;
+                while (i < listboxAllRoles.getSize()) {
+                    ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxAllRoles.getElementAt(i);
+                    if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
+                        listboxAllRoles.remove(i);
+                    }
+                    i++;
                 }
-                i++;
             }
         } catch (NotAllowException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
@@ -354,16 +357,19 @@ public class ViewMemberController {
         try {
             ITransferUserPrivilege privilege = (ITransferUserPrivilege) this.panelMembers.getListboxActiveRoles().getSelectedValue();
 
-            this.listboxAllRoles.addElement(privilege);
-            memberController.removePrivilege(privilege);
+            if (privilege != null) {
 
-            int i = 0;
-            while (i < listboxActiveRoles.getSize()) {
-                ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxActiveRoles.getElementAt(i);
-                if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
-                    listboxActiveRoles.remove(i);
+                this.listboxAllRoles.addElement(privilege);
+                memberController.removePrivilege(privilege);
+
+                int i = 0;
+                while (i < listboxActiveRoles.getSize()) {
+                    ITransferUserPrivilege privFromAllRoles = (ITransferUserPrivilege) listboxActiveRoles.getElementAt(i);
+                    if (privFromAllRoles.getName().equalsIgnoreCase(privilege.getName())) {
+                        listboxActiveRoles.remove(i);
+                    }
+                    i++;
                 }
-                i++;
             }
         } catch (NotAllowException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);

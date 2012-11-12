@@ -480,6 +480,9 @@ public class ViewContestController {
             }
             this.contestController.commit();
             this.contestController.start();
+            this.panelContests.getListboxAllTeamsInSport().updateUI();
+            this.panelContests.getListboxContestTeams().updateUI();
+            
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {

@@ -61,7 +61,7 @@ public class ViewContestController {
         try {
             this.searchController = factory.getRMISearchController(ApplicationController.user);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         this.panelContests = panelContest;
@@ -97,7 +97,7 @@ public class ViewContestController {
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -144,7 +144,7 @@ public class ViewContestController {
                     this.tableMatchOverview.addRow(vector);
                 }
             } catch (IllegalGetInstanceException | RemoteException ex) {
-                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -157,7 +157,7 @@ public class ViewContestController {
             this.contestController.setContestFee(Float.parseFloat(panelContests.getTfContestFee().getText()));
             this.contestController.commit();
         } catch (DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }catch (Exception ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }  
@@ -235,9 +235,9 @@ public class ViewContestController {
                 }
             }
         } catch (InstantiationException | IllegalAccessException | NotSupportedException | ExistingTransactionException | NoTransactionException | NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+         //   Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
         }  
     }
 
@@ -287,7 +287,7 @@ public class ViewContestController {
                 entriesIterator++;
             }
         }catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+         //   Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             contestController.commit();
@@ -307,7 +307,7 @@ public class ViewContestController {
         } catch (NoTransactionException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -327,9 +327,9 @@ public class ViewContestController {
                     this.comboContestTeams.addElement(c);
                 }
             } catch (RemoteException ex) {
-                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+              // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalGetInstanceException ex) {
-                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+              //  Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -350,7 +350,7 @@ public class ViewContestController {
                 this.allTeamMembers.addElement((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
                 this.contestTeamMembers.removeElement(this.panelContests.getListboxContestTeamMembers().getSelectedValue());
             } catch (RemoteException ex) {
-                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
@@ -371,7 +371,7 @@ public class ViewContestController {
                 }
             }
         } catch (RemoteException | IllegalGetInstanceException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -428,7 +428,7 @@ public class ViewContestController {
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -470,7 +470,7 @@ public class ViewContestController {
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+          //  Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -559,7 +559,7 @@ public class ViewContestController {
         } catch (NotSupportedException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -582,7 +582,7 @@ public class ViewContestController {
         } catch (NoTransactionException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

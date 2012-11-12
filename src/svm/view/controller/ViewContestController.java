@@ -92,8 +92,6 @@ public class ViewContestController {
             this.searchController.commit();
 
 
-        } catch (NotAllowException ex) {
-            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -106,9 +104,11 @@ public class ViewContestController {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotSupportedException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotAllowException nEx) {
+             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
         } catch (Exception ex) {
             Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }  
 
     }
 
@@ -156,9 +156,11 @@ public class ViewContestController {
             this.contestController.setContestEndDate(panelContests.getDcContestEndDate().getDate());
             this.contestController.setContestFee(Float.parseFloat(panelContests.getTfContestFee().getText()));
             this.contestController.commit();
-        } catch (NotAllowException | DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
+        } catch (DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }catch (Exception ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
 
     public void createNewContest() {
@@ -194,8 +196,10 @@ public class ViewContestController {
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Team ist bereits in Auswahl vorhanden");
             }
-        } catch (RemoteException | NoSessionFoundException | DomainException | InstantiationException | IllegalAccessException | NotAllowException | HeadlessException e) {
+        } catch (RemoteException | NoSessionFoundException | DomainException | InstantiationException | IllegalAccessException | HeadlessException e) {
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
+        } catch (NotAllowException nEx) {
+             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
         }
     }
 
@@ -230,9 +234,11 @@ public class ViewContestController {
                     contestTeams.addElement(team);
                 }
             }
-        } catch (InstantiationException | IllegalAccessException | NotSupportedException | NotAllowException | ExistingTransactionException | NoTransactionException | NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
+        } catch (InstantiationException | IllegalAccessException | NotSupportedException | ExistingTransactionException | NoTransactionException | NoSessionFoundException | RemoteException | IllegalGetInstanceException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception ex) {
+            Logger.getLogger(PanelMembers.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
 
     public void saveMatchOverview() {
@@ -254,7 +260,7 @@ public class ViewContestController {
                     dateString = (String) this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 0);
                     this.contestController.setDateForMatch(t, sdf.parse(dateString));
                 } catch (NotAllowException ex) {
-                    Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
                 } catch (ParseException ex) {
                     Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
                     javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing Date, corrupted cell: " + entriesIterator + ",0\nCorrect Format is dd.MM.yyyy - hh.mm");
@@ -267,9 +273,11 @@ public class ViewContestController {
                         this.contestController.setResult(t,
                                 Integer.valueOf(this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 3).toString()),
                                 Integer.valueOf(this.panelContests.getTableMatchesOverview().getValueAt(entriesIterator, 4).toString()));
-                    } catch (NoSessionFoundException | DomainException | InstantiationException | IllegalAccessException | NotAllowException ex) {
+                    } catch (NoSessionFoundException | DomainException | InstantiationException | IllegalAccessException ex) {
                         Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    } catch (NotAllowException ex) {
+                   javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
+                } 
                 } catch (ClassCastException ex) {
                     Logger.getLogger(PanelContests.class.getName()).log(Level.SEVERE, null, ex);
                     javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Error while parsing result, corrupted resultrow: " + entriesIterator);
@@ -438,7 +446,10 @@ public class ViewContestController {
                 try {
                     contestController.addTeam((ITransferTeam) this.panelContests.getListboxContestTeams().getSelectedValue());
                     i++;
-                } catch (DomainException | NotAllowException ex) {
+                } catch (NotAllowException ex) {
+                   javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
+                }               
+                catch (DomainException ex) {
                     Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -471,9 +482,11 @@ public class ViewContestController {
                     try {
                         this.contestController.addMatch(teamA.get(entryIterator), teamB.get(entryIterator), new Date(), new Date());
                         entryIterator++;
-                    } catch (NotSupportedException | NotAllowException ex) {
+                    } catch (NotSupportedException ex) {
                         Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    } catch (NotAllowException ex) {
+                   javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Sie haben nicht die erforderlichen Rechte.");
+                } 
                 } catch (LogicException | DomainException | InstantiationException | IllegalAccessException ex) {
                     Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
                 }

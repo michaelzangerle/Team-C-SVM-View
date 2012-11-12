@@ -818,7 +818,7 @@ public class PanelMembers extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbContactDetailsItemStateChanged
 
     private void btnAddRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoleActionPerformed
-        // TODO add your handling code here:
+        viewMemberController.addPrivilege();
     }//GEN-LAST:event_btnAddRoleActionPerformed
 
     private void listboxAllRolesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxAllRolesValueChanged
@@ -838,7 +838,7 @@ public class PanelMembers extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbSearchDepartmentItemStateChanged
 
     private void btnRemoveRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveRoleActionPerformed
-        // TODO add your handling code here:
+        viewMemberController.removePrivilege();
     }//GEN-LAST:event_btnRemoveRoleActionPerformed
 
     public JLabel getLblActiveRoles() {

@@ -1,4 +1,4 @@
-Team-C-SVM-View
+View Layer
 ===============
 
-View Layer
+Die View ist modular aufgebaut und basiert auf den zugrundeliegenden UseCases. Über einzelne Tab-Panels werden die View-Formulare segmentiert. Auf diese Weise können nicht nur die entsprechenden User-Rechte später berücksichtigt werden indem einzelne Tab-Panels oder Unterpanels gesperrt oder freigegeben werden können, sondern auch das Event-Handling kann sauber ausgegliedert und auf zu den UseCase passende ViewController delegiert werden. Ein modular strukturierter Aufbau der GUI ist somit einfach möglich. Der Programmeinstieg erfolgt über einen übergreifenden ApplicationController.

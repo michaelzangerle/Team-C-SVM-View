@@ -70,7 +70,7 @@ public class ViewMemberController {
 
 
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -153,7 +153,7 @@ public class ViewMemberController {
         } catch (NotSupportedException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
@@ -211,7 +211,7 @@ public class ViewMemberController {
         } catch (RemoteException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         }
     }
 
@@ -256,7 +256,7 @@ public class ViewMemberController {
             panelMembers.getCmbSearchDepartment().setModel(model);
             this.searchController.commit();
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -337,7 +337,7 @@ public class ViewMemberController {
                 }
             }
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
@@ -372,7 +372,7 @@ public class ViewMemberController {
                 }
             }
         } catch (NotAllowException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DomainAttributeException ex) {

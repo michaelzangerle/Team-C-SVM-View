@@ -21,9 +21,9 @@ public class PanelContests extends javax.swing.JPanel {
      * Creates new Form Panel for Contest UseCases
      */
     public PanelContests() {
-         this.viewContestController = new ViewContestController(this);
+        this.viewContestController = new ViewContestController(this);
         initComponents();
-
+        this.viewContestController.initializeModels();
     }
 
     public JTabbedPane getTabPanelContestDetails() {
@@ -984,6 +984,7 @@ public class PanelContests extends javax.swing.JPanel {
     private void listboxShowContestsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxShowContestsValueChanged
         viewContestController.contestChange();
         viewContestController.updateContests();
+        viewContestController.contestDetailsTabChanged();
     }//GEN-LAST:event_listboxShowContestsValueChanged
 
     private void dcContestStartDatePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dcContestStartDatePropertyChange

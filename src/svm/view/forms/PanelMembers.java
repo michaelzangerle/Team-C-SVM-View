@@ -796,7 +796,9 @@ public class PanelMembers extends javax.swing.JPanel {
 
     private void btnMemberSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberSaveActionPerformed
        viewMemberController.saveMember();
-        
+       viewMemberController.clearMemberList();
+       viewMemberController.showMembers();
+       viewMemberController.searchMembers();
     }//GEN-LAST:event_btnMemberSaveActionPerformed
 
     private void btnMemberNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberNewActionPerformed

@@ -42,6 +42,7 @@ public class ViewMemberController {
     private PanelMembers panelMembers;
     private DefaultListModel listboxActiveRoles = new DefaultListModel();
     private DefaultListModel listboxAllRoles = new DefaultListModel();
+    private DefaultListModel<ITransferMember> listboxShowMembers = new DefaultListModel();
 
     public ViewMemberController(PanelMembers panelMembers) {
         try {
@@ -61,11 +62,11 @@ public class ViewMemberController {
             List<ITransferMember> members = this.searchController.getMembers(
                     panelMembers.getTfSearchFirstName().getText(),
                     panelMembers.getTfSearchLastName().getText());//,chosenDepartment,panelMembers.getCbxSearchFee().isSelected());
-            DefaultListModel<ITransferMember> model = new DefaultListModel<>();
+            listboxShowMembers = new DefaultListModel<>();
             for (ITransferMember m : members) {
-                model.addElement(m);
+                listboxShowMembers.addElement(m);
             }
-            panelMembers.getListboxShowMembers().setModel(model);
+            panelMembers.getListboxShowMembers().setModel(listboxShowMembers);
             this.searchController.commit();
 
 
@@ -380,5 +381,9 @@ public class ViewMemberController {
         } catch (RemoteException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void clearMemberList() {
+        listboxShowMembers.clear();
     }
 }

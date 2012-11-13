@@ -72,14 +72,30 @@ public class ViewContestController {
         try {
 
             this.searchController.start();
-            showContests.clear();
+            ITransferContest selectedContest = (ITransferContest)this.panelContests.getListboxContestTeams().getSelectedValue();
+
+            if (this.panelContests.getListboxContestTeams().getSelectedValue() == null) {
+                showContests.clear();
+            }
             for (ITransferContest c : searchController.getContests()) {
-                showContests.addElement(c);
+                int i = 0;
+                boolean contains = false;
+                while (i < this.contestTeams.getSize()) {
+                    if (this.contestTeams.getElementAt(i).getName().equalsIgnoreCase(c.getName())) {
+                        contains = true;
+                    }
+                    i++;
+                }
+                if (contains == false){
+                    showContests.addElement(c);
+                }
             }
             this.panelContests.getListboxShowContests().setModel(showContests);
             //this.panelContests.getListboxShowContests().setSelectedIndex(0);
-
-            ITransferContest selectedContest = (ITransferContest) this.showContests.get(0);
+            
+            if (this.panelContests.getListboxContestTeams().getSelectedValue() == null){
+                selectedContest = (ITransferContest) this.showContests.get(0);
+            }
 
             this.contestController = this.factory.getRMIContestController(selectedContest, ApplicationController.user);
             this.contestController.start();
@@ -215,6 +231,7 @@ public class ViewContestController {
 
     public void showAllTeams() {
         try {
+            this.panelContests.getListboxContestTeams().setModel(contestTeams);
             this.panelContests.getListboxAllTeamsInSport().setModel(allTeamsInSport);
             if (allTeamsInSport.isEmpty()) {
                 searchController.start();
@@ -224,7 +241,7 @@ public class ViewContestController {
                 searchController.commit();
             }
             if (contestTeams.isEmpty()) {
-                
+
                 for (ITransferTeam team : contestController.getTeams()) {
                     System.out.println(team.getName());
                     contestTeams.addElement(team);
@@ -278,7 +295,7 @@ public class ViewContestController {
                 }
                 entriesIterator++;
             }
-        }catch (RemoteException ex) {
+        } catch (RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
@@ -303,10 +320,6 @@ public class ViewContestController {
         }
     }
 
-    public void assignContestTeamModel() {
-        this.panelContests.getListboxContestTeams().setModel(contestTeams);
-    }
-
     public void manageSubteams() {
         this.panelContests.getListboxAllTeamMembers().setModel(allTeamMembers);
         this.panelContests.getListboxContestTeamMembers().setModel(contestTeamMembers);
@@ -327,20 +340,39 @@ public class ViewContestController {
     }
 
     public void addToSubTeam() {
-        if (this.panelContests.getListboxAllTeamMembers().getSelectedValue() != null) {
-            this.contestTeamMembers.addElement((ITransferMember) this.panelContests.getListboxAllTeamMembers().getSelectedValue());
-            this.allTeamMembers.removeElement(this.panelContests.getListboxAllTeamMembers().getSelectedValue());
+        ITransferMember member = (ITransferMember) this.panelContests.getListboxAllTeamMembers().getSelectedValue();
+        if (member != null) {
+            try {
+                this.contestTeamMembers.addElement(member);
+                this.allTeamMembers.removeElement(member);
+                this.subTeamController.addMember(member);
+            } catch (LogicException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSessionFoundException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DomainException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotSupportedException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this.panelContests, "Bitte eine Auswahl treffen");
         }
     }
 
     public void removeFromSubTeam() {
-        if (this.panelContests.getListboxContestTeamMembers().getSelectedValue() != null) {
+        ITransferMember member = (ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue();
+        if (member != null) {
             try {
-                this.subTeamController.removeMember((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
-                this.allTeamMembers.addElement((ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue());
-                this.contestTeamMembers.removeElement(this.panelContests.getListboxContestTeamMembers().getSelectedValue());
+                this.subTeamController.removeMember(member);
+                this.allTeamMembers.addElement(member);
+                this.contestTeamMembers.removeElement(member);
             } catch (RemoteException ex) {
                 Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -482,7 +514,7 @@ public class ViewContestController {
             this.contestController.start();
             this.panelContests.getListboxAllTeamsInSport().updateUI();
             this.panelContests.getListboxContestTeams().updateUI();
-            
+
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -519,9 +551,9 @@ public class ViewContestController {
             for (ITransferMember member : subTeamController.getMemberOfTeam()) {
                 int i = 0;
                 boolean contains = false;
-                while ((i < contestTeamMembers.getSize()) && (contains == false)){
-                    if ((member.getFirstName().equalsIgnoreCase(contestTeamMembers.get(i).getFirstName())) &&
-                            member.getLastName().equalsIgnoreCase(contestTeamMembers.get(i).getLastName())){
+                while ((i < contestTeamMembers.getSize()) && (contains == false)) {
+                    if ((member.getFirstName().equalsIgnoreCase(contestTeamMembers.get(i).getFirstName()))
+                            && member.getLastName().equalsIgnoreCase(contestTeamMembers.get(i).getLastName())) {
                         contains = true;
                     }
                     i++;
@@ -574,19 +606,18 @@ public class ViewContestController {
     }
 
     public void contestDetailsTabChanged() {
-       
-         if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Teams")){
-             showContests();
-             showAllTeams();
-            assignContestTeamModel();
-        }else if( panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Wettkampfteilnehmer")){
+
+        if (panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Teams")) {
+            showContests();
+            showAllTeams();
+        } else if (panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Wettkampfteilnehmer")) {
             manageSubteams();
-        }else if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase( "Neue Matches anlegen")){
+        } else if (panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Neue Matches anlegen")) {
             manageContestTeams();
-        }else if(panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Matchübersicht")){
+        } else if (panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Matchübersicht")) {
             showMatchOverview();
         }
-        
-        
+
+
     }
 }

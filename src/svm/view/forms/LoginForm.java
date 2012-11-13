@@ -38,7 +38,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm(IRMIControllerFactory factory) {
         initComponents();
-        this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
+        //this.setIconImage(new ImageIcon(getClass().getResource("svm/view/resources/svm_icon_neg.png")).getImage());
         this.appController = new ApplicationController();
         this.factory=factory;
     }

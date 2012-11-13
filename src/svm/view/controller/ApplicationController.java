@@ -110,8 +110,9 @@ public class ApplicationController {
 
             // select the look and feel
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-            Image icon = Toolkit.getDefaultToolkit().getImage("../resources/svm_icon_neg.png");
-
+            //Image icon = Toolkit.getDefaultToolkit().getImage("/svm/view/resources/svm_lg_140.png");
+             
+            
             // Start the application
             startSVM();
 

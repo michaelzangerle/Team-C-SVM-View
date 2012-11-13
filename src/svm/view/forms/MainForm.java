@@ -25,14 +25,14 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();       
-        this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
+        //this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
         
     }
 
     public MainForm(ApplicationController appController) {
-         initComponents();
+        initComponents();
         this.appController = appController;
-        this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
+        //this.setIconImage(new ImageIcon(getClass().getResource("../resources/svm_icon_neg.png")).getImage());
     }
 
     /**

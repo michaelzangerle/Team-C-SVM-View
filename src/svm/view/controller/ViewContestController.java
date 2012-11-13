@@ -57,6 +57,13 @@ public class ViewContestController {
     private IRMISubTeamController subTeamController;
     private List<ITransferMatch> overviewMatches;
 
+    
+    /**
+ * Controller for UseCases with Contests
+ * Does the Event-Handling
+
+ * @author Patrick
+ */
     public ViewContestController(PanelContests panelContest) {
         try {
             this.searchController = factory.getRMISearchController(ApplicationController.user);
@@ -67,6 +74,11 @@ public class ViewContestController {
         this.panelContests = panelContest;
     }
 
+    /**
+     * Show all contests in overview list on the left
+  
+     * 
+     */
     public void showContests() {
 
         try {
@@ -128,6 +140,12 @@ public class ViewContestController {
 
     }
 
+    /**
+     * Show matches, dates and results
+     * in the current contest
+     * 
+     * 
+     */
     public void showMatchOverview() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy - hh.mm");
@@ -165,6 +183,10 @@ public class ViewContestController {
         }
     }
 
+     /**
+     * Save the edited contest to database
+
+     */ 
     public void saveContest() {
         try {
             this.contestController.setContestName(panelContests.getTfContestName().getText());
@@ -177,6 +199,11 @@ public class ViewContestController {
         }
     }
 
+     /**
+     * Create new contest from the entered data
+     * 
+     * 
+     */
     public void createNewContest() {
 
         try {
@@ -199,6 +226,12 @@ public class ViewContestController {
         }
     }
 
+    
+    /**
+     * Add a team to a contest
+     * 
+     * 
+     */
     public void addTeamToContest() {
         try {
             ITransferTeam team = (ITransferTeam) this.panelContests.getListboxAllTeamsInSport().getSelectedValue();
@@ -215,6 +248,12 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Remove a team from a contest
+     * 
+     * 
+     * 
+     */
     public void removeTeamFromContest() {
         try {
             ITransferTeam team = (ITransferTeam) this.panelContests.getListboxContestTeams().getSelectedValue();
@@ -229,6 +268,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Show all teams participating in contest
+     * 
+     * 
+     */
     public void showAllTeams() {
         try {
             this.panelContests.getListboxContestTeams().setModel(contestTeams);
@@ -252,6 +296,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Save edited data from match overview table to database
+     * 
+     * 
+     */
     public void saveMatchOverview() {
         try {
             int i = 0;
@@ -320,6 +369,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Manage subteams - add and remove members to the
+     * participating team in contest
+     * 
+     */
     public void manageSubteams() {
         this.panelContests.getListboxAllTeamMembers().setModel(allTeamMembers);
         this.panelContests.getListboxContestTeamMembers().setModel(contestTeamMembers);
@@ -339,6 +393,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Add member to subteam
+     * 
+     * 
+     */
     public void addToSubTeam() {
         ITransferMember member = (ITransferMember) this.panelContests.getListboxAllTeamMembers().getSelectedValue();
         if (member != null) {
@@ -366,6 +425,10 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Remove member from subteam
+     * 
+     */
     public void removeFromSubTeam() {
         ITransferMember member = (ITransferMember) this.panelContests.getListboxContestTeamMembers().getSelectedValue();
         if (member != null) {
@@ -381,6 +444,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Manage teams in the current contest
+     * 
+     * 
+     */
     public void manageContestTeams() {
         try {
             this.panelContests.getListboxAllContestTeams().setModel(allContestTeams);
@@ -400,6 +468,10 @@ public class ViewContestController {
 
     }
 
+    /**
+     * Remove team from current contest
+     * 
+     */
     public void removeFromTeam() {
         if (this.panelContests.getListboxTeamA().getSelectedValue() != null) {
             teamA.removeElement(this.panelContests.getListboxTeamA().getSelectedValue());
@@ -409,14 +481,26 @@ public class ViewContestController {
         }
     }
 
+     /**
+     * Create match - add as team b
+     * 
+     */
     public void addToTeamB() {
         teamB.addElement((ITransferTeam) this.panelContests.getListboxAllContestTeams().getSelectedValue());
     }
 
+    /**
+     * Create match - add as team a
+     * 
+     */
     public void addToTeamA() {
         teamA.addElement((ITransferTeam) this.panelContests.getListboxAllContestTeams().getSelectedValue());
     }
 
+    /**
+     * Change the selected contest
+     * 
+     */
     public void contestChange() {
         contestTeams.clear();
         allTeamMembers.clear();
@@ -428,6 +512,11 @@ public class ViewContestController {
         comboContestTeams = new DefaultComboBoxModel<>();
     }
 
+    /**
+     * Update contest data with entered data
+     * 
+     * 
+     */
     public void updateContests() {
         try {
             if (this.panelContests.getListboxShowContests().getSelectedIndex() == -1) {
@@ -456,6 +545,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Clear fields to enter new data for new contest
+     * 
+     * 
+     */
     public void clearForNewContest() {
         this.panelContests.getTfContestName().setText("");
         this.panelContests.getDcContestStartDate().setDate(null);
@@ -463,6 +557,11 @@ public class ViewContestController {
         this.panelContests.getTfContestFee().setText("");
     }
 
+    /**
+     * Save selected teams for contest
+     * 
+     * 
+     */
     public void saveContestTeams() {
         try {
             int i = 0;
@@ -495,6 +594,10 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Save the created matches
+     * 
+     */
     public void saveTeamComposition() {
         try {
             int entryIterator = 0;
@@ -534,6 +637,10 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Add member to subteam
+     * 
+     */
     public void changeContestTeamSelection() {
 
         this.allTeamMembers.clear();
@@ -582,6 +689,10 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Save subteams
+     * 
+     */
     public void saveSubteam() {
         try {
             this.subTeamController.commit();
@@ -605,6 +716,11 @@ public class ViewContestController {
         }
     }
 
+    /**
+     * Change contest - tabs Event-Handling delegation
+     * 
+     * 
+     */
     public void contestDetailsTabChanged() {
 
         if (panelContests.getTabPanelContestDetails().getSelectedComponent().getName().equalsIgnoreCase("Teams")) {

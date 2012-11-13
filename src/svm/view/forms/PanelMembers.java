@@ -286,7 +286,7 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                                 .addComponent(cbxSearchFee)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnMemberSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                                .addComponent(btnMemberSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(tfSearchLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfSearchFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelMembersSearchLayout.createSequentialGroup()
@@ -344,7 +344,7 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersList.setLayout(panelMembersListLayout);
         panelMembersListLayout.setHorizontalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +357,7 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersLeft.setLayout(panelMembersLeftLayout);
         panelMembersLeftLayout.setHorizontalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
         );
         panelMembersLeftLayout.setVerticalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,6 +518,7 @@ public class PanelMembers extends javax.swing.JPanel {
         lblMemberRoles.setForeground(new java.awt.Color(102, 102, 102));
         lblMemberRoles.setText("Mitglied Rechteverwaltung");
 
+        listboxAllRoles.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         listboxAllRoles.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "-" };
             public int getSize() { return strings.length; }
@@ -545,6 +546,7 @@ public class PanelMembers extends javax.swing.JPanel {
         checkMemberFee.setText("bezahlt");
         checkMemberFee.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        listboxActiveRoles.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         listboxActiveRoles.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "-" };
             public int getSize() { return strings.length; }
@@ -649,8 +651,8 @@ public class PanelMembers extends javax.swing.JPanel {
                                     .addComponent(btnRemoveRole, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(listScrollActiveRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblActiveRoles)))))
+                                    .addComponent(lblActiveRoles)
+                                    .addComponent(listScrollActiveRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -662,7 +664,7 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addComponent(dcEntryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(7, 7, 7))
+                .addContainerGap())
         );
         splitPanelMembersRightLayout.setVerticalGroup(
             splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -742,10 +744,11 @@ public class PanelMembers extends javax.swing.JPanel {
                                     .addComponent(jLabel23)))))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addComponent(lblMemberRoles)
+                        .addGap(18, 18, 18)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAllRoles)
                             .addComponent(lblActiveRoles))
-                        .addGap(24, 24, 24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(listScrollAllRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(listScrollActiveRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -1058,7 +1058,8 @@ public class PanelContests extends javax.swing.JPanel {
 
     private void btnContestSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContestSaveActionPerformed
         viewContestController.saveContest();
-
+        viewContestController.resetShowContestsDone();
+        viewContestController.showContests();
     }//GEN-LAST:event_btnContestSaveActionPerformed
 
     private void btnMatchCompositionSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchCompositionSaveActionPerformed

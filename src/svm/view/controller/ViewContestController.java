@@ -819,4 +819,8 @@ public class ViewContestController {
             System.out.println("Not sufficient privilege");
         }
     }
+
+    public void resetShowContestsDone() {
+        showContestsDone = false;
+    }
 }

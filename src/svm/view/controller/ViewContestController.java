@@ -510,6 +510,7 @@ public class ViewContestController {
         teamB.clear();
         showAllLocations = new DefaultComboBoxModel<>();
         comboContestTeams = new DefaultComboBoxModel<>();
+
     }
 
     /**

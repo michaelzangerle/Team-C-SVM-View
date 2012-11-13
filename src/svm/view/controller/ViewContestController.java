@@ -407,6 +407,8 @@ public class ViewContestController {
                 this.contestTeamMembers.addElement(member);
                 this.allTeamMembers.removeElement(member);
                 this.subTeamController.addMember(member);
+            } catch (NotAllowException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (LogicException ex) {
                 Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NoSessionFoundException ex) {
@@ -438,6 +440,8 @@ public class ViewContestController {
                 this.subTeamController.removeMember(member);
                 this.allTeamMembers.addElement(member);
                 this.contestTeamMembers.removeElement(member);
+            } catch (NotAllowException ex) {
+                Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (RemoteException ex) {
                 Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
             }

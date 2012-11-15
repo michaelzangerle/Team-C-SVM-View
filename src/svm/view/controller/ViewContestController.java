@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -52,6 +53,7 @@ public class ViewContestController {
     private DefaultComboBoxModel<ITransferLocation> showAllLocations = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<ITransferTeam> comboContestTeams = new DefaultComboBoxModel<>();
     private DefaultListModel<ITransferTeam> allTeamsInSport = new DefaultListModel<>();
+    private DefaultComboBoxModel<ITransferSport> allSports = new DefaultComboBoxModel<>();
     private DefaultTableModel tableMatchOverview = new DefaultTableModel();
     private HashMap<ITransferTeam, LinkedList<ITransferMember>> participatingMembers;
     private IRMISubTeamController subTeamController;
@@ -191,11 +193,29 @@ public class ViewContestController {
      *
      */
     public void saveContest() {
+        boolean finished = false;
+        Date today = new Date();
+        
+        if (!finished) {
+            if (panelContests.getDcContestEndDate().getDate().compareTo(today) < 0) {
+                
+                finished = true;
+            }
+            else {
+                finished = panelContests.getIsFinished().isSelected();                        
+            }
+        } else {
+            
+            finished = panelContests.getIsFinished().isSelected();
+        }
+        
         try {
             this.contestController.setContestName(panelContests.getTfContestName().getText());
             this.contestController.setContestStartDate(panelContests.getDcContestStartDate().getDate());
             this.contestController.setContestEndDate(panelContests.getDcContestEndDate().getDate());
             this.contestController.setContestFee(Float.parseFloat(panelContests.getTfContestFee().getText()));
+            this.contestController.setSport((ITransferSport) panelContests.getCmbAllSports().getSelectedItem());
+            this.contestController.setFinished(finished);
             this.contestController.commit();
         } catch (NotAllowException | DomainParameterCheckException | ExistingTransactionException | NoSessionFoundException | NoTransactionException | DomainAttributeException | RemoteException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
@@ -538,6 +558,9 @@ public class ViewContestController {
             this.panelContests.getDcContestStartDate().setDate(selectedContest.getStart());
             this.panelContests.getDcContestEndDate().setDate(selectedContest.getEnd());
             this.panelContests.getTfContestFee().setText(Float.toString(selectedContest.getFee()));
+            this.panelContests.getCmbAllSports().setSelectedIndex(getIndexByObject(allSports, selectedContest.getSport()));
+            //System.out.println(getIndexByObject(allSports, selectedContest.getSport()));
+            this.panelContests.getIsFinished().setSelected(selectedContest.isFinished());
             refreshContestGUI();
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
@@ -826,5 +849,47 @@ public class ViewContestController {
 
     public void resetShowContestsDone() {
         showContestsDone = false;
+    }
+    
+    
+    public void getAllSports()
+    { 
+            try {
+
+                searchController.start();
+                for (ITransferSport sport : searchController.getSports()) {
+                    
+                    this.allSports.addElement(sport);
+                }
+                this.panelContests.getCmbAllSports().setModel(allSports);
+            } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotAllowException  ex) {
+            Logger.getLogger(ViewContestController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+    }
+    
+    private Integer getIndexByObject(AbstractListModel<ITransferSport> listModel, ITransferSport sport){
+        int i=0;
+        
+        for (i=0; i < listModel.getSize() ; i++) {
+            
+            if (listModel.getElementAt(i).getName().equals(sport.getName())) {
+                
+                return i;
+            }
+        }        
+        return 0;
     }
 }

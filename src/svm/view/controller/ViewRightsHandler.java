@@ -142,7 +142,7 @@ public class ViewRightsHandler {
                 panelContests.getBtnContestSave().setEnabled(set);
                 panelContests.getBtnContestNew().setEnabled(set);
                 panelContests.getTfContestFee().setEnabled(set);
-                panelContests.getTfContestID().setEnabled(set);
+                panelContests.getIsFinished().setEnabled(set);
                 panelContests.getTfContestName().setEnabled(set);
                 panelContests.getDcContestEndDate().setEnabled(set);
                 panelContests.getDcContestStartDate().setEnabled(set);

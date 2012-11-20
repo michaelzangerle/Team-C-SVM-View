@@ -76,10 +76,10 @@ public class ApplicationController {
 
             System.setSecurityManager(new RMISecurityManager());
 
-
-            //Hole Argument (IP)
-            // String ip = args[0];
-            String ip = InetAddress.getLocalHost().getHostAddress();
+            String ip=InetAddress.getLocalHost().getHostAddress();
+            if(args.length>0)
+                ip=args[0];
+      
             try {
                 //  ip="172.16.63.174";
                 //Lookup Objekt    Holle ATM Fabrik

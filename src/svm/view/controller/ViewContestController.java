@@ -4,6 +4,7 @@
  */
 package svm.view.controller;
 
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
@@ -60,7 +61,8 @@ public class ViewContestController {
     private List<ITransferMatch> overviewMatches;
     private int index;
     private boolean showContestsDone = false;
-
+    private int MESSAGE_COUNT = 0;
+    
     /**
      * Controller for UseCases with Contests Does the Event-Handling
      *
@@ -891,5 +893,17 @@ public class ViewContestController {
             }
         }        
         return 0;
+    }
+    
+    private void refreshMessages(){
+        this.panelContests.getTabPanelContestDetails().getTabComponentAt(4).setName("(" + MESSAGE_COUNT + ") Messages");
+    }
+    
+    private int getMessageCount(){
+        return MESSAGE_COUNT;
+    }
+    
+    private void setMessageCount(int MESSAGE_COUNT){
+        this.MESSAGE_COUNT = MESSAGE_COUNT;
     }
 }

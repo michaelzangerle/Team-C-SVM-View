@@ -236,6 +236,7 @@ public class PanelContests extends javax.swing.JPanel {
         tableMatchesOverview = new javax.swing.JTable();
         jLabel30 = new javax.swing.JLabel();
         btnMatchOverviewSave = new javax.swing.JButton();
+        panelContestMessages = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(995, 690));
 
@@ -951,6 +952,21 @@ public class PanelContests extends javax.swing.JPanel {
 
         tabPanelContestDetails.addTab("Matchübersicht", panelContestResults);
 
+        panelContestMessages.setBackground(new java.awt.Color(252, 252, 252));
+
+        javax.swing.GroupLayout panelContestMessagesLayout = new javax.swing.GroupLayout(panelContestMessages);
+        panelContestMessages.setLayout(panelContestMessagesLayout);
+        panelContestMessagesLayout.setHorizontalGroup(
+            panelContestMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 591, Short.MAX_VALUE)
+        );
+        panelContestMessagesLayout.setVerticalGroup(
+            panelContestMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 465, Short.MAX_VALUE)
+        );
+
+        tabPanelContestDetails.addTab("Messages", panelContestMessages);
+
         javax.swing.GroupLayout splitPanelContestRightLayout = new javax.swing.GroupLayout(splitPanelContestRight);
         splitPanelContestRight.setLayout(splitPanelContestRightLayout);
         splitPanelContestRightLayout.setHorizontalGroup(
@@ -1160,6 +1176,7 @@ public class PanelContests extends javax.swing.JPanel {
     private javax.swing.JPanel panelContestHead;
     private javax.swing.JPanel panelContestLeft;
     private javax.swing.JPanel panelContestMenu;
+    private javax.swing.JPanel panelContestMessages;
     private javax.swing.JPanel panelContestResults;
     private javax.swing.JPanel panelContestSubTeams;
     private javax.swing.JPanel panelContestTeams;

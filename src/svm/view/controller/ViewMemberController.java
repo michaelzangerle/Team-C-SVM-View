@@ -43,6 +43,7 @@ public class ViewMemberController {
     private DefaultListModel listboxActiveRoles = new DefaultListModel();
     private DefaultListModel listboxAllRoles = new DefaultListModel();
     private DefaultListModel<ITransferMember> listboxShowMembers = new DefaultListModel();
+    private DefaultComboBoxModel cmbSport = new DefaultComboBoxModel();
 
     public ViewMemberController(PanelMembers panelMembers) {
         try {

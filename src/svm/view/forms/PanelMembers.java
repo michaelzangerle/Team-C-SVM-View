@@ -212,6 +212,8 @@ public class PanelMembers extends javax.swing.JPanel {
         lblAllRoles = new javax.swing.JLabel();
         btnRemoveRole = new javax.swing.JButton();
         lblActiveRoles = new javax.swing.JLabel();
+        lblSport = new javax.swing.JLabel();
+        cmbSport = new javax.swing.JComboBox();
 
         splitPanelMembers.setBackground(new java.awt.Color(252, 252, 252));
         splitPanelMembers.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -286,7 +288,7 @@ public class PanelMembers extends javax.swing.JPanel {
                             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                                 .addComponent(cbxSearchFee)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnMemberSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnMemberSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                             .addComponent(tfSearchLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfSearchFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelMembersSearchLayout.createSequentialGroup()
@@ -344,7 +346,7 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersList.setLayout(panelMembersListLayout);
         panelMembersListLayout.setHorizontalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
         );
         panelMembersListLayout.setVerticalGroup(
             panelMembersListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +359,7 @@ public class PanelMembers extends javax.swing.JPanel {
         panelMembersLeft.setLayout(panelMembersLeftLayout);
         panelMembersLeftLayout.setHorizontalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
         );
         panelMembersLeftLayout.setVerticalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,6 +579,12 @@ public class PanelMembers extends javax.swing.JPanel {
         lblActiveRoles.setForeground(new java.awt.Color(102, 102, 102));
         lblActiveRoles.setText("Aktive Rollen");
 
+        lblSport.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        lblSport.setForeground(new java.awt.Color(51, 51, 51));
+        lblSport.setText("Sportart");
+
+        cmbSport.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout splitPanelMembersRightLayout = new javax.swing.GroupLayout(splitPanelMembersRight);
         splitPanelMembersRight.setLayout(splitPanelMembersRightLayout);
         splitPanelMembersRightLayout.setHorizontalGroup(
@@ -655,16 +663,19 @@ public class PanelMembers extends javax.swing.JPanel {
                                     .addComponent(listScrollActiveRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSport))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dcEntryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(checkMemberFee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbSport, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(9, 10, Short.MAX_VALUE))
         );
         splitPanelMembersRightLayout.setVerticalGroup(
             splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -698,13 +709,17 @@ public class PanelMembers extends javax.swing.JPanel {
                                 .addComponent(jLabel7)
                                 .addComponent(tfLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(dcBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
+                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSport))
+                        .addGap(21, 21, 21)
+                        .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(dcBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cmbSport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
@@ -891,6 +906,7 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JComboBox cmbContactDetails;
     private javax.swing.JComboBox cmbGender;
     private javax.swing.JComboBox cmbSearchDepartment;
+    private javax.swing.JComboBox cmbSport;
     private com.toedter.calendar.JDateChooser dcBirthDate;
     private com.toedter.calendar.JDateChooser dcEntryDate;
     private javax.swing.Box.Filler filler1;
@@ -917,6 +933,7 @@ public class PanelMembers extends javax.swing.JPanel {
     private javax.swing.JLabel lblActiveRoles;
     private javax.swing.JLabel lblAllRoles;
     private javax.swing.JLabel lblMemberRoles;
+    private javax.swing.JLabel lblSport;
     private javax.swing.JScrollPane listScrollActiveRoles;
     private javax.swing.JScrollPane listScrollAllRoles;
     private javax.swing.JList listboxActiveRoles;

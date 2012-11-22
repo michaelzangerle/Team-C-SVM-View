@@ -11,6 +11,7 @@ import svm.logic.abstraction.transferobjects.ITransferAuth;
 import svm.view.forms.MainForm;
 import svm.view.forms.PanelContests;
 import svm.view.forms.PanelMembers;
+import svm.view.forms.PanelMessages;
 
 /**
  *
@@ -22,6 +23,7 @@ public class ViewRightsHandler {
     private MainForm mainForm;
     private PanelContests panelContests;
     private PanelMembers panelMembers;
+    private PanelMessages panelMessages;
         
     private JTabbedPane tabPanelContestDetails;
     private HashMap<String,JPanel> mainPanelsByName;
@@ -95,6 +97,7 @@ public class ViewRightsHandler {
         this.mainForm = appController.getMainForm();
         this.panelContests = appController.getPanelContests();
         this.panelMembers = appController.getPanelMembers();
+        this.panelMessages = appController.getPanelMessages();
         this.tabPanelContestDetails = panelContests.getTabPanelContestDetails();
         this.contestSubPanelsByName = this.initPanelsByName(contestSubPanelsByName, tabPanelContestDetails);
         

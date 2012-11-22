@@ -4,8 +4,6 @@
  */
 package svm.view.controller;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -16,15 +14,14 @@ import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import svm.logic.abstraction.transferobjects.ITransferAuth;
-import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
 import svm.view.forms.PanelContests;
 import svm.view.forms.PanelMembers;
+import svm.view.forms.PanelMessages;
 
 /**
  *
@@ -47,6 +44,7 @@ public class ApplicationController {
      */
     private PanelContests panelContests;
     private PanelMembers panelMembers;
+    private PanelMessages panelMessages;
 
     /**
      * UseCase Controller
@@ -54,6 +52,7 @@ public class ApplicationController {
      */
     private ViewContestController viewContestCtrl;
     private ViewMemberController viewMemberCtrl;
+    private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
 
     public ApplicationController() {
@@ -62,8 +61,10 @@ public class ApplicationController {
     public void init() {
         this.panelContests = new PanelContests();
         this.panelMembers = new PanelMembers();
+        this.panelMessages = new PanelMessages();
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
+        this.viewMessagesCtrl = new ViewMessagesController(panelMessages);
         this.viewRightsHandler = new ViewRightsHandler(this.user,this);       
     }
 
@@ -82,7 +83,7 @@ public class ApplicationController {
       
             try {
                 //  ip="172.16.63.174";
-                //Lookup Objekt    Holle ATM Fabrik
+                //Lookup Objekt    Hole ATM Fabrik
                 factory = (IRMIControllerFactory) Naming.lookup("rmi://" + ip + ":1099/RMI");
             } catch (MalformedURLException ex) {
                 Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,14 +152,12 @@ public class ApplicationController {
         mainForm.toFront();
         loginForm.setVisible(false);
         mainForm.setAutoRequestFocus(true);
-
-        
+ 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {             
                 mainForm.toFront();
                 mainForm.repaint();
-
             }
         });
 
@@ -172,12 +171,12 @@ public class ApplicationController {
     public void loadPrivileges() {
         panelMembers.setName("Mitglieder");
         panelContests.setName("Wettbewerbe");
+        panelMessages.setName("Nachrichten");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
+        mainForm.getTabPanelMainCenter().add(panelMessages);
         viewRightsHandler.setRights();
     }
-    
-    
 
     public void switchMainTab() {
 
@@ -204,6 +203,8 @@ public class ApplicationController {
         return panelMembers;
     }
 
-    
-    
+    public PanelMessages getPanelMessages() {
+        return panelMessages;
+    }
+ 
 }

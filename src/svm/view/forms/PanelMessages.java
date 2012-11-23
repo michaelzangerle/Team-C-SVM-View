@@ -27,6 +27,7 @@ public class PanelMessages extends javax.swing.JPanel {
     public PanelMessages() {       
             initComponents();
             this.viewMessagesController = new ViewMessagesController(this);
+            init();
              }
     
     /* Getters and Setters for Panel Components */
@@ -43,16 +44,8 @@ public class PanelMessages extends javax.swing.JPanel {
         return btnDenyContest;
     }
 
-    public JButton getBtnRemoveNewMemberFromTeam() {
-        return btnRemoveNewMemberFromTeam;
-    }
-
     public JButton getBtnSaveAssignment() {
         return btnSaveAssignment;
-    }
-
-    public JComboBox getCmbSelectSport() {
-        return cmbSelectSport;
     }
 
     public JComboBox getCmbSelectTeam() {
@@ -69,6 +62,10 @@ public class PanelMessages extends javax.swing.JPanel {
 
     public JList getListboxNewMembersToAssign() {
         return listboxNewMembersToAssign;
+    }
+
+    public JList getListboxLog() {
+        return listboxLog;
     }
 
 
@@ -92,9 +89,10 @@ public class PanelMessages extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         listboxMembersOfSelectedTeam = new javax.swing.JList();
         btnAssignNewMemberToTeam = new javax.swing.JButton();
-        btnRemoveNewMemberFromTeam = new javax.swing.JButton();
         cmbSelectTeam = new javax.swing.JComboBox();
-        cmbSelectSport = new javax.swing.JComboBox();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listboxLog = new javax.swing.JList();
+        jLabel4 = new javax.swing.JLabel();
         splitPanelMembersRight = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jLabel2 = new javax.swing.JLabel();
@@ -140,7 +138,7 @@ public class PanelMessages extends javax.swing.JPanel {
             panelMembersSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMembersSearchLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSaveAssignment, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -201,8 +199,6 @@ public class PanelMessages extends javax.swing.JPanel {
 
         btnAssignNewMemberToTeam.setText(">>");
 
-        btnRemoveNewMemberFromTeam.setText("<<");
-
         cmbSelectTeam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team wählen", "Item 2", "Item 3", "Item 4" }));
         cmbSelectTeam.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbSelectTeam.addItemListener(new java.awt.event.ItemListener() {
@@ -211,51 +207,58 @@ public class PanelMessages extends javax.swing.JPanel {
             }
         });
 
-        cmbSelectSport.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sport wählen", "Item 2", "Item 3", "Item 4" }));
-        cmbSelectSport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbSelectSport.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbSelectSportItemStateChanged(evt);
-            }
+        listboxLog.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
+        jScrollPane4.setViewportView(listboxLog);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("Nachrichten Log");
 
         javax.swing.GroupLayout panelMessagesListLayout = new javax.swing.GroupLayout(panelMessagesList);
         panelMessagesList.setLayout(panelMessagesListLayout);
         panelMessagesListLayout.setHorizontalGroup(
             panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMessagesListLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMessagesListLayout.createSequentialGroup()
+                .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelMessagesListLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
+                        .addComponent(jScrollPane4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelMessagesListLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAssignNewMemberToTeam, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                            .addComponent(btnRemoveNewMemberFromTeam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelMessagesListLayout.createSequentialGroup()
-                        .addComponent(cmbSelectSport, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panelMessagesListLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAssignNewMemberToTeam, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelMessagesListLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelMessagesListLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         panelMessagesListLayout.setVerticalGroup(
             panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMessagesListLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbSelectSport, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmbSelectTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelMessagesListLayout.createSequentialGroup()
-                        .addComponent(btnAssignNewMemberToTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRemoveNewMemberFromTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(344, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2)))
+                .addGroup(panelMessagesListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAssignNewMemberToTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         splitPanelMembersLeft.setRightComponent(panelMessagesList);
@@ -264,12 +267,12 @@ public class PanelMessages extends javax.swing.JPanel {
         panelMembersLeft.setLayout(panelMembersLeftLayout);
         panelMembersLeftLayout.setHorizontalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+            .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
         );
         panelMembersLeftLayout.setVerticalGroup(
             panelMembersLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMembersLeftLayout.createSequentialGroup()
-                .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                .addComponent(splitPanelMembersLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -293,6 +296,7 @@ public class PanelMessages extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listboxAssignedContests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listboxAssignedContests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listboxAssignedContests.setDoubleBuffered(true);
         listboxAssignedContests.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -354,12 +358,12 @@ public class PanelMessages extends javax.swing.JPanel {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
                         .addComponent(btnDenyContest, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAcceptContest, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -388,16 +392,12 @@ public class PanelMessages extends javax.swing.JPanel {
         
     }//GEN-LAST:event_listboxNewMembersToAssignValueChanged
 
-    private void cmbSelectSportItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSelectSportItemStateChanged
-         viewMessagesController.showMembersToAssign();
-    }//GEN-LAST:event_cmbSelectSportItemStateChanged
-
     private void listboxMembersOfSelectedTeamValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxMembersOfSelectedTeamValueChanged
         
     }//GEN-LAST:event_listboxMembersOfSelectedTeamValueChanged
 
     private void cmbSelectTeamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSelectTeamItemStateChanged
-        viewMessagesController.showTeamMembers();
+        //viewMessagesController.showTeamMembers();
     }//GEN-LAST:event_cmbSelectTeamItemStateChanged
 
     private void listboxAssignedContestsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listboxAssignedContestsValueChanged
@@ -406,15 +406,15 @@ public class PanelMessages extends javax.swing.JPanel {
 
     private void btnSaveAssignmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveAssignmentActionPerformed
 
-        viewMessagesController.saveTeamMembers();
+       // viewMessagesController.saveTeamMembers();
     }//GEN-LAST:event_btnSaveAssignmentActionPerformed
 
     private void btnDenyContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenyContestActionPerformed
-         viewMessagesController.denySelectedContests();
+       //  viewMessagesController.denySelectedContests();
     }//GEN-LAST:event_btnDenyContestActionPerformed
 
     private void btnAcceptContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptContestActionPerformed
-         viewMessagesController.acceptSelectedContests();
+       //  viewMessagesController.acceptSelectedContests();
     }//GEN-LAST:event_btnAcceptContestActionPerformed
     
 
@@ -422,18 +422,19 @@ public class PanelMessages extends javax.swing.JPanel {
     private javax.swing.JButton btnAcceptContest;
     private javax.swing.JButton btnAssignNewMemberToTeam;
     private javax.swing.JButton btnDenyContest;
-    private javax.swing.JButton btnRemoveNewMemberFromTeam;
     private javax.swing.JButton btnSaveAssignment;
-    private javax.swing.JComboBox cmbSelectSport;
     private javax.swing.JComboBox cmbSelectTeam;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList listboxAssignedContests;
+    private javax.swing.JList listboxLog;
     private javax.swing.JList listboxMembersOfSelectedTeam;
     private javax.swing.JList listboxNewMembersToAssign;
     private javax.swing.JPanel panelMembersLeft;
@@ -443,4 +444,10 @@ public class PanelMessages extends javax.swing.JPanel {
     private javax.swing.JSplitPane splitPanelMembersLeft;
     private javax.swing.JPanel splitPanelMembersRight;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+       
+        viewMessagesController.showAllTeams();
+        viewMessagesController.showTeamMembers();
+    }
 }

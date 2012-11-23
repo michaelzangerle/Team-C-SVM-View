@@ -15,7 +15,19 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import svm.logic.abstraction.controller.IMessageController;
+import svm.logic.abstraction.exception.IllegalGetInstanceException;
+import svm.logic.abstraction.jmsobjects.IMemberMessage;
+import svm.logic.abstraction.jmsobjects.IMessageObserver;
+import svm.logic.abstraction.jmsobjects.ISubTeamMessage;
+import svm.logic.abstraction.jmsobjects.MessageType;
 import svm.logic.abstraction.transferobjects.ITransferAuth;
+import svm.persistence.abstraction.exceptions.ExistingTransactionException;
+import svm.persistence.abstraction.exceptions.NoSessionFoundException;
+import svm.persistence.abstraction.exceptions.NoTransactionException;
+import svm.persistence.abstraction.exceptions.NotSupportedException;
+import svm.rmi.abstraction.controller.IRMIMessageController;
+import svm.rmi.abstraction.controller.IRMISearchController;
 import svm.rmi.abstraction.factory.IRMIControllerFactory;
 import svm.view.forms.LoginForm;
 import svm.view.forms.MainForm;
@@ -54,6 +66,7 @@ public class ApplicationController {
     private ViewMemberController viewMemberCtrl;
     private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
+    private IRMIMessageController messageController;
 
     public ApplicationController() {
     }
@@ -137,7 +150,7 @@ public class ApplicationController {
         loginForm.setVisible(true);
     }
 
-    private void startMainForm(String username) {
+    private void startMainForm(String username) throws RemoteException {
         init();
         mainForm = new MainForm(this);
         mainForm.setLblUser(username);
@@ -160,12 +173,67 @@ public class ApplicationController {
                 mainForm.repaint();
             }
         });
+        
+        this.messageController = factory.getMessageController(user);
+        this.messageController.addObserver(new IMessageObserver() {
 
+            @Override
+            public void updateMemberMessage(IMemberMessage imm) {
+                viewMessagesCtrl.addMemberMsg(imm);
+                if(imm.getType().equals(MessageType.NEW)) {
+                    
+                    try {
+                        
+                    IRMISearchController search = factory.getRMISearchController(user);
+                    search.start();
+                        viewMessagesCtrl.showMembersToAssign(search.getMemberByUID(imm.getMember()));
+                        search.commit();
+                    } catch (ExistingTransactionException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoTransactionException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InstantiationException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NotSupportedException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoSessionFoundException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalGetInstanceException ex) {
+                        Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
 
+            @Override
+            public void updateSubTeamMessage(ISubTeamMessage istm) {
+                viewMessagesCtrl.addSubTeamMsg(istm);               
+            }
+        });
+        try {
+            this.messageController.start();
+        } catch (NoSessionFoundException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void login(String username, String password) {
-        startMainForm(username);
+        try {
+            startMainForm(username);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void loadPrivileges() {

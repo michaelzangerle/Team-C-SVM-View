@@ -20,6 +20,7 @@ import svm.logic.abstraction.exception.NotAllowException;
 import svm.logic.abstraction.transferobjects.ITransferDepartment;
 import svm.logic.abstraction.transferobjects.ITransferLocation;
 import svm.logic.abstraction.transferobjects.ITransferMember;
+import svm.logic.abstraction.transferobjects.ITransferSport;
 import svm.logic.abstraction.transferobjects.ITransferUserPrivilege;
 import svm.persistence.abstraction.exceptions.ExistingTransactionException;
 import svm.persistence.abstraction.exceptions.NoSessionFoundException;
@@ -167,6 +168,15 @@ public class ViewMemberController {
 
     public void saveMember() {
         try {
+            IRMISearchController search = this.factory.getRMISearchController(ApplicationController.user);
+            search.start();
+            List<ITransferSport> sport = search.getSports();
+            search.commit();
+            for (ITransferSport sp : sport){
+                if (sp.equals(this.panelMembers.getCmbSport().getSelectedItem())){
+                    this.memberController.setSport(sp);
+                }
+            }
             this.memberController.setFirstName(panelMembers.getTfFirstName().getText());
             this.memberController.setLastName(panelMembers.getTfLastName().getText());
             this.memberController.setBirthDate(panelMembers.getDcBirthDate().getDate());
@@ -199,6 +209,14 @@ public class ViewMemberController {
             this.memberController.setUsername(panelMembers.getTfUserName().getText());
             //this.memberController.setUsername("1234");
             this.memberController.commit();
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalGetInstanceException ex) {
+            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {

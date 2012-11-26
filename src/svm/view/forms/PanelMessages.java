@@ -198,6 +198,11 @@ public class PanelMessages extends javax.swing.JPanel {
         jScrollPane2.setViewportView(listboxMembersOfSelectedTeam);
 
         btnAssignNewMemberToTeam.setText(">>");
+        btnAssignNewMemberToTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAssignNewMemberToTeamActionPerformed(evt);
+            }
+        });
 
         cmbSelectTeam.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team wählen", "Item 2", "Item 3", "Item 4" }));
         cmbSelectTeam.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -311,7 +316,7 @@ public class PanelMessages extends javax.swing.JPanel {
         jLabel3.setText("Bitte Wettkämpfe auswählen und zusagen oder absagen");
         jLabel3.setToolTipText("");
 
-        btnDenyContest.setText("zusagen");
+        btnDenyContest.setText("Absagen");
         btnDenyContest.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDenyContest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,7 +324,7 @@ public class PanelMessages extends javax.swing.JPanel {
             }
         });
 
-        btnAcceptContest.setText("absagen");
+        btnAcceptContest.setText("Zusagen");
         btnAcceptContest.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAcceptContest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,9 +364,9 @@ public class PanelMessages extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(splitPanelMembersRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(splitPanelMembersRightLayout.createSequentialGroup()
-                        .addComponent(btnDenyContest, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAcceptContest, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDenyContest, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE))
                 .addContainerGap())
@@ -410,12 +415,16 @@ public class PanelMessages extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveAssignmentActionPerformed
 
     private void btnDenyContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenyContestActionPerformed
-       //  viewMessagesController.denySelectedContests();
+       viewMessagesController.denySelectedContests();
     }//GEN-LAST:event_btnDenyContestActionPerformed
 
     private void btnAcceptContestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptContestActionPerformed
-       //  viewMessagesController.acceptSelectedContests();
+       viewMessagesController.acceptSelectedContests();
     }//GEN-LAST:event_btnAcceptContestActionPerformed
+
+    private void btnAssignNewMemberToTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignNewMemberToTeamActionPerformed
+        viewMessagesController.assignMemberToTeam();
+    }//GEN-LAST:event_btnAssignNewMemberToTeamActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

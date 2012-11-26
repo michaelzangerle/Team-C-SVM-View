@@ -174,7 +174,7 @@ public class ApplicationController {
             }
         });
         
-        this.messageController = factory.getMessageController(user);
+        this.messageController = factory.getRMIMessageController(user);
         this.messageController.addObserver(new IMessageObserver() {
 
             @Override

@@ -44,6 +44,7 @@ public class ViewMemberController {
     private DefaultListModel listboxActiveRoles = new DefaultListModel();
     private DefaultListModel listboxAllRoles = new DefaultListModel();
     private DefaultListModel<ITransferMember> listboxShowMembers = new DefaultListModel();
+    private DefaultComboBoxModel<ITransferSport> cmbSport = new DefaultComboBoxModel();
 
     public ViewMemberController(PanelMembers panelMembers) {
         try {
@@ -68,11 +69,19 @@ public class ViewMemberController {
                 listboxShowMembers.addElement(m);
             }
             panelMembers.getListboxShowMembers().setModel(listboxShowMembers);
+            
+            List<ITransferSport> sports = searchController.getSports();
+            
             this.searchController.commit();
 
+            for (ITransferSport sp : sports){
+                this.cmbSport.addElement(sp);
+            }
+            
+            this.panelMembers.getCmbSport().setModel(cmbSport);
 
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -155,7 +164,7 @@ public class ViewMemberController {
         } catch (NotSupportedException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (IllegalGetInstanceException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
@@ -172,8 +181,8 @@ public class ViewMemberController {
             search.start();
             List<ITransferSport> sport = search.getSports();
             search.commit();
-            for (ITransferSport sp : sport){
-                if (sp.equals(this.panelMembers.getCmbSport().getSelectedItem())){
+            for (ITransferSport sp : sport) {
+                if (sp.equals(this.panelMembers.getCmbSport().getSelectedItem())) {
                     this.memberController.setSport(sp);
                 }
             }
@@ -230,7 +239,7 @@ public class ViewMemberController {
         } catch (RemoteException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         }
     }
 
@@ -275,7 +284,7 @@ public class ViewMemberController {
             panelMembers.getCmbSearchDepartment().setModel(model);
             this.searchController.commit();
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (NoSessionFoundException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalGetInstanceException ex) {
@@ -356,7 +365,7 @@ public class ViewMemberController {
                 }
             }
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSessionFoundException ex) {
@@ -391,7 +400,7 @@ public class ViewMemberController {
                 }
             }
         } catch (NotAllowException ex) {
-                   javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DomainAttributeException ex) {

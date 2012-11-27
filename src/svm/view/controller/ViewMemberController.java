@@ -37,6 +37,7 @@ import svm.view.forms.PanelMembers;
  */
 public class ViewMemberController {
 
+    private boolean isCmbSportInitialized = false;
     private IRMIControllerFactory factory = ApplicationController.factory;
     private IRMIMemberController memberController;
     private IRMISearchController searchController;
@@ -69,17 +70,8 @@ public class ViewMemberController {
                 listboxShowMembers.addElement(m);
             }
             panelMembers.getListboxShowMembers().setModel(listboxShowMembers);
-            
-            List<ITransferSport> sports = searchController.getSports();
-            
+
             this.searchController.commit();
-
-            for (ITransferSport sp : sports){
-                this.cmbSport.addElement(sp);
-            }
-            
-            this.panelMembers.getCmbSport().setModel(cmbSport);
-
         } catch (NotAllowException ex) {
             javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         } catch (InstantiationException ex) {
@@ -119,6 +111,7 @@ public class ViewMemberController {
                 ITransferMember tmp = this.memberController.getMember();
                 // panelMembers.getTfFirstName().setText(tmp.getFirstName());
                 // panelMembers.getTfLastName().setText(tmp.getLastName());
+
                 showMemberDetails(tmp);
 
             } catch (InstantiationException | IllegalAccessException | NotSupportedException | NoSessionFoundException ex) {
@@ -197,6 +190,7 @@ public class ViewMemberController {
             this.memberController.setEmail2(panelMembers.getTfMail2().getText());
             this.memberController.setPhone1(panelMembers.getTfPhone1().getText());
             this.memberController.setPhone2(panelMembers.getTfPhone2().getText());
+            this.memberController.setSport((ITransferSport)this.panelMembers.getCmbSport().getSelectedItem());
             //this.memberController.setFax(" ");
             //this.memberController.setLat("47");
             //this.memberController.setLong("9");
@@ -281,6 +275,14 @@ public class ViewMemberController {
             for (ITransferDepartment department : searchController.getDepartments()) {
                 model.addElement(department);
             }
+            if (isCmbSportInitialized == false) {
+                List<ITransferSport> sports = searchController.getSports();
+                for (ITransferSport sp : sports) {
+                    this.cmbSport.addElement(sp);
+                }
+                this.panelMembers.getCmbSport().setModel(cmbSport);
+                isCmbSportInitialized = true;
+            }
             panelMembers.getCmbSearchDepartment().setModel(model);
             this.searchController.commit();
         } catch (NotAllowException ex) {
@@ -325,6 +327,7 @@ public class ViewMemberController {
             if (tmp.getPaid()) {
                 panelMembers.getCheckMemberFee().setEnabled(false);
             }
+            this.cmbSport.setSelectedItem(tmp.getSport());
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -232,6 +232,7 @@ public class ViewMessagesController {
             this.listboxLog.addElement("SubTeamMessage: " + subTeam.getName() + " " + tm.getType().toString() + " " + member.getFirstName() + " " + member.getLastName());
             this.panelMessages.getListboxLog().setModel(this.listboxLog);
             this.listboxAssignedContests.addElement(tm);
+            this.panelMessages.getListboxAssignedContests().setModel(listboxAssignedContests);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {

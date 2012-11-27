@@ -179,6 +179,7 @@ public class ApplicationController {
 
             @Override
             public void updateMemberMessage(IMemberMessage imm) {
+                
                 viewMessagesCtrl.addMemberMsg(imm);
                 if(imm.getType().equals(MessageType.NEW)) {
                     

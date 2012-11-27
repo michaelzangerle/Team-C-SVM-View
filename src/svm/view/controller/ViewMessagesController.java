@@ -64,7 +64,7 @@ public class ViewMessagesController {
             ITransferMember member = searchController.getMemberByUID(msg.getMember());
             ITransferSubTeam subTeam = searchController.getSubTeam(msg.getSubTeam());
             searchController.commit();
-            IRMISubTeamConfirmationController subTeamConfirmationController = this.factory.getRMISubTeamConfirmationController(ApplicationController.user, member, subteam);
+            IRMISubTeamConfirmationController subTeamConfirmationController = this.factory.getRMISubTeamConfirmationController(ApplicationController.user, member, subTeam);
             subTeamConfirmationController.start();
             subTeamConfirmationController.setConfirmation(true, "");
             subTeamConfirmationController.commit();
@@ -103,9 +103,9 @@ public class ViewMessagesController {
             ITransferMember member = searchController.getMemberByUID(msg.getMember());
             ITransferSubTeam subTeam = searchController.getSubTeam(msg.getSubTeam());
             searchController.commit();
-            IRMISubTeamConfirmationController subTeamConfirmationController = this.factory.getRMISubTeamConfirmationController(ApplicationController.user, member, subteam);
+            IRMISubTeamConfirmationController subTeamConfirmationController = this.factory.getRMISubTeamConfirmationController(ApplicationController.user, member, subTeam);
             subTeamConfirmationController.start();
-            subTeamConfirmationController.setConfirmation(true, "");
+            subTeamConfirmationController.setConfirmation(false, "");
             subTeamConfirmationController.commit();
 
             int i = 0;

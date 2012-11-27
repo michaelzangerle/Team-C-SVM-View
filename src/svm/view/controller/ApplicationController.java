@@ -57,7 +57,6 @@ public class ApplicationController {
     private PanelContests panelContests;
     private PanelMembers panelMembers;
     private PanelMessages panelMessages;
-
     /**
      * UseCase Controller
      *
@@ -67,7 +66,6 @@ public class ApplicationController {
     private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
     private IRMIMessageController messageController;
-    
     private int MESSAGE_COUNT = 0;
 
     public ApplicationController() {
@@ -80,7 +78,7 @@ public class ApplicationController {
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
         this.viewMessagesCtrl = new ViewMessagesController(panelMessages);
-        this.viewRightsHandler = new ViewRightsHandler(this.user,this);       
+        this.viewRightsHandler = new ViewRightsHandler(this.user, this);
     }
 
     public static void main(String args[]) throws UnknownHostException {
@@ -92,10 +90,11 @@ public class ApplicationController {
 
             System.setSecurityManager(new RMISecurityManager());
 
-            String ip=InetAddress.getLocalHost().getHostAddress();
-            if(args.length>0)
-                ip=args[0];
-      
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            if (args.length > 0) {
+                ip = args[0];
+            }
+
             try {
                 //  ip="172.16.63.174";
                 //Lookup Objekt    Hole ATM Fabrik
@@ -127,8 +126,8 @@ public class ApplicationController {
             // select the look and feel
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
             //Image icon = Toolkit.getDefaultToolkit().getImage("/svm/view/resources/svm_lg_140.png");
-             
-            
+
+
             // Start the application
             startSVM();
 
@@ -158,7 +157,7 @@ public class ApplicationController {
         mainForm.setLblUser(username);
         mainForm.getLblPrivileges().setVisible(false);
         loadPrivileges();
-        
+
         mainForm.pack();
         mainForm.setSize(995, 740);
         mainForm.setLocationRelativeTo(null);
@@ -167,30 +166,31 @@ public class ApplicationController {
         mainForm.toFront();
         loginForm.setVisible(false);
         mainForm.setAutoRequestFocus(true);
- 
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {             
+            public void run() {
                 mainForm.toFront();
                 mainForm.repaint();
             }
         });
-        
+
         this.messageController = factory.getRMIMessageController(user);
         this.messageController.addObserver(new IMessageObserver() {
-
             @Override
             public void updateMemberMessage(IMemberMessage imm) {
-                
-                incrementMessageCount();
-                viewMessagesCtrl.addMemberMsg(imm);
-                
-                if(imm.getType().equals(MessageType.NEW)) {
-                    
+
+                if (!imm.getType().equals(MessageType.REMOVED)) {
+                    viewMessagesCtrl.addMemberMsg(imm);
+                    incrementMessageCount();
+                }
+
+                if (imm.getType().equals(MessageType.NEW)) {
+
                     try {
-                        
-                    IRMISearchController search = factory.getRMISearchController(user);
-                    search.start();
+
+                        IRMISearchController search = factory.getRMISearchController(user);
+                        search.start();
                         viewMessagesCtrl.showMembersToAssign(search.getMemberByUID(imm.getMember()));
                         search.commit();
                     } catch (ExistingTransactionException ex) {
@@ -215,7 +215,7 @@ public class ApplicationController {
 
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
-                viewMessagesCtrl.addSubTeamMsg(istm);  
+                viewMessagesCtrl.addSubTeamMsg(istm);
                 incrementMessageCount();
             }
         });
@@ -280,9 +280,15 @@ public class ApplicationController {
     public PanelMessages getPanelMessages() {
         return panelMessages;
     }
-    
-    public void incrementMessageCount(){
+
+    public void incrementMessageCount() {
         MESSAGE_COUNT++;
+        mainForm.getTabPanelMainCenter().remove(panelMessages);
+        mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
+    }
+
+    public void decrementMessageCount() {
+        MESSAGE_COUNT--;
         mainForm.getTabPanelMainCenter().remove(panelMessages);
         mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
     }

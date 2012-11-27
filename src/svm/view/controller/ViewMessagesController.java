@@ -110,7 +110,7 @@ public class ViewMessagesController {
             subTeamConfirmationController.commit();
 
             this.panelMessages.getListboxAssignedContests().updateUI();
-            
+            System.out.println(this.listboxAssignedContests.getSize());
             int i = 0;
             while (i < this.listboxAssignedContests.getSize()) {
                 if (this.listboxAssignedContests.getElementAt(i).equals(msg)) {
@@ -234,12 +234,8 @@ public class ViewMessagesController {
             searchController.commit();
             this.listboxLog.addElement("SubTeamMessage: " + subTeam.getName() + " " + tm.getType().toString() + " " + member.getFirstName() + " " + member.getLastName());
             this.panelMessages.getListboxLog().setModel(this.listboxLog);
-            if (tm.getType().equals(MessageType.ADDED)) {
-
-                
-                this.listboxAssignedContests.addElement(tm);
-                this.panelMessages.getListboxAssignedContests().setModel(listboxAssignedContests);
-            }
+            this.listboxAssignedContests.addElement(tm);
+            this.panelMessages.getListboxAssignedContests().setModel(listboxAssignedContests);
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {
@@ -282,14 +278,18 @@ public class ViewMessagesController {
                 this.listboxMembersOfSelectedTeam.addElement(member);
                 this.panelMessages.getListboxMembersOfSelectedTeam().updateUI();
 
-                int i = 0;
+                this.panelMessages.getListboxNewMembersToAssign().remove(this.panelMessages.getListboxNewMembersToAssign().getSelectedIndex());
+                this.listboxNewMembersToAssign.removeElement(member);
+                /*int i = 0;
                 while (i < this.listboxNewMembersToAssign.getSize()) {
                     if (this.listboxNewMembersToAssign.getElementAt(i).equals(member)) {
-                        this.listboxNewMembersToAssign.remove(i);
+                        //this.listboxNewMembersToAssign.remove(i);
+                        this.listboxNewMembersToAssign.removeElement(member);
                         break;
                     }
-                }
-                this.panelMessages.getListboxNewMembersToAssign().setModel(listboxNewMembersToAssign);
+                    i++;
+                }*/
+                //this.panelMessages.getListboxNewMembersToAssign().setModel(listboxNewMembersToAssign);
             }
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);

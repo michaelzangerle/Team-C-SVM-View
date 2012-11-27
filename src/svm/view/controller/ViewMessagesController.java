@@ -153,10 +153,8 @@ public class ViewMessagesController {
      */
     public void showAllTeams() {
         this.panelMessages.getCmbSelectTeam().setModel(cmbSelectTeam);
-
         if (this.panelMessages.getCmbSelectTeam().getModel().getSize() == 0) {
             try {
-
                 searchController.start();
                 try {
                     for (ITransferTeam team : searchController.getTeams()) {
@@ -265,6 +263,7 @@ public class ViewMessagesController {
     }
 
     public void assignMemberToTeam() {
+        this.panelMessages.getListboxMembersOfSelectedTeam().setModel(listboxMembersOfSelectedTeam);
         try {
             ITransferMember member = (ITransferMember) this.panelMessages.getListboxNewMembersToAssign().getSelectedValue();
             if (member != null) {
@@ -274,15 +273,15 @@ public class ViewMessagesController {
                 memberController.commit();
                 this.listboxMembersOfSelectedTeam.addElement(member);
                 this.panelMessages.getListboxMembersOfSelectedTeam().updateUI();
-                
+
                 int i = 0;
-                while (i < this.listboxNewMembersToAssign.getSize()){
-                    if (this.listboxNewMembersToAssign.getElementAt(i).equals(member)){
+                while (i < this.listboxNewMembersToAssign.getSize()) {
+                    if (this.listboxNewMembersToAssign.getElementAt(i).equals(member)) {
                         this.listboxNewMembersToAssign.remove(i);
                         break;
                     }
                 }
-                this.panelMessages.getListboxNewMembersToAssign().updateUI();
+                this.panelMessages.getListboxNewMembersToAssign().setModel(listboxNewMembersToAssign);
             }
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);

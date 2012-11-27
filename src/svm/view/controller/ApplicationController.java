@@ -66,7 +66,7 @@ public class ApplicationController {
     private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
     private IRMIMessageController messageController;
-    private int MESSAGE_COUNT = 0;
+    private static int MESSAGE_COUNT = 0;
 
     public ApplicationController() {
     }
@@ -255,12 +255,14 @@ public class ApplicationController {
     public void switchMainTab() {
 
         if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Mitglieder")) {
-
+            mainForm.getTabPanelMainCenter().remove(panelMessages);
+            mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
             panelMembers.getViewMemberController().showDepartments();
 
 
         } else if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Wettbewerbe")) {
-
+            mainForm.getTabPanelMainCenter().remove(panelMessages);
+            mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
             panelContests.getViewContestController().showContests();
         }
     }
@@ -291,5 +293,9 @@ public class ApplicationController {
         MESSAGE_COUNT--;
         mainForm.getTabPanelMainCenter().remove(panelMessages);
         mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
+    }
+    
+    public static void decrementMessageCountExternally(){
+        MESSAGE_COUNT--;
     }
 }

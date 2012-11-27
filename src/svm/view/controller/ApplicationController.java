@@ -182,7 +182,9 @@ public class ApplicationController {
 
                 if (!imm.getType().equals(MessageType.REMOVED)) {
                     viewMessagesCtrl.addMemberMsg(imm);
-                    incrementMessageCount();
+                    if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
+                        incrementMessageCount();
+                    }
                 }
 
                 if (imm.getType().equals(MessageType.NEW)) {
@@ -215,8 +217,12 @@ public class ApplicationController {
 
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
-                viewMessagesCtrl.addSubTeamMsg(istm);
-                incrementMessageCount();
+                if (!istm.getType().equals(MessageType.REMOVED)) {
+                    viewMessagesCtrl.addSubTeamMsg(istm);
+                    if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
+                        incrementMessageCount();
+                    }
+                }
             }
         });
         try {
@@ -245,7 +251,7 @@ public class ApplicationController {
     public void loadPrivileges() {
         panelMembers.setName("Mitglieder");
         panelContests.setName("Wettbewerbe");
-        panelMessages.setName("(" + MESSAGE_COUNT + ") " + "Nachrichten");
+        panelMessages.setName(/*"(" + MESSAGE_COUNT + ") " +*/ "Nachrichten");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
         mainForm.getTabPanelMainCenter().add(panelMessages);
@@ -255,14 +261,8 @@ public class ApplicationController {
     public void switchMainTab() {
 
         if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Mitglieder")) {
-            mainForm.getTabPanelMainCenter().remove(panelMessages);
-            mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
             panelMembers.getViewMemberController().showDepartments();
-
-
         } else if (mainForm.getTabPanelMainCenter().getSelectedComponent().getName().equalsIgnoreCase("Wettbewerbe")) {
-            mainForm.getTabPanelMainCenter().remove(panelMessages);
-            mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
             panelContests.getViewContestController().showContests();
         }
     }
@@ -283,19 +283,16 @@ public class ApplicationController {
         return panelMessages;
     }
 
-    public void incrementMessageCount() {
+    public static void incrementMessageCount() {
         MESSAGE_COUNT++;
-        mainForm.getTabPanelMainCenter().remove(panelMessages);
-        mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
     }
 
-    public void decrementMessageCount() {
+    public static void decrementMessageCount() {
         MESSAGE_COUNT--;
+    }
+
+    public void refreshMessages() {
         mainForm.getTabPanelMainCenter().remove(panelMessages);
         mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
-    }
-    
-    public static void decrementMessageCountExternally(){
-        MESSAGE_COUNT--;
     }
 }

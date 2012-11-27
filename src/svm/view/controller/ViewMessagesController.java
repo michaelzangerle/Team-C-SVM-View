@@ -77,7 +77,7 @@ public class ViewMessagesController {
                     break;
                 }
             }
-            ApplicationController.decrementMessageCountExternally();
+            ApplicationController.decrementMessageCount();
 
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,7 +119,7 @@ public class ViewMessagesController {
                     break;
                 }
             }
-            ApplicationController.decrementMessageCountExternally();
+            ApplicationController.decrementMessageCount();
 
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -282,7 +282,7 @@ public class ViewMessagesController {
 
                 this.panelMessages.getListboxNewMembersToAssign().remove(this.panelMessages.getListboxNewMembersToAssign().getSelectedIndex());
                 this.listboxNewMembersToAssign.removeElement(member);
-                ApplicationController.decrementMessageCountExternally();
+                ApplicationController.decrementMessageCount();
                 /*int i = 0;
                 while (i < this.listboxNewMembersToAssign.getSize()) {
                     if (this.listboxNewMembersToAssign.getElementAt(i).equals(member)) {

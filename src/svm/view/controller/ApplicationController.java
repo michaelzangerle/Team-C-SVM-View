@@ -67,6 +67,8 @@ public class ApplicationController {
     private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
     private IRMIMessageController messageController;
+    
+    private int MESSAGE_COUNT = 0;
 
     public ApplicationController() {
     }
@@ -180,7 +182,9 @@ public class ApplicationController {
             @Override
             public void updateMemberMessage(IMemberMessage imm) {
                 
+                incrementMessageCount();
                 viewMessagesCtrl.addMemberMsg(imm);
+                
                 if(imm.getType().equals(MessageType.NEW)) {
                     
                     try {
@@ -211,7 +215,8 @@ public class ApplicationController {
 
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
-                viewMessagesCtrl.addSubTeamMsg(istm);               
+                viewMessagesCtrl.addSubTeamMsg(istm);  
+                incrementMessageCount();
             }
         });
         try {
@@ -240,7 +245,7 @@ public class ApplicationController {
     public void loadPrivileges() {
         panelMembers.setName("Mitglieder");
         panelContests.setName("Wettbewerbe");
-        panelMessages.setName("Nachrichten");
+        panelMessages.setName("(" + MESSAGE_COUNT + ") " + "Nachrichten");
         mainForm.getTabPanelMainCenter().add(panelMembers);
         mainForm.getTabPanelMainCenter().add(panelContests);
         mainForm.getTabPanelMainCenter().add(panelMessages);
@@ -275,5 +280,10 @@ public class ApplicationController {
     public PanelMessages getPanelMessages() {
         return panelMessages;
     }
- 
+    
+    public void incrementMessageCount(){
+        MESSAGE_COUNT++;
+        mainForm.getTabPanelMainCenter().remove(panelMessages);
+        mainForm.getTabPanelMainCenter().insertTab("(" + MESSAGE_COUNT + ") " + "Nachrichten", null, panelMessages, null, 1);
+    }
 }

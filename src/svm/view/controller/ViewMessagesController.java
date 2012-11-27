@@ -14,6 +14,7 @@ import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.exception.NotAllowException;
 import svm.logic.abstraction.jmsobjects.IMemberMessage;
 import svm.logic.abstraction.jmsobjects.ISubTeamMessage;
+import svm.logic.abstraction.jmsobjects.MessageType;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.logic.abstraction.transferobjects.ITransferSubTeam;
 import svm.logic.abstraction.transferobjects.ITransferTeam;
@@ -108,6 +109,8 @@ public class ViewMessagesController {
             subTeamConfirmationController.setConfirmation(false, "");
             subTeamConfirmationController.commit();
 
+            this.panelMessages.getListboxAssignedContests().updateUI();
+            
             int i = 0;
             while (i < this.listboxAssignedContests.getSize()) {
                 if (this.listboxAssignedContests.getElementAt(i).equals(msg)) {
@@ -231,8 +234,12 @@ public class ViewMessagesController {
             searchController.commit();
             this.listboxLog.addElement("SubTeamMessage: " + subTeam.getName() + " " + tm.getType().toString() + " " + member.getFirstName() + " " + member.getLastName());
             this.panelMessages.getListboxLog().setModel(this.listboxLog);
-            this.listboxAssignedContests.addElement(tm);
-            this.panelMessages.getListboxAssignedContests().setModel(listboxAssignedContests);
+            if (tm.getType().equals(MessageType.ADDED)) {
+
+                
+                this.listboxAssignedContests.addElement(tm);
+                this.panelMessages.getListboxAssignedContests().setModel(listboxAssignedContests);
+            }
         } catch (ExistingTransactionException ex) {
             Logger.getLogger(ViewMessagesController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoTransactionException ex) {

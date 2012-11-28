@@ -202,7 +202,7 @@ public class ViewMessagesController {
         }
     }
 
-    void addMemberMsg(IMemberMessage imm) {
+    public void addMemberMsg(IMemberMessage imm) {
         try {
             searchController.start();
             ITransferMember member = searchController.getMemberByUID(imm.getMember());
@@ -228,7 +228,7 @@ public class ViewMessagesController {
         }
     }
 
-    void addSubTeamMsg(ISubTeamMessage tm) {
+    public void addSubTeamMsg(ISubTeamMessage tm) {
         try {
             searchController.start();
             ITransferMember member = searchController.getMemberByUID(tm.getMember());

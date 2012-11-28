@@ -63,7 +63,6 @@ public class ApplicationController {
      */
     private ViewContestController viewContestCtrl;
     private ViewMemberController viewMemberCtrl;
-    private ViewMessagesController viewMessagesCtrl;
     private ViewRightsHandler viewRightsHandler;
     private IRMIMessageController messageController;
     private static int MESSAGE_COUNT = 0;
@@ -77,7 +76,6 @@ public class ApplicationController {
         this.panelMessages = new PanelMessages();
         this.viewContestCtrl = new ViewContestController(panelContests);
         this.viewMemberCtrl = new ViewMemberController(panelMembers);
-        this.viewMessagesCtrl = new ViewMessagesController(panelMessages);
         this.viewRightsHandler = new ViewRightsHandler(this.user, this);
     }
 
@@ -181,7 +179,7 @@ public class ApplicationController {
             public void updateMemberMessage(IMemberMessage imm) {
 
                 if (!imm.getType().equals(MessageType.REMOVED)) {
-                    viewMessagesCtrl.addMemberMsg(imm);
+                    panelMessages.addMemberMsg(imm);
                     if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
                         incrementMessageCount();
                     }
@@ -193,7 +191,7 @@ public class ApplicationController {
 
                         IRMISearchController search = factory.getRMISearchController(user);
                         search.start();
-                        viewMessagesCtrl.showMembersToAssign(search.getMemberByUID(imm.getMember()));
+                        panelMessages.showMembersToAssign(search.getMemberByUID(imm.getMember()));
                         search.commit();
                     } catch (ExistingTransactionException ex) {
                         Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
@@ -218,7 +216,7 @@ public class ApplicationController {
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
                 if (!istm.getType().equals(MessageType.REMOVED)) {
-                    viewMessagesCtrl.addSubTeamMsg(istm);
+                    panelMessages.addSubTeamMessage(istm);
                     if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
                         incrementMessageCount();
                     }

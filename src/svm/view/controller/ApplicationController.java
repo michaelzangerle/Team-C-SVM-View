@@ -173,8 +173,10 @@ public class ApplicationController {
             }
         });
 
+        
         this.messageController = factory.getRMIMessageController(user);
         this.messageController.addObserver(new IMessageObserver() {
+           
             @Override
             public void updateMemberMessage(IMemberMessage imm) {
 
@@ -188,7 +190,7 @@ public class ApplicationController {
                 if (imm.getType().equals(MessageType.NEW)) {
 
                     try {
-
+                        javax.swing.JOptionPane.showMessageDialog(mainForm,"Sie haben eine neue Nachricht.");
                         IRMISearchController search = factory.getRMISearchController(user);
                         search.start();
                         panelMessages.showMembersToAssign(search.getMemberByUID(imm.getMember()));
@@ -216,6 +218,7 @@ public class ApplicationController {
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
                 if (!istm.getType().equals(MessageType.REMOVED)) {
+					javax.swing.JOptionPane.showMessageDialog(mainForm,"Sie haben eine neue Nachricht.");
                     panelMessages.addSubTeamMessage(istm);
                     if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
                         incrementMessageCount();

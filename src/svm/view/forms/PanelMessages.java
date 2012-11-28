@@ -214,9 +214,14 @@ public class PanelMessages extends javax.swing.JPanel {
                 cmbSelectTeamItemStateChanged(evt);
             }
         });
+        cmbSelectTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSelectTeamActionPerformed(evt);
+            }
+        });
 
         listboxLog.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "-" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -428,6 +433,13 @@ public class PanelMessages extends javax.swing.JPanel {
     private void btnAssignNewMemberToTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignNewMemberToTeamActionPerformed
         viewMessagesController.assignMemberToTeam();
     }//GEN-LAST:event_btnAssignNewMemberToTeamActionPerformed
+
+    private void cmbSelectTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSelectTeamActionPerformed
+        
+        viewMessagesController.assignMemberToTeam();
+        
+        
+    }//GEN-LAST:event_cmbSelectTeamActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,7 +5,6 @@
 package svm.view.controller;
 
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -14,7 +13,6 @@ import svm.logic.abstraction.exception.IllegalGetInstanceException;
 import svm.logic.abstraction.exception.NotAllowException;
 import svm.logic.abstraction.jmsobjects.IMemberMessage;
 import svm.logic.abstraction.jmsobjects.ISubTeamMessage;
-import svm.logic.abstraction.jmsobjects.MessageType;
 import svm.logic.abstraction.transferobjects.ITransferMember;
 import svm.logic.abstraction.transferobjects.ITransferSubTeam;
 import svm.logic.abstraction.transferobjects.ITransferTeam;
@@ -77,6 +75,7 @@ public class ViewMessagesController {
                     break;
                 }
             }
+            javax.swing.JOptionPane.showMessageDialog(this.panelMessages, "Sie haben Ihre Teilnahme bestätigt.");
             ApplicationController.decrementMessageCount();
 
         } catch (InstantiationException ex) {
@@ -147,8 +146,8 @@ public class ViewMessagesController {
     public void showMembersToAssign(ITransferMember imm) {
 
 
-        this.listboxNewMembersToAssign.addElement(imm);
         this.panelMessages.getListboxNewMembersToAssign().setModel(listboxNewMembersToAssign);
+        this.listboxNewMembersToAssign.addElement(imm);
     }
 
     /**
@@ -278,10 +277,12 @@ public class ViewMessagesController {
                 memberController.addMemberToTeam((ITransferTeam) this.panelMessages.getCmbSelectTeam().getSelectedItem());
                 memberController.commit();
                 this.listboxMembersOfSelectedTeam.addElement(member);
-                this.panelMessages.getListboxMembersOfSelectedTeam().updateUI();
+                //this.panelMessages.getListboxMembersOfSelectedTeam().updateUI();
+                this.listboxMembersOfSelectedTeam.getSize();
+                this.listboxNewMembersToAssign.getSize();
 
-                this.panelMessages.getListboxNewMembersToAssign().remove(this.panelMessages.getListboxNewMembersToAssign().getSelectedIndex());
-                this.listboxNewMembersToAssign.removeElement(member);
+                //this.panelMessages.getListboxNewMembersToAssign().remove(this.panelMessages.getListboxNewMembersToAssign().getSelectedIndex());
+                //this.listboxNewMembersToAssign.removeElement(member);
                 ApplicationController.decrementMessageCount();
                 /*int i = 0;
                 while (i < this.listboxNewMembersToAssign.getSize()) {
@@ -314,5 +315,7 @@ public class ViewMessagesController {
     }
 
     public void showTeamMembers() {
+            
+
     }
 }

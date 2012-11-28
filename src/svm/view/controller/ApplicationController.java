@@ -175,8 +175,10 @@ public class ApplicationController {
             }
         });
 
+        
         this.messageController = factory.getRMIMessageController(user);
         this.messageController.addObserver(new IMessageObserver() {
+           
             @Override
             public void updateMemberMessage(IMemberMessage imm) {
 
@@ -190,10 +192,10 @@ public class ApplicationController {
                 if (imm.getType().equals(MessageType.NEW)) {
 
                     try {
-
+                        javax.swing.JOptionPane.showMessageDialog(mainForm,"Sie haben eine neue Nachricht.");
                         IRMISearchController search = factory.getRMISearchController(user);
                         search.start();
-                        viewMessagesCtrl.showMembersToAssign(search.getMemberByUID(imm.getMember()));
+                        viewMessagesCtrl.showMembersToAssign(search.getMemberByUID(imm.getMember()));                        
                         search.commit();
                     } catch (ExistingTransactionException ex) {
                         Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
@@ -218,6 +220,7 @@ public class ApplicationController {
             @Override
             public void updateSubTeamMessage(ISubTeamMessage istm) {
                 if (!istm.getType().equals(MessageType.REMOVED)) {
+                    javax.swing.JOptionPane.showMessageDialog(mainForm,"Sie haben eine neue Nachricht.");
                     viewMessagesCtrl.addSubTeamMsg(istm);
                     if (!mainForm.getTabPanelMainCenter().getSelectedComponent().equals(panelMessages)) {
                         incrementMessageCount();

@@ -191,9 +191,6 @@ public class ViewMemberController {
             this.memberController.setPhone1(panelMembers.getTfPhone1().getText());
             this.memberController.setPhone2(panelMembers.getTfPhone2().getText());
             this.memberController.setSport((ITransferSport)this.panelMembers.getCmbSport().getSelectedItem());
-            //this.memberController.setFax(" ");
-            //this.memberController.setLat("47");
-            //this.memberController.setLong("9");
             if (panelMembers.getCheckMemberFee().isEnabled() && panelMembers.getCheckMemberFee().isSelected()) {
                 try {
                     this.memberController.setPaidCurrentYear();
@@ -210,7 +207,6 @@ public class ViewMemberController {
             this.memberController.setStreet(panelMembers.getTfStreet().getText());
             this.memberController.setStreetNumber(panelMembers.getTfStreetNumber().getText());
             this.memberController.setUsername(panelMembers.getTfUserName().getText());
-            //this.memberController.setUsername("1234");
             this.memberController.commit();
         } catch (InstantiationException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,12 +225,13 @@ public class ViewMemberController {
         } catch (DomainParameterCheckException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DomainAttributeException ex) {
-            Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
+            javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Bitte (*) Pflichtfelder ausfüllen.");
         } catch (RemoteException ex) {
             Logger.getLogger(ViewMemberController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotAllowException ex) {
             javax.swing.JOptionPane.showMessageDialog(this.panelMembers, "Sie haben nicht die erforderlichen Rechte.");
         }
+        
     }
 
     public void createNewMember() {
@@ -415,5 +412,9 @@ public class ViewMemberController {
 
     public void clearMemberList() {
         listboxShowMembers.clear();
+    }
+    
+    public void selectFirstMember() {
+        panelMembers.getListboxShowMembers().setSelectedIndex(0);
     }
 }
